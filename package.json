@@ -1,0 +1,27 @@
+{
+  "name": "twitch-reward",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json",
+    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/translate": "^8.3.0",
+    "@google/generative-ai": "^0.15.0",
+    "bad-words": "^3.0.4",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.27.0"
+  },
+  "devDependencies": {
+    "@types/bad-words": "^3.0.3",
+    "@types/node": "^20.14.2",
+    "typescript": "^5.4.5"
+  }
+}

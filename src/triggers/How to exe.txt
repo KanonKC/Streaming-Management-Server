@@ -1,0 +1,2 @@
+Set-MpPreference -ExclusionPath <path>
+pyinstaller --onefile --noconsole src/triggers/
