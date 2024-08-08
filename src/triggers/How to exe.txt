@@ -1,2 +1,2 @@
-Set-MpPreference -ExclusionPath <path>
+Set-MpPreference -ExclusionPath C:/Users/user/Documents/Twitch-Reward
 pyinstaller --onefile --noconsole src/triggers/

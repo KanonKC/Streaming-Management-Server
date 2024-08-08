@@ -16,6 +16,7 @@ function switchKeyboardFromEnglishToThai(text: string) {
     }
 
     let thaiText = "";
+
     for (let i = 0; i < text.length; i++) {
         if (thaiKeyboard[text[i]]) {
             thaiText += thaiKeyboard[text[i]];
@@ -23,13 +24,16 @@ function switchKeyboardFromEnglishToThai(text: string) {
             thaiText += text[i];
         }
     }
-
+    
     return thaiText;
 }
 
 export async function changeMischangingLanguageThaiToEnglish(text: string) {
     const thaiKeyText = switchKeyboardFromEnglishToThai(text);
+    console.log(text, thaiKeyText);
     const meaningfulThaiLanguage = await isMeaningfulThaiLanguage(thaiKeyText);
+    console.log(text, thaiKeyText, meaningfulThaiLanguage);
+    // console.log(text, thaiKeyText, meaningfulThaiLanguage);
     if (meaningfulThaiLanguage) {
         return thaiKeyText;
     }

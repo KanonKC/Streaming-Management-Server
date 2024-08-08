@@ -15,9 +15,11 @@
   "dependencies": {
     "@google-cloud/translate": "^8.3.0",
     "@google/generative-ai": "^0.15.0",
+    "axios": "^1.7.3",
     "bad-words": "^3.0.4",
     "dotenv": "^16.4.5",
-    "fastify": "^4.27.0"
+    "fastify": "^4.27.0",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@types/bad-words": "^3.0.3",

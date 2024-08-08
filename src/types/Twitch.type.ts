@@ -13,3 +13,12 @@ export interface TwitchChannelInfo {
         is_branded_content: boolean;
     }[]
 }
+
+export interface TwitchPrediction {
+    broadcaster_id: string;
+    title: string;
+    outcomes: {
+        title: string;
+    }[]
+    prediction_window: number;
+}

@@ -6,6 +6,7 @@ import { changeStreamTitle } from './modules/ChangeStreamTitle'
 import { getChannelInfo } from './services/Twitch.service'
 import { changeMischangingLanguageThaiToEnglish } from './modules/ChangeMischangingLanguageThaiToEnglish'
 import { getOneIceBreakingQuestion } from './modules/GetOneIceBreakingQuestion'
+import { getImageDetail } from './modules/GetImageDetail'
 
 const server = fastify()
 
@@ -24,6 +25,10 @@ type GetRandomFood = FastifyRequest<{
 
 type MischangeTH2EN = FastifyRequest<{
   Querystring: { text: string }
+}>
+
+type GetImageDetail = FastifyRequest<{
+  Querystring: { url: string }
 }>
 
 server.get('/title', async (request: ChangeStreamTitle, reply) => {
@@ -47,9 +52,9 @@ server.get('/foods', async (request: GetRandomFood, reply: FastifyReply) => {
 
 // server.get('/mischange/th-en', async (request: MischangeTH2EN, reply: FastifyReply) => {
 //     const text = request.query.text
-
+//     console.log(text)
 //     const changingResult = await changeMischangingLanguageThaiToEnglish(text)
-
+//     console.log(changingResult)
 //     if (changingResult === undefined) {
 //         reply.send({ text: null, mischange: false })
 //     }
@@ -61,6 +66,14 @@ server.get('/foods', async (request: GetRandomFood, reply: FastifyReply) => {
 server.get('/ice-breaking', async (request: FastifyRequest, reply: FastifyReply) => {
     const question = await getOneIceBreakingQuestion()
     reply.send({ question: question })
+})
+
+server.get('/image', async (request: GetImageDetail, reply: FastifyReply) => {
+    const { url } = request.query
+    console.log(url)
+    const imageDetail = await getImageDetail(url)
+    console.log(imageDetail)
+    reply.send(imageDetail)
 })
 
 server.listen({ port: 8080 }, (err, address) => {
