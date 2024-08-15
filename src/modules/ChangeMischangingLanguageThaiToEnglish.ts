@@ -30,10 +30,7 @@ function switchKeyboardFromEnglishToThai(text: string) {
 
 export async function changeMischangingLanguageThaiToEnglish(text: string) {
     const thaiKeyText = switchKeyboardFromEnglishToThai(text);
-    console.log(text, thaiKeyText);
     const meaningfulThaiLanguage = await isMeaningfulThaiLanguage(thaiKeyText);
-    console.log(text, thaiKeyText, meaningfulThaiLanguage);
-    // console.log(text, thaiKeyText, meaningfulThaiLanguage);
     if (meaningfulThaiLanguage) {
         return thaiKeyText;
     }
