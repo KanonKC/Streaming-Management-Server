@@ -1,3 +1,10 @@
+export interface TwitchListAPIResponse<T> {
+    data: T;
+    pagination: {
+        cursor: string;
+    }
+}
+
 export interface TwitchChannelInfo {
     data: {
         broadcaster_id: string;
@@ -21,4 +28,24 @@ export interface TwitchPrediction {
         title: string;
     }[]
     prediction_window: number;
+}
+
+export interface TwitchClip {
+    id: string;
+    url: string;
+    embed_url: string;
+    broadcaster_id: string;
+    broadcaster_name: string;
+    creator_id: string;
+    creator_name: string;
+    video_id: string;
+    game_id: string;
+    language: string;
+    title: string;
+    view_count: number;
+    created_at: string;
+    thumbnail_url: string;
+    duration: number;
+    vod_offset: number | null;
+    is_featured: boolean;
 }

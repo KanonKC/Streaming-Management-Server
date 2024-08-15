@@ -6,7 +6,9 @@ import { changeStreamTitle } from './modules/ChangeStreamTitle'
 import { getChannelInfo } from './services/Twitch.service'
 import { changeMischangingLanguageThaiToEnglish } from './modules/ChangeMischangingLanguageThaiToEnglish'
 import { getOneIceBreakingQuestion } from './modules/GetOneIceBreakingQuestion'
-import { getImageDetail } from './modules/GetImageDetail'
+import { showImage } from './modules/ShowImage'
+import { clearBackslash } from './utils/ClearBackslash'
+import { showFeaturedTwitchClip } from './modules/ShowFeaturedTwitchClip'
 
 const server = fastify()
 
@@ -27,8 +29,17 @@ type MischangeTH2EN = FastifyRequest<{
   Querystring: { text: string }
 }>
 
-type GetImageDetail = FastifyRequest<{
+type ShowImage = FastifyRequest<{
   Querystring: { url: string }
+  Headers: {
+    imageurl: string
+    twitchid: string
+    username: string
+  }
+}>
+
+type FeatureClip = FastifyRequest<{
+  Querystring: { broadcasterId: string }
 }>
 
 server.get('/title', async (request: ChangeStreamTitle, reply) => {
@@ -68,12 +79,20 @@ server.get('/ice-breaking', async (request: FastifyRequest, reply: FastifyReply)
     reply.send({ question: question })
 })
 
-server.get('/image', async (request: GetImageDetail, reply: FastifyReply) => {
-    const { url } = request.query
-    console.log(url)
-    const imageDetail = await getImageDetail(url)
-    console.log(imageDetail)
-    reply.send(imageDetail)
+server.get('/image', async (request: ShowImage, reply: FastifyReply) => {
+    const { imageurl, twitchid, username } = request.headers
+    const formatUrl = clearBackslash(String(imageurl))
+    console.log(formatUrl)
+    await showImage(formatUrl, twitchid, username)
+    reply.status(204).send()
+})
+
+server.get('/feature-clip', async (request: FeatureClip, reply: FastifyReply) => {
+    const { broadcasterId } = request.query;
+    console.log(broadcasterId)
+    const response = await showFeaturedTwitchClip(String(broadcasterId))
+    console.log(response)
+    reply.send(response)
 })
 
 server.listen({ port: 8080 }, (err, address) => {

@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { TwitchChannelInfo, TwitchPrediction } from "../types/Twitch.type";
+import { TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_OAUTH_TOKEN } = process.env;
@@ -30,4 +30,11 @@ export async function createPrediction(payload: TwitchPrediction) {
         body: JSON.stringify(payload)
     })
     return await response.json()
+}
+
+export async function getTwitchClips(broadcasterId: string, isFeature: boolean) {
+    const response = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${broadcasterId}&is_featured=${isFeature}`, {
+        method: 'GET', headers
+    })
+    return await response.json() as TwitchListAPIResponse<TwitchClip[]>
 }
