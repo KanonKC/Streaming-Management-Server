@@ -1,7 +1,7 @@
 import axios from "axios";
 import sharp from "sharp";
 import fs from "fs";
-import { prisma } from "../prisma";
+import { prisma } from "../database/prisma";
 
 const IMAGE_PATH = 'dist/show-an-image.png'
 
