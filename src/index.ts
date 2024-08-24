@@ -9,6 +9,7 @@ import { getOneIceBreakingQuestion } from './modules/GetOneIceBreakingQuestion'
 import { showImage } from './modules/ShowImage'
 import { clearBackslash } from './utils/ClearBackslash'
 import { showFeaturedTwitchClip } from './modules/ShowFeaturedTwitchClip'
+import { prisma } from './prisma'
 
 const server = fastify()
 
@@ -40,6 +41,17 @@ type ShowImage = FastifyRequest<{
 
 type FeatureClip = FastifyRequest<{
   Querystring: { broadcasterId: string }
+}>
+
+type TwitchChannelPointRedeemed = FastifyRequest<{
+  Headers: {
+    userid: string
+    username: string
+    rewardid: string
+    rewardname: string
+    rewardcost: number
+    rewardprompt: string
+  }
 }>
 
 server.get('/title', async (request: ChangeStreamTitle, reply) => {
@@ -95,10 +107,34 @@ server.get('/feature-clip', async (request: FeatureClip, reply: FastifyReply) =>
     reply.send(response)
 })
 
+server.get('/twitch/channel-point', async (request: TwitchChannelPointRedeemed, reply: FastifyReply) => {
+    const { 
+        userid,
+        username,
+        rewardid,
+        rewardname,
+        rewardcost,
+        rewardprompt
+    } = request.headers;
+  
+    await prisma.twitchChannelPointRedeemedLog.create({
+      data: {
+        userId: userid,
+        username: username,
+        rewardId: rewardid,
+        rewardName: rewardname,
+        rewardCost: Number(rewardcost),
+        rewardPrompt: rewardprompt,
+      }
+    })
+
+    reply.status(204)
+})
+
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)
   }
-  console.log(`Server listening at a ${address}`)
+  console.log(`Server listening at ${address}`)
 })

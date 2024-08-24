@@ -17,3 +17,14 @@ model ShowImage {
   imageUrl  String
   timestamp DateTime @default(now())
 }
+
+model TwitchChannelPointRedeemedLog {
+  id            Int      @id @default(autoincrement())
+  userId        String
+  username      String
+  rewardId      String
+  rewardName    String
+  rewardCost    Int
+  rewardPrompt  String?
+  timestamp     DateTime @default(now())
+}
