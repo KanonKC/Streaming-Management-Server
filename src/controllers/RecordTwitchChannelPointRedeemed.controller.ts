@@ -18,7 +18,7 @@ export async function recordTwitchChannelPointRedeemedController(
   request: RecordTwitchChannelPointRedeemed,
   reply: FastifyReply
 ) {
-    console.log("recordTwitchChannelPointRedeemedController")
+
     const { 
         userid,
         username,
@@ -29,7 +29,7 @@ export async function recordTwitchChannelPointRedeemedController(
 
     const { rewardName } = request.query;
 
-    const result = await prisma.twitchChannelPointRedeemedLog.create({
+    await prisma.twitchChannelPointRedeemedLog.create({
       data: {
         userId: userid,
         username: username,
@@ -39,8 +39,6 @@ export async function recordTwitchChannelPointRedeemedController(
         rewardPrompt: rewardprompt === "" ? null : rewardprompt,
       }
     })
-
-    console.log(result)
 
     return reply.status(204)
 }
