@@ -1,6 +1,6 @@
-import { configDotenv } from "dotenv"
-import { DownloadVideo } from "../types/StreamEditor.type";
 import axios from "axios";
+import { configDotenv } from "dotenv";
+import { DownloadVideo } from "../types/StreamEditor.type";
 
 configDotenv();
 

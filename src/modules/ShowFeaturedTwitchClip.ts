@@ -11,22 +11,21 @@ export async function showFeaturedTwitchClip(broadcasterId: string) {
     let twitchClips: TwitchClip[] = [];
 
     const featureTwitchClipResponse = await getTwitchClips(broadcasterId, true);
-    console.log('featureTwitchClipResponse', featureTwitchClipResponse)
 
-    if (featureTwitchClipResponse.data.length > 0) {
-        twitchClips = featureTwitchClipResponse.data;
+    if (featureTwitchClipResponse.data.data.length > 0) {
+        twitchClips = featureTwitchClipResponse.data.data;
     }
     else {
         const twitchClipsResponse = await getTwitchClips(broadcasterId, false);
 
-        if (twitchClipsResponse.data.length === 0) {
+        if (twitchClipsResponse.data.data.length === 0) {
             return { filename: '' };
         }
         
-        twitchClips = twitchClipsResponse.data;
+        twitchClips = twitchClipsResponse.data.data;
     }
 
     const randomClipUrl = twitchClips[Math.floor(Math.random() * twitchClips.length)].url;
     const downloadVideoResponse = await downloadVideo(randomClipUrl);
-    return { filename: `${STREAM_EDITOR_VIDEO_FULL_PATH}/${downloadVideoResponse.video.filename}` }
+    return { filename: `${STREAM_EDITOR_VIDEO_FULL_PATH}/${downloadVideoResponse.data.video.filename}` }
 }

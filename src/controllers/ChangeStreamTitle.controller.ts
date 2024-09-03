@@ -18,7 +18,7 @@ export async function changeStreamTitleController(request: ChangeStreamTitle, re
 
     const { newTitle } = request.query
     const channelInfo = await getChannelInfo(TWITCH_BROADCASTER_ID)
-    const currentTitle = channelInfo.data[0].title
+    const currentTitle = channelInfo.data.data[0].title
     const newLegitTitle = changeStreamTitle(currentTitle, newTitle)
 
     return reply.status(200).send({ title: newLegitTitle })
