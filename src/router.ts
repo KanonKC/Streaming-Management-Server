@@ -5,6 +5,7 @@ import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQu
 import { showImageController } from "./controllers/ShowImage.controller";
 import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
+import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAllTwitchChannelPointRedeemed.controller";
 
 const server = fastify()
 
@@ -13,6 +14,7 @@ server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
 server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
-server.get('/twitch/channel-point', recordTwitchChannelPointRedeemedController)
+server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
+server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 
 export default server

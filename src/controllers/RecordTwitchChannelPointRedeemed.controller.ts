@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { prisma } from "../database/prisma"
+import socket from "../socket-client"
 
 type RecordTwitchChannelPointRedeemed = FastifyRequest<{
     Querystring: {
@@ -39,6 +40,8 @@ export async function recordTwitchChannelPointRedeemedController(
         rewardPrompt: rewardprompt === "" ? null : rewardprompt,
       }
     })
+
+    socket.emit("reloadTwitchChannelPointRedeemedLog")
 
     return reply.status(204)
 }

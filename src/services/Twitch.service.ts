@@ -1,40 +1,30 @@
 import { configDotenv } from "dotenv";
 import { TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
+import axios from "axios";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_OAUTH_TOKEN } = process.env;
-const headers = new Headers()
-headers.append('Content-Type', 'application/json')
-headers.append('Client-Id', TWITCH_CLIENT_ID as string)
-headers.append('Authorization', `Bearer ${TWITCH_OAUTH_TOKEN}`)
 
-
-async function twitchAPI(endpoint: string) {
-    const response = await fetch(`https://api.twitch.tv/helix/${endpoint}`, {
-        method: 'GET', headers
-    })
-    return await response.json()
-}
+const twitchAPI = axios.create({
+    baseURL: 'https://api.twitch.tv/helix',
+    headers: {
+        'Client-Id': TWITCH_CLIENT_ID,
+        'Authorization': `Bearer ${TWITCH_OAUTH_TOKEN}`
+    }
+})
 
 export async function getChannelInfo(broadcasterId: string): Promise<TwitchChannelInfo> {
-    const response = await fetch(`https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, {
-        method: 'GET', headers
+    return twitchAPI.get('/channels', {
+        params: { broadcaster_id: broadcasterId }
     })
-    return await response.json()
 }
 
 export async function createPrediction(payload: TwitchPrediction) {
-    const response = await fetch('https://api.twitch.tv/helix/predictions', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload)
-    })
-    return await response.json()
+    return twitchAPI.post('/predictions', payload)
 }
 
 export async function getTwitchClips(broadcasterId: string, isFeature: boolean) {
-    const response = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${broadcasterId}&is_featured=${isFeature}`, {
-        method: 'GET', headers
+    return twitchAPI.get('/clips', {
+        params: { broadcaster_id: broadcasterId, is_featured: isFeature }
     })
-    return await response.json() as TwitchListAPIResponse<TwitchClip[]>
 }

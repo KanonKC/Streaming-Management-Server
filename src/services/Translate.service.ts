@@ -17,6 +17,6 @@ async function translateEnglishToThai(text: string) {
   
 }
 
-translateEnglishToThai("Hello, World!");
+// translateEnglishToThai("Hello, World!");
 
 // ต้องจ่ายเงินอ่ะ https://console.cloud.google.com/marketplace/product/google/translate.googleapis.com

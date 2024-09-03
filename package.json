@@ -7,20 +7,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
     "start": "nodemon src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "socket": "nodemon src/socket.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
     "@google-cloud/translate": "^8.3.0",
     "@google/generative-ai": "^0.15.0",
     "@prisma/client": "^5.18.0",
-    "axios": "^1.7.3",
+    "axios": "^1.7.7",
     "bad-words": "^3.0.4",
     "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
     "@types/bad-words": "^3.0.3",

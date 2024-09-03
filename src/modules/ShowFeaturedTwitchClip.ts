@@ -11,6 +11,7 @@ export async function showFeaturedTwitchClip(broadcasterId: string) {
     let twitchClips: TwitchClip[] = [];
 
     const featureTwitchClipResponse = await getTwitchClips(broadcasterId, true);
+    console.log('featureTwitchClipResponse', featureTwitchClipResponse)
 
     if (featureTwitchClipResponse.data.length > 0) {
         twitchClips = featureTwitchClipResponse.data;
