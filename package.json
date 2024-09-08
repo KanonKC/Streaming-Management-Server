@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
-    "start": "nodemon src/index.ts",
+    "start": "node build/index.js",
+    "socket": "node build/socket.js",
     "dev": "nodemon src/index.ts",
-    "socket": "nodemon src/socket.ts"
+    "socket-dev": "nodemon src/socket.ts"
   },
   "keywords": [],
   "author": "",
