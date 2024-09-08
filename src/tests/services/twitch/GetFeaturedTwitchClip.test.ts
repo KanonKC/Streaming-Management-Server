@@ -5,6 +5,6 @@ configDotenv();
 
 const { TWITCH_BROADCASTER_ID } = process.env;
 
-getTwitchClips(TWITCH_BROADCASTER_ID as string).then((clips) => {
-    clips.data.map((clip) => console.log(clip.title, clip.url))
+getTwitchClips(TWITCH_BROADCASTER_ID as string, false).then((response) => {
+    console.log('response', response.data)
 })
