@@ -1,6 +1,6 @@
 import axios from "axios";
 import { configDotenv } from "dotenv";
-import { DownloadVideo } from "../types/StreamEditor.type";
+import { DownloadAndUploadVideoResponse } from "../types/StreamEditor.type";
 
 configDotenv();
 
@@ -10,5 +10,5 @@ const streamEditorAPI = axios.create({
 })
 
 export async function downloadVideo(url: string) {
-    return streamEditorAPI.post<DownloadVideo>('/download', { url })
+    return streamEditorAPI.post<DownloadAndUploadVideoResponse>('/download', { sources: [{ url }] })
 }

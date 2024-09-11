@@ -27,5 +27,6 @@ export async function showFeaturedTwitchClip(broadcasterId: string) {
 
     const randomClipUrl = twitchClips[Math.floor(Math.random() * twitchClips.length)].url;
     const downloadVideoResponse = await downloadVideo(randomClipUrl);
-    return { filename: `${STREAM_EDITOR_VIDEO_FULL_PATH}/${downloadVideoResponse.data.video.filename}` }
+    const downloadedVideo = downloadVideoResponse.data.sources[0];
+    return { filename: `${STREAM_EDITOR_VIDEO_FULL_PATH}/${downloadedVideo.filename}`, durationMilliseconds: downloadedVideo.duration * 1000 };
 }
