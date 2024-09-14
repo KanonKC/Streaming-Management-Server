@@ -7,6 +7,7 @@ import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAllTwitchChannelPointRedeemed.controller";
 import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcomeMessage.controller";
+import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 
 const server = fastify()
 
@@ -18,5 +19,6 @@ server.get('/feature-clip', showFeaturedTwitchClipController)
 server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
 server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
+server.get('/tarot', revealTarotCardController)
 
 export default server
