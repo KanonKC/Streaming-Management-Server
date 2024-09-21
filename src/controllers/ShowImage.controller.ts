@@ -14,6 +14,6 @@ type ShowImage = FastifyRequest<{
 export async function showImageController(request: ShowImage, reply: FastifyReply) {
     const { imageurl, twitchid, username } = request.headers
     const formatUrl = clearBackslash(String(imageurl))
-    await showImage(formatUrl, twitchid, username)
-    return reply.status(204).send()
+    const image = await showImage(formatUrl, twitchid, username)
+    return reply.send(image)
 }

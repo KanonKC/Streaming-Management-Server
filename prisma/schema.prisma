@@ -11,11 +11,12 @@ datasource db {
 }
 
 model ShowImage {
-    id        Int      @id @default(autoincrement())
-    twitchId  String?
-    username  String?
-    imageUrl  String
-    timestamp DateTime @default(now())
+    id              Int      @id @default(autoincrement())
+    twitchId        String?
+    username        String?
+    imageUrl        String
+    timestamp       DateTime @default(now())
+    imageFilename   String   @unique
 }
 
 model TwitchChannelPointRedeemedLog {
