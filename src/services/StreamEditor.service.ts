@@ -10,5 +10,5 @@ const streamEditorAPI = axios.create({
 })
 
 export async function downloadVideo(url: string) {
-    return streamEditorAPI.post<DownloadAndUploadVideoResponse>('/download', { sources: [{ url }] })
+    return streamEditorAPI.post<DownloadAndUploadVideoResponse>('/download', { sources: [{ url, resolution: { width: 1920, height: 1080 } }] })
 }
