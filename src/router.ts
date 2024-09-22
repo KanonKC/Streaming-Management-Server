@@ -8,6 +8,7 @@ import { recordTwitchChannelPointRedeemedController } from "./controllers/Record
 import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAllTwitchChannelPointRedeemed.controller";
 import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcomeMessage.controller";
 import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
+import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
 
 const server = fastify()
 
@@ -16,9 +17,14 @@ server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
 server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
-server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
-server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
 server.get('/tarot', revealTarotCardController)
+
+server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
+server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
+
+server.get('/killer-queue-requests', getKillerRequestQueuesController)
+server.get('/killer-queue-requests/add', addKillerRequestController)
+server.get('/killer-queue-requests/mark/:index', markKillerRequestAsDoneController)
 
 export default server

@@ -22,7 +22,6 @@ export async function showImage(url: string, twitchId: string, username: string)
     const imageResponse = await axios.get(url, { responseType: 'arraybuffer' });
     
     const contentType:string = imageResponse.headers['content-type'];
-    console.log('contentType', contentType);
 
     if (!contentType.includes('image')) {
         return { imagePath: null };
@@ -48,7 +47,7 @@ export async function showImage(url: string, twitchId: string, username: string)
             imageFilename: filename
         }
     })
-    console.log('filename', filename);
+
     const fullImagePath = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PATH}/${filename}`;
 
     const imageBuffer = await image.toBuffer();

@@ -36,3 +36,12 @@ model CustomWelcomeMessage {
     soundFilePath   String
     message         String?
 }
+
+model KillerRequestQueue {
+    id              Int      @id @default(autoincrement())
+    twitchUserId    String 
+    twitchUsername  String
+    description     String
+    isActive        Boolean  @default(true)
+    timestamp       DateTime @default(now())
+}
