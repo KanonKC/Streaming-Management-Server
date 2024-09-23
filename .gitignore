@@ -4,6 +4,7 @@ assets/data/bad_word_list.json
 build
 node_modules
 env
+dumps
 
 *.spec
 *.db
