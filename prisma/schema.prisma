@@ -1,47 +1,44 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model ShowImage {
-    id              Int      @id @default(autoincrement())
-    twitchId        String?
-    username        String?
-    imageUrl        String
-    timestamp       DateTime @default(now())
-    imageFilename   String   @unique
+  id            Int      @id @default(autoincrement())
+  twitchId      String?
+  username      String?
+  imageUrl      String
+  timestamp     DateTime @default(now())
+  imageFilename String   @unique
 }
 
 model TwitchChannelPointRedeemedLog {
-    id            Int      @id @default(autoincrement())
-    userId        String
-    username      String
-    rewardId      String
-    rewardName    String
-    rewardCost    Int
-    rewardPrompt  String?
-    timestamp     DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  userId       String
+  username     String
+  rewardId     String
+  rewardName   String
+  rewardCost   Int
+  timestamp    DateTime @default(now())
+  rewardPrompt String?
 }
 
 model CustomWelcomeMessage {
-    id              Int      @id @default(autoincrement())
-    twitchUserId    String   @unique
-    soundFilePath   String
-    message         String?
+  id            Int     @id @default(autoincrement())
+  twitchUserId  String  @unique
+  soundFilePath String
+  message       String?
 }
 
 model KillerRequestQueue {
-    id              Int      @id @default(autoincrement())
-    twitchUserId    String 
-    twitchUsername  String
-    description     String
-    isActive        Boolean  @default(true)
-    timestamp       DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  twitchUserId   String
+  twitchUsername String
+  description    String
+  isActive       Boolean  @default(true)
+  timestamp      DateTime @default(now())
 }
