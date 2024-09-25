@@ -9,6 +9,7 @@ import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAll
 import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcomeMessage.controller";
 import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
+import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
 
 const server = fastify()
 
@@ -26,5 +27,8 @@ server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRede
 server.get('/killer-queue-requests', getKillerRequestQueuesController)
 server.get('/killer-queue-requests/add', addKillerRequestController)
 server.get('/killer-queue-requests/mark/:index', markKillerRequestAsDoneController)
+
+server.get('/magic-number-mystery-boxes/create/:twitchRewardId', createMagicNumberMysteryBoxController)
+server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumberMysteryBoxController)
 
 export default server

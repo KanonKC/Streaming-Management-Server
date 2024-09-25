@@ -1,7 +1,7 @@
 import { prisma } from "../../database/prisma";
 import { SolveMagicNumberMysteryBoxPayload } from "../../types/MagicNumberMysteryBox.type";
 
-export async function createMagicNumberMysteryBox(
+export async function solveMagicNumberMysteryBox(
     twitchRewardId: string,
     payload: SolveMagicNumberMysteryBoxPayload
 ) {
@@ -20,7 +20,7 @@ export async function createMagicNumberMysteryBox(
     }
 
     if (guessNumber < mysteryBox.possibleMinNumber || guessNumber > mysteryBox.possibleMaxNumber) {
-        return { code: "OUT_OF_RANGE", ...mysteryBox }
+        return { code: "OUT_OF_RANGE", guessNumber, ...mysteryBox }
     }
 
     if (guessNumber === mysteryBox.correctNumber) {
@@ -43,10 +43,10 @@ export async function createMagicNumberMysteryBox(
                 id: mysteryBox.id
             },
             data: {
-                possibleMinNumber: guessNumber
+                possibleMinNumber: guessNumber + 1
             }
         })
-        return { code: "NUMBER_TOO_LOW", response }
+        return { code: "NUMBER_TOO_LOW", guessNumber, ...response }
     }
     else if (guessNumber > mysteryBox.correctNumber) {
         const response = await prisma.magicNumberMysteryBox.update({
@@ -54,9 +54,9 @@ export async function createMagicNumberMysteryBox(
                 id: mysteryBox.id
             },
             data: {
-                possibleMaxNumber: guessNumber
+                possibleMaxNumber: guessNumber - 1
             }
         })
-        return { code: "NUMBER_TOO_HIGH", response }
+        return { code: "NUMBER_TOO_HIGH", guessNumber, ...response }
     }
 }
