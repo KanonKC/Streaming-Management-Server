@@ -45,3 +45,18 @@ model KillerRequestQueue {
     isActive        Boolean  @default(true)
     timestamp       DateTime @default(now())
 }
+
+model MagicNumberMysteryBox {
+    id                      Int      @id @default(autoincrement())
+    minNumber               Int
+    maxNumber               Int
+    possibleMinNumber       Int
+    possibleMaxNumber       Int
+    correctNumber           Int
+    twitchRewardId          String
+    isActive                Boolean  @default(true)
+    winnerUserId            String?
+    winnerUsername          String?
+    description             String?
+    timestamp               DateTime @default(now())
+}
