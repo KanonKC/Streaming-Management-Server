@@ -1,8 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { addKillerRequest, getKillerRequestQueues, markKillerRequestAsDone } from "../modules/KillerQueueRequest"
+import { addRandomKillerRequest } from "../modules/KillerQueueRequest/AddRandomKillerRequest"
 
 export async function addKillerRequestController(request: FastifyRequest<{
     Querystring: {
+        random: boolean
         description: string
     }
     Headers: {
@@ -10,10 +12,16 @@ export async function addKillerRequestController(request: FastifyRequest<{
         twitchusername: string
     }
 }>, reply: FastifyReply) {
-    const { description } = request.query
+    const { description, random } = request.query
     const { twitchid, twitchusername } = request.headers
-    const response = await addKillerRequest(twitchid, String(twitchusername), description)
-    return reply.send(response)
+    if (!random) {
+        const response = await addKillerRequest(twitchid, String(twitchusername), description)
+        return reply.send(response)
+    }
+    else {
+        const response = await addRandomKillerRequest(twitchid, String(twitchusername))
+        return reply.send(response)
+    }
 }
 
 export async function getKillerRequestQueuesController(request: FastifyRequest, reply: FastifyReply) {
