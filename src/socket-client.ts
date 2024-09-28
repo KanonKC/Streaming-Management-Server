@@ -1,5 +1,9 @@
 import { io } from 'socket.io-client';
+import { configDotenv } from 'dotenv'
 
-const socket = io("http://localhost:8003");
+configDotenv();
+const { SOCKET_PORT } = process.env;
+
+const socket = io(`http://localhost:${SOCKET_PORT}`);
 
 export default socket;
