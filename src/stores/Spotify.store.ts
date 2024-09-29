@@ -4,23 +4,39 @@ import { SpotifyAuthorization } from "../types/Spotify.type";
 class SpotifyStore {
 
     namespace = 'main';
+    accessToken: string | null = null;
+    refreshToken: string | null = null;
+    expires: number | null = null;
+
 
     constructor() {}
 
-    async getToken() {
+    async loadToken() {
         const storage = await prisma.storage.findUnique({
             where: { namespace: this.namespace },
         });
 
+        this.accessToken = storage?.spotifyAccessToken || null;
+        this.refreshToken = storage?.spotifyRefreshToken || null;
+        this.expires = storage?.spotifyTokenExpires ? storage.spotifyTokenExpires.getTime() : null;
+
         return {
-            accessToken: storage?.spotifyAccessToken,
-            refreshToken: storage?.spotifyRefreshToken,
-            expires: storage?.spotifyTokenExpires,
+            accessToken: this.accessToken,
+            refreshToken: this.refreshToken,
+            expires: this.expires,
+        }
+    }
+
+    getToken() {
+        return {
+            accessToken: this.accessToken,
+            refreshToken: this.refreshToken,
+            expires: this.expires,
         }
     }
 
     async setToken(spotifyAuthorization: SpotifyAuthorization) {
-        return prisma.storage.upsert({
+        await prisma.storage.upsert({
             where: { namespace: this.namespace },
             update: {
                 spotifyAccessToken: spotifyAuthorization.access_token,
@@ -33,6 +49,8 @@ class SpotifyStore {
                 spotifyTokenExpires: new Date(Date.now() + spotifyAuthorization.expires_in * 1000),
             },
         });
+
+        return this.loadToken();
     }
 }
 

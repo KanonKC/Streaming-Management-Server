@@ -5,3 +5,8 @@ export interface SpotifyAuthorization {
     refresh_token: string
     scope: string
 }
+
+export interface AddItemToPlaybackQueuePayload {
+    uri: string
+    device_id?: string
+}

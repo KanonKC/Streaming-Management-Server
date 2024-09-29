@@ -2,6 +2,7 @@ import { configDotenv } from 'dotenv'
 import server from './router'
 import cors from '@fastify/cors'
 import { getOAuthUrl } from './services/Spotify.service'
+import { spotifyStore } from './stores/Spotify.store'
 
 configDotenv()
 const PORT = Number(process.env.PORT) || 8080
