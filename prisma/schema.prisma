@@ -60,3 +60,12 @@ model MagicNumberMysteryBox {
     description             String?
     timestamp               DateTime @default(now())
 }
+
+model Storage {
+    id                      Int      @id @default(autoincrement())
+    namespace               String   @unique
+    spotifyAccessToken      String?
+    spotifyRefreshToken     String?
+    spotifyTokenExpires     DateTime?
+    timestamp               DateTime @default(now())
+}
