@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { configDotenv } from "dotenv";
 import { generateRandomString } from "../utils/RandomString.util";
 import { post } from "request";
-import { AddItemToPlaybackQueuePayload, SpotifyAuthorization } from "../types/Spotify.type";
+import { AddItemToPlaybackQueuePayload, SpotifyAuthorization, SpotifySearchResult, SpotifyTrack } from "../types/Spotify.type";
 import { spotifyStore } from "../stores/Spotify.store";
 
 configDotenv();
@@ -42,6 +42,28 @@ export async function addItemToPlaybackQueue(payload: AddItemToPlaybackQueuePayl
     const { accessToken } = await spotifyStore.loadToken()
     return spotifyAPI.post('/me/player/queue', null, {
         params: payload,
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+}
+
+export async function searchTracks(query: string): Promise<AxiosResponse<SpotifySearchResult>> {
+    const { accessToken } = await spotifyStore.loadToken()
+    return spotifyAPI.get('/search', {
+        params: {
+            q: query,
+            type: 'track',
+        },
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+}
+
+export async function getTrack(trackId: string): Promise<AxiosResponse<SpotifyTrack>> {
+    const { accessToken } = await spotifyStore.loadToken()
+    return spotifyAPI.get(`/tracks/${trackId}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`
         }
