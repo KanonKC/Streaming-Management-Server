@@ -65,7 +65,7 @@ export async function getIceBreakingQuestion() {
 }
 
 export async function getRandomTriviaQuestion() {
-    const prompt = "Give me one random information that rarely prople know, it may be truth or not. Also give me the answer if it is a truth or not. Please answer as a Thai language."
+    const prompt = "Give me one random information that rarely prople know, it may be truth or not. Also give me the answer if it is a truth or not. Please answer as a Thai language. Your answer should be in the following format: <คำถาม>|<TRUE/FALSE>|<คำอธิบาย>. Answer should not contain new line"
 
     const { response } = await model.generateContent(prompt);
     return response.text();
