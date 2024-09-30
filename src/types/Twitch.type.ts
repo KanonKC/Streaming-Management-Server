@@ -30,6 +30,7 @@ export interface TwitchChannelInfo {
 }
 
 type TwitchPredictionWindow = 30 | 60 | 120 | 300 | 600 | 900 | 1200 | 1800;
+type TwitchPredictionStatus = "ACTIVE" | "CANCELED" | "RESOLVED" | "LOCKED";
 
 export interface CreatePredctionPayload {
     broadcaster_id: string;
@@ -38,6 +39,14 @@ export interface CreatePredctionPayload {
         title: string;
     }[]
     prediction_window: TwitchPredictionWindow;
+}
+
+export interface UpdatePredctionPayload {
+    broadcaster_id: string;
+    id: string;
+    title: string;
+    status: TwitchPredictionStatus;
+    winning_outcome_id?: string;
 }
 
 export interface TwitchPrediction {
@@ -63,7 +72,7 @@ export interface TwitchPrediction {
             color: "BLUE" | "PINK"
         }[],
         prediction_window: TwitchPredictionWindow,
-        status: "ACTIVE" | "CANCELED" | "RESOLVED" | "LOCKED",
+        status: TwitchPredictionStatus,
         created_at: string,
         ended_at: string | null,
         locked_at: string | null
