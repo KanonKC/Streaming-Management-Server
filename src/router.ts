@@ -10,6 +10,7 @@ import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcom
 import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
 import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
+import { addMusicTrackToSpotifyPlayerController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 
 const server = fastify()
 
@@ -30,5 +31,8 @@ server.get('/killer-queue-requests/mark/:index', markKillerRequestAsDoneControll
 
 server.get('/magic-number-mystery-boxes/create/:twitchRewardId', createMagicNumberMysteryBoxController)
 server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumberMysteryBoxController)
+
+server.get('/spotify/callback', spotifyAuthorizationCallbackController)
+server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
 
 export default server
