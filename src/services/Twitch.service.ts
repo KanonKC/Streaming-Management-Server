@@ -1,8 +1,9 @@
 import { configDotenv } from "dotenv";
-import { TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
+import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
 import axios, { AxiosResponse } from "axios";
 import { ListAPIResponse } from "../types/Controller.type";
 import { generateRandomString } from "../utils/RandomString.util";
+import { twitchStore } from "../stores/Twitch.store";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_OAUTH_TOKEN, PORT } = process.env;
@@ -49,8 +50,14 @@ export async function getChannelInfo(broadcasterId: string) {
     })
 }
 
-export async function createPrediction(payload: TwitchPrediction) {
-    return twitchAPI.post<TwitchPrediction>('/predictions', payload)
+export async function createPrediction(payload: CreatePredctionPayload) {
+    const { accessToken } = await twitchStore.loadToken();
+    return twitchAPI.post<TwitchPrediction>('/predictions', payload, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
 }
 
 export async function getTwitchClips(broadcasterId: string, isFeature: boolean) {
