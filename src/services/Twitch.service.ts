@@ -1,10 +1,10 @@
 import { configDotenv } from "dotenv";
-import { TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
-import axios from "axios";
+import { TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
+import axios, { AxiosResponse } from "axios";
 import { ListAPIResponse } from "../types/Controller.type";
 
 configDotenv();
-const { TWITCH_CLIENT_ID, TWITCH_OAUTH_TOKEN } = process.env;
+const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_OAUTH_TOKEN, PORT } = process.env;
 
 const twitchAPI = axios.create({
     baseURL: 'https://api.twitch.tv/helix',
@@ -13,6 +13,29 @@ const twitchAPI = axios.create({
         'Authorization': `Bearer ${TWITCH_OAUTH_TOKEN}`
     }
 })
+
+export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<TwitchAuthorization>> {
+    
+    const authOptions = {
+        url: 'https://id.twitch.tv/oauth2/token',
+        form: {
+          code: code,
+          client_id: TWITCH_CLIENT_ID,
+          client_secret: TWITCH_CLIENT_SECRET,
+          redirect_uri: `http://localhost:${PORT}/twitch/callback`,
+          grant_type: 'authorization_code'
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        json: true
+    };
+
+    return axios.post(authOptions.url, authOptions.form, {
+        headers: authOptions.headers
+    })
+    
+} 
 
 export async function getChannelInfo(broadcasterId: string) {
     return twitchAPI.get<TwitchChannelInfo>('/channels', {
