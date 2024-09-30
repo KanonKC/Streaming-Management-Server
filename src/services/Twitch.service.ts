@@ -2,6 +2,7 @@ import { configDotenv } from "dotenv";
 import { TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction } from "../types/Twitch.type";
 import axios, { AxiosResponse } from "axios";
 import { ListAPIResponse } from "../types/Controller.type";
+import { generateRandomString } from "../utils/RandomString.util";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_OAUTH_TOKEN, PORT } = process.env;
@@ -13,6 +14,11 @@ const twitchAPI = axios.create({
         'Authorization': `Bearer ${TWITCH_OAUTH_TOKEN}`
     }
 })
+
+export function getTwitchOAuthUrl() {
+    const randomString = generateRandomString(16);
+    return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${TWITCH_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/twitch/callback&scope=channel:manage:predictions&state=${randomString}`
+}
 
 export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<TwitchAuthorization>> {
     

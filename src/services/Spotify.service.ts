@@ -12,7 +12,7 @@ const spotifyAPI = axios.create({
     baseURL: 'https://api.spotify.com/v1',
 })
 
-export function getOAuthUrl() {
+export function getSpotifyOAuthUrl() {
     const randomString = generateRandomString(16);
     return `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=user-modify-playback-state&redirect_uri=http://localhost:${PORT}/spotify/callback&state=${randomString}`
 }

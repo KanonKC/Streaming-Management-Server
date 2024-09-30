@@ -67,5 +67,8 @@ model Storage {
     spotifyAccessToken      String?
     spotifyRefreshToken     String?
     spotifyTokenExpires     DateTime?
+    twitchAccessToken       String?
+    twitchRefreshToken      String?
+    twitchTokenExpires      DateTime?
     timestamp               DateTime @default(now())
 }
