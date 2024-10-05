@@ -42,6 +42,7 @@ model KillerRequestQueue {
     twitchUserId    String 
     twitchUsername  String
     description     String
+    isRandom        Boolean  @default(false)
     isActive        Boolean  @default(true)
     timestamp       DateTime @default(now())
 }
