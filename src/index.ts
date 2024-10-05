@@ -1,8 +1,8 @@
+import cors from '@fastify/cors'
 import { configDotenv } from 'dotenv'
 import server from './router'
-import cors from '@fastify/cors'
-import { getOAuthUrl } from './services/Spotify.service'
-import { spotifyStore } from './stores/Spotify.store'
+import { getSpotifyOAuthUrl } from './services/Spotify.service'
+import { getTwitchOAuthUrl } from './services/Twitch.service'
 
 configDotenv()
 const PORT = Number(process.env.PORT) || 8080
@@ -16,7 +16,9 @@ server.listen({ port: PORT }, (err, address) => {
     console.error(err)
     process.exit(1)
   }
-  const spotifyOAuthUrl = getOAuthUrl()
   console.log(`Server listening at ${address}`)
-  console.log(`Please login to Spotify at ${spotifyOAuthUrl}`)
+  console.log('----- Spotify -----')
+  console.log(getSpotifyOAuthUrl())
+  console.log('----- Twitch -----')
+  console.log(getTwitchOAuthUrl())
 })
