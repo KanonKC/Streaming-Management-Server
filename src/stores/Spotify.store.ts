@@ -16,9 +16,16 @@ class SpotifyStore {
             where: { namespace: this.namespace },
         });
 
-        if ((!storage || !storage?.spotifyTokenExpires || storage?.spotifyTokenExpires < new Date()) && this.refreshToken) {
-            const newRefreshToken = await getRefreshToken(this.refreshToken);
-            await this.setToken(newRefreshToken.data);
+        if (storage && (!storage.spotifyTokenExpires || storage.spotifyTokenExpires < new Date())) {
+            if (storage.spotifyRefreshToken) {
+                const newRefreshToken = await getRefreshToken(storage.spotifyRefreshToken);
+                return this.setToken(newRefreshToken.data);
+            }
+            return {
+                accessToken: null,
+                refreshToken: null,
+                expires: null,
+            }
         }
 
         this.accessToken = storage?.spotifyAccessToken || null;
