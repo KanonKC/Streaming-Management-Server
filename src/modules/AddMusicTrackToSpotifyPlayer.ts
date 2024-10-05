@@ -35,13 +35,14 @@ export async function addMusicTrackToSpotifyPlayer(query: string) {
         await addItemToPlaybackQueue({ uri: track.uri })
     }
     catch(error) {
-        console.log((error as AxiosError).response?.status)
         switch((error as AxiosError).response?.status) {
             case 401:
                 console.log('Spotify access token expired')
                 return { code: 'TOKEN_EXPIRED' }
             case 403:
                 return { code: 'FORBIDDEN' }
+            case 404:
+                return { code: 'PLAYER_NOT_FOUND' }
         }
     }
     

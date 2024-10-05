@@ -19,8 +19,8 @@ export async function spotifyAuthorizationCallbackController(request: FastifyReq
     const response = await getUserLoginAccessToken(code)
     const auth = response.data
 
-    await spotifyStore.setToken(auth)
-
+    const result = await spotifyStore.setToken(auth)
+    console.log(result.expires)
     console.log('Spotify authorization successful')
     reply.send('Spotify authorization successful')
 }
