@@ -11,10 +11,10 @@ const io = new Server({
 });
 
 io.on("connection", (socket) => {
+    console.log(`Socket listening at http://[::1]:${SOCKET_PORT}`);
     socket.on("reloadTwitchChannelPointRedeemedLog", async () => {
         io.emit("reloadTwitchChannelPointRedeemedLog");
     });
 })
 
 io.listen(Number(SOCKET_PORT));
-console.log(`Socket listening at http://localhost:${SOCKET_PORT}`);
