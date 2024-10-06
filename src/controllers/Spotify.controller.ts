@@ -5,7 +5,7 @@ import { configDotenv } from "dotenv"
 import { post } from "request"
 import { getUserLoginAccessToken } from "../services/Spotify.service"
 import { spotifyStore } from "../stores/Spotify.store"
-import { addMusicTrackToSpotifyPlayer } from "../modules/AddMusicTrackToSpotifyPlayer"
+import { addMusicTrackToSpotifyPlayer } from "../modules/SpotifyMusicRequest/AddMusicTrackToSpotifyPlayer"
 
 configDotenv()
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, PORT  } = process.env 

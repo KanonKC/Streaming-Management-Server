@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { configDotenv } from "dotenv";
 import { generateRandomString } from "../utils/RandomString.util";
 import { post } from "request";
-import { AddItemToPlaybackQueuePayload, SpotifyAuthorization, SpotifySearchResult, SpotifyTrack } from "../types/Spotify.type";
+import { AddItemToPlaybackQueuePayload, SpotifyAuthorization, SpotifySearchResult, SpotifyTrack, SpotifyUserQueue } from "../types/Spotify.type";
 import { spotifyStore } from "../stores/Spotify.store";
 
 configDotenv();
@@ -20,7 +20,7 @@ const spotifyAPI = axios.create({
 
 export function getOAuthUrl() {
     const randomString = generateRandomString(16);
-    return `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=${scopes.join(' ')}&redirect_uri=http://localhost:${PORT}/spotify/callback&state=${randomString}`
+    return `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=${scopes.join('%20')}&redirect_uri=http://localhost:${PORT}/spotify/callback&state=${randomString}`
 }
 
 export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<SpotifyAuthorization>> {
@@ -91,6 +91,15 @@ export async function searchTracks(query: string): Promise<AxiosResponse<Spotify
 export async function getTrack(trackId: string): Promise<AxiosResponse<SpotifyTrack>> {
     const { accessToken } = await spotifyStore.loadToken()
     return spotifyAPI.get(`/tracks/${trackId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+}
+
+export async function getUserQueue(): Promise<AxiosResponse<SpotifyUserQueue>> {
+    const { accessToken } = await spotifyStore.loadToken()
+    return spotifyAPI.get('/me/player/queue', {
         headers: {
             Authorization: `Bearer ${accessToken}`
         }

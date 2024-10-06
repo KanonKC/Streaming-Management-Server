@@ -1,4 +1,4 @@
-import { addItemToPlaybackQueue, getTrack, searchTracks } from "../../services/Spotify.service"
+import { addItemToPlaybackQueue, getTrack, getUserQueue, searchTracks } from "../../services/Spotify.service"
 
 // 404 - Make sure you already active Spotify player (Just play some music in Spotify now!)
 
@@ -38,6 +38,15 @@ describe('Spotify API', () => {
             const result = await getTrack('1njlnn8ZKHI77Pe9szIONR?si=23d41a21fbc24892')
             expect(result.status).toBe(200)
             expect(result.data.uri).toBe('spotify:track:1njlnn8ZKHI77Pe9szIONR')
+        })
+    })
+
+    describe('getUserQueue', () => {
+        it('should get user queue', async () => {
+            const result = await getUserQueue()
+            console.log('User Queue', result.data)
+            console.log('Artist', result.data.queue.map((track) => track.artists.map((artist) => artist.name)))
+            expect(result.status).toBe(200)
         })
     })
 })

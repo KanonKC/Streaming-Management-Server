@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
-import { addItemToPlaybackQueue, getTrack, searchTracks } from "../services/Spotify.service";
-import { SpotifyTrack } from "../types/Spotify.type"
+import { addItemToPlaybackQueue, getTrack, searchTracks } from "../../services/Spotify.service";
+import { SpotifyTrack } from "../../types/Spotify.type"
 
 export async function addMusicTrackToSpotifyPlayer(query: string) {
 
@@ -46,5 +46,7 @@ export async function addMusicTrackToSpotifyPlayer(query: string) {
         }
     }
     
-    return { code: 'SUCCESS', ...track }
+    const artistNames = track.artists.map((artist) => artist.name).join(', ')
+
+    return { code: 'SUCCESS', ...track, artistNames }
 }
