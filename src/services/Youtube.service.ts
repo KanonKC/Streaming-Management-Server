@@ -19,3 +19,13 @@ export async function searchYoutubeVideos(query: string): Promise<AxiosResponse<
         }
     })
 }
+
+export async function getYoutubeVideoById(id: string): Promise<AxiosResponse<YoutubeSearch>> {
+    return youtubeAPI.get('/videos', {
+        params: {
+            id: id,
+            part: 'snippet',
+            key: YOUTUBE_API_KEY
+        }
+    })
+}
