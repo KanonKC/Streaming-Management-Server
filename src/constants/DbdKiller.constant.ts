@@ -33,7 +33,7 @@ export const DBDKillerList = [
     'The Singularity',
     'The Xenomorph',
     'The Good Guy',
-    'Thg Unknown',
+    'The Unknown',
     'The Lich',
     'The Dark Lord'
 ]

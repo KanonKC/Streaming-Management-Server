@@ -9,5 +9,5 @@ createPrediction({
     ],
     prediction_window: 60
 }).then((response) => {
-    console.log(response)
+    console.log(response.data)
 })

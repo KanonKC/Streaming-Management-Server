@@ -11,6 +11,7 @@ import { revealTarotCardController } from "./controllers/RevealTarotCard.control
 import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
+import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 
 const server = fastify()
 
@@ -35,5 +36,7 @@ server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumber
 server.get('/spotify/callback', spotifyAuthorizationCallbackController)
 server.get('/spotify/player', showCurrentMusicQueueController)
 server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
+
+server.get('/twitch/callback', twitchAuthorizationCallbackController)
 
 export default server

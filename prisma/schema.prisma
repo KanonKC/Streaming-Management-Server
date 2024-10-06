@@ -42,6 +42,7 @@ model KillerRequestQueue {
     twitchUserId    String 
     twitchUsername  String
     description     String
+    isRandom        Boolean  @default(false)
     isActive        Boolean  @default(true)
     timestamp       DateTime @default(now())
 }
@@ -67,5 +68,8 @@ model Storage {
     spotifyAccessToken      String?
     spotifyRefreshToken     String?
     spotifyTokenExpires     DateTime?
+    twitchAccessToken       String?
+    twitchRefreshToken      String?
+    twitchTokenExpires      DateTime?
     timestamp               DateTime @default(now())
 }
