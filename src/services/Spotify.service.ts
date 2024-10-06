@@ -8,13 +8,19 @@ import { spotifyStore } from "../stores/Spotify.store";
 configDotenv();
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, PORT } = process.env;
 
+const scopes = [
+    'user-modify-playback-state',
+    'user-read-playback-state',
+    'user-read-currently-playing',
+]
+
 const spotifyAPI = axios.create({
     baseURL: 'https://api.spotify.com/v1',
 })
 
 export function getOAuthUrl() {
     const randomString = generateRandomString(16);
-    return `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=user-modify-playback-state&redirect_uri=http://localhost:${PORT}/spotify/callback&state=${randomString}`
+    return `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=${scopes.join(' ')}&redirect_uri=http://localhost:${PORT}/spotify/callback&state=${randomString}`
 }
 
 export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<SpotifyAuthorization>> {
