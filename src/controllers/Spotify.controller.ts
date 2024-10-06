@@ -5,7 +5,8 @@ import { configDotenv } from "dotenv"
 import { post } from "request"
 import { getUserLoginAccessToken } from "../services/Spotify.service"
 import { spotifyStore } from "../stores/Spotify.store"
-import { addMusicTrackToSpotifyPlayer } from "../modules/AddMusicTrackToSpotifyPlayer"
+import { addMusicTrackToSpotifyPlayer } from "../modules/SpotifyMusicRequest/AddMusicTrackToSpotifyPlayer"
+import { showCurrentMusicQueue } from "../modules/SpotifyMusicRequest/ShowCurrentMusicQueue"
 
 configDotenv()
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, PORT  } = process.env 
@@ -30,5 +31,10 @@ export async function addMusicTrackToSpotifyPlayerController(request: FastifyReq
 }>, reply: FastifyReply) {
     const { query } = request.query
     const response = await addMusicTrackToSpotifyPlayer(query)
+    return reply.send(response)
+}
+
+export async function showCurrentMusicQueueController(request: FastifyRequest, reply: FastifyReply) {
+    const response = await showCurrentMusicQueue()
     return reply.send(response)
 }

@@ -1,4 +1,4 @@
-import { addMusicTrackToSpotifyPlayer } from "../../modules/AddMusicTrackToSpotifyPlayer"
+import { addMusicTrackToSpotifyPlayer } from "../../modules/SpotifyMusicRequest/AddMusicTrackToSpotifyPlayer"
 
 describe('AddMusicTrackToSpotifyPlayer', () => {
     it('Search by normal keyword', async () => {

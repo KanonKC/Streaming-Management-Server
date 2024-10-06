@@ -11,13 +11,24 @@ export interface AddItemToPlaybackQueuePayload {
     device_id?: string
 }
 
-export interface SpotifyTrack {
-    uri: string
+export interface SpotifyArtist {
     name: string
+    uri: string
+}
+
+export interface SpotifyTrack {
+    artists: SpotifyArtist[]
+    name: string
+    uri: string
 }
 
 export interface SpotifySearchResult {
     tracks: {
         items: SpotifyTrack[]
     }
+}
+
+export interface SpotifyUserQueue {
+    currently_playing: SpotifyTrack | null
+    queue: SpotifyTrack[]
 }
