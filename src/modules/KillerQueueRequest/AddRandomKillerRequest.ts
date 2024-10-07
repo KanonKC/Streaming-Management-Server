@@ -1,5 +1,6 @@
 import { DBDKillerList } from "../../constants/DbdKiller.constant";
 import { prisma } from "../../database/prisma";
+import { getKillerRequestQueueTwitchText } from "../../utils/KillerRequestQueue.util";
 
 export async function addRandomKillerRequest(twitchUserId: string, twitchUsername: string) {
     
@@ -22,11 +23,7 @@ export async function addRandomKillerRequest(twitchUserId: string, twitchUsernam
         }
     })
     
-    const totalQueue = await prisma.killerRequestQueue.count({
-        where: {
-            isActive: true
-        }
-    })
+    const twitchText = await getKillerRequestQueueTwitchText()
 
-    return { ...queue, totalQueue }
+    return { ...queue, ...twitchText }
 }
