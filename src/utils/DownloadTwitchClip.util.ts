@@ -15,7 +15,7 @@ export async function videoResize(filename:string, width: number, height: number
     
     return new Promise((resolve, reject) => {
 		exec(
-			`ffmpeg -i ${process.env.VIDEO_STORAGE_PATH}/${filename} -s ${width}x${height} -c:a copy ${FULL_PATH}/${outputFilename}`,
+			`ffmpeg -i ${FULL_PATH}/${filename} -s ${width}x${height} -c:a copy ${FULL_PATH}/${outputFilename}`,
 			async (error) => {
 				if (error) {
 					reject(error)
