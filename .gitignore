@@ -9,3 +9,4 @@ dumps/show-images/*.png
 
 *.spec
 *.db
+Streaming-Management-Server.exe

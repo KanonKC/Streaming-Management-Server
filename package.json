@@ -9,7 +9,8 @@
     "start": "node build/index.js",
     "socket": "node build/socket.js",
     "dev": "nodemon src/index.ts",
-    "socket-dev": "nodemon src/socket.ts"
+    "socket-dev": "nodemon src/socket.ts",
+    "build-exe": "bun build src/index.ts --compile --outfile Streaming-Management-Server"
   },
   "keywords": [],
   "author": "",
