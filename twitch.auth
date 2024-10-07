@@ -1,0 +1,1 @@
+https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=517jc7dfgsqxbyn222zmf7hxkj1xmi&redirect_uri=http://localhost:8082/twitch/callback&scope=channel:manage:predictions&state=c3ab8aa609ea11e793ae92361f002671

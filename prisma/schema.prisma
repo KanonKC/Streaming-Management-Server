@@ -42,6 +42,7 @@ model KillerRequestQueue {
     twitchUserId    String 
     twitchUsername  String
     description     String
+    isRandom        Boolean  @default(false)
     isActive        Boolean  @default(true)
     timestamp       DateTime @default(now())
 }
@@ -58,5 +59,17 @@ model MagicNumberMysteryBox {
     winnerUserId            String?
     winnerUsername          String?
     description             String?
+    timestamp               DateTime @default(now())
+}
+
+model Storage {
+    id                      Int      @id @default(autoincrement())
+    namespace               String   @unique
+    spotifyAccessToken      String?
+    spotifyRefreshToken     String?
+    spotifyTokenExpires     DateTime?
+    twitchAccessToken       String?
+    twitchRefreshToken      String?
+    twitchTokenExpires      DateTime?
     timestamp               DateTime @default(now())
 }
