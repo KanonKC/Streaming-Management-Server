@@ -20,6 +20,10 @@ export interface SpotifyTrack {
     artists: SpotifyArtist[]
     name: string
     uri: string
+    href: string
+    external_urls: {
+        spotify: string
+    }
 }
 
 export interface SpotifySearchResult {

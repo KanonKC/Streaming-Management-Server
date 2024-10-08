@@ -1,10 +1,7 @@
-import { configDotenv } from "dotenv";
-import { downloadVideo } from "../services/StreamEditor.service";
+import { SHOUTOUT_CLIP_FULL_PATH } from "../constants/LocalFilePath.constant";
 import { getTwitchClips } from "../services/Twitch.service";
 import { TwitchClip } from "../types/Twitch.type";
-
-configDotenv();
-const { STREAM_EDITOR_VIDEO_FULL_PATH } = process.env;
+import { downloadTwitchClip } from "../utils/DownloadTwitchClip.util";
 
 export async function showFeaturedTwitchClip(broadcasterId: string) {
     
@@ -26,7 +23,11 @@ export async function showFeaturedTwitchClip(broadcasterId: string) {
     }
 
     const randomClipUrl = twitchClips[Math.floor(Math.random() * twitchClips.length)].url;
-    const downloadVideoResponse = await downloadVideo(randomClipUrl);
-    const downloadedVideo = downloadVideoResponse.data.sources[0];
-    return { filename: `${STREAM_EDITOR_VIDEO_FULL_PATH}/${downloadedVideo.filename}`, durationMilliseconds: downloadedVideo.duration * 1000 };
+    const downloadVideoResponse = await downloadTwitchClip(randomClipUrl);
+    const downloadedVideo = downloadVideoResponse;
+    return {
+        filename: `${SHOUTOUT_CLIP_FULL_PATH}/${downloadedVideo.filename}`,
+        durationMilliseconds: Math.ceil(downloadedVideo.duration * 1000) - 1500
+    };
+    
 }

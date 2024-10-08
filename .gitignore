@@ -4,7 +4,9 @@ assets/data/bad_word_list.json
 build
 node_modules
 env
-dumps
+dumps/shoutout-clips/*.mp4
+dumps/show-images/*.png
 
 *.spec
 *.db
+Streaming-Management-Server.exe
