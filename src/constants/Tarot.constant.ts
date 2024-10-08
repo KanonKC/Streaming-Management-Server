@@ -136,7 +136,7 @@ export const MinorCards: TarotCard[] = [
     },
     {
         id: 26,
-        name: "Five of ",
+        name: "Five of Cups",
         description: "การสูญเสีย ความเศร้า เหมือนถ้วยที่ล้มลง ความรู้สึกสิ้นหวัง ความหวังพังทลาย"
     },
     {
