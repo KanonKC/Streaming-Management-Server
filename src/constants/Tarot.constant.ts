@@ -1,6 +1,6 @@
 import { TarotCard } from "../types/Tarot.type";
 
-export const PrimaryCards: TarotCard[] = [
+export const MajorCards: TarotCard[] = [
     {
         id: 0,
         name: "The Fool",
@@ -113,7 +113,7 @@ export const PrimaryCards: TarotCard[] = [
     }
 ]
 
-export const SecondaryCards: TarotCard[] = [
+export const MinorCards: TarotCard[] = [
     {
         id: 22,
         name: "Ace of Cups",

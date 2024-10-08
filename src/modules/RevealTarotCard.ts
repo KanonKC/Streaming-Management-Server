@@ -1,32 +1,53 @@
-import { PrimaryCards, SecondaryCards } from "../constants/Tarot.constant"
+import { MajorCards, MinorCards } from "../constants/Tarot.constant"
 
-function getPictureNumberAndIndex(id: number, diffIdStart: number, diffIdEnd: number, pictureNumberOffset: number) {
-    let picturePosition = id
+export function revealTarotCard(majorCardId?: number, minorCardId?: number):{
+    majorCard: {
+        id: number;
+        title: string;
+        description: string;
+        picturePage: number;
+        pictureIndex: number;
+    },
+    minorCard: {
+        id: number;
+        title: string;
+        description: string;
+        picturePage: number;
+        pictureIndex: number;
+    }
+} {
 
-    if (id >= diffIdStart && id <= diffIdEnd) {
-        picturePosition += 1
+    const randomMajorCard = MajorCards[
+        (majorCardId || majorCardId === 0) ? majorCardId :
+        Math.floor(Math.random() * MajorCards.length)
+    ]
+
+    const randomMinorCard = MinorCards[
+        (minorCardId || minorCardId === 0) ? minorCardId - 22 :
+        Math.floor(Math.random() * MinorCards.length)
+    ]
+
+    let majorPicturePosition = randomMajorCard.id
+
+    if (majorPicturePosition >= 19 && majorPicturePosition <= 21) {
+        majorPicturePosition += 1
     }
 
-    const pictureNumber = Math.floor(picturePosition / 8) + 1 + pictureNumberOffset
-    const pictureOneIndex = (picturePosition % 8) + 1
-
-    return { pictureNumber, pictureOneIndex }
-}
-
-
-export function revealTarotCard() {
-    const randomCard = PrimaryCards[Math.floor(Math.random() * PrimaryCards.length)]
-    const randomSecondaryCard = SecondaryCards[Math.floor(Math.random() * SecondaryCards.length)]
-
-    const { pictureNumber, pictureOneIndex } = getPictureNumberAndIndex(randomCard.id, 19, 21, 0)
-
-    const secondaryBody = {
-        secondaryId: randomSecondaryCard.id,
-        secondaryName: randomSecondaryCard.name,
-        secondaryDescription: randomSecondaryCard.description,
-        secondaryPictureNumber: Math.floor((randomSecondaryCard.id - 22) / 8) + 4,
-        secondaryPictureOneIndex: ((randomSecondaryCard.id - 22) % 8) + 1,
+    const majorCard = {
+        id: randomMajorCard.id,
+        title: randomMajorCard.name,
+        description: randomMajorCard.description,
+        picturePage: Math.floor(majorPicturePosition / 8) + 1,
+        pictureIndex: majorPicturePosition % 8,
     }
 
-    return { ...randomCard, pictureNumber, pictureOneIndex, ...secondaryBody }
+    const minorCard = {
+        id: randomMinorCard.id,
+        title: randomMinorCard.name,
+        description: randomMinorCard.description,
+        picturePage: Math.floor((randomMinorCard.id - 22) / 8) + 4,
+        pictureIndex: (randomMinorCard.id - 22) % 8,
+    }
+
+    return { majorCard, minorCard }
 }
