@@ -11,7 +11,7 @@ import { revealTarotCardController } from "./controllers/RevealTarotCard.control
 import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
-import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
+import { twitchAuthorizationCallbackController, twitchEventSubscriptionCallbackController } from "./controllers/Twitch.controller";
 
 const server = fastify()
 
@@ -23,6 +23,7 @@ server.get('/feature-clip', showFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
 server.get('/tarot', revealTarotCardController)
 
+server.get('/twitch/event-sub', twitchEventSubscriptionCallbackController)
 server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
 

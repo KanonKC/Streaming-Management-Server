@@ -1,9 +1,9 @@
+import axios, { Axios, AxiosResponse } from "axios";
 import { configDotenv } from "dotenv";
-import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction, UpdatePredctionPayload } from "../types/Twitch.type";
-import axios, { AxiosResponse } from "axios";
-import { ListAPIResponse } from "../types/Controller.type";
-import { generateRandomString } from "../utils/RandomString.util";
 import { twitchStore } from "../stores/Twitch.store";
+import { ListAPIResponse } from "../types/Controller.type";
+import { CreatePredctionPayload, CreateTwitchEventSubscriptionPayload, TwitchAppAuthorization, TwitchChannelInfo, TwitchClip, TwitchEventSubscription, TwitchPrediction, TwitchUserAuthorization, UpdatePredctionPayload } from "../types/Twitch.type";
+import { generateRandomString } from "../utils/RandomString.util";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_OAUTH_TOKEN, PORT } = process.env;
@@ -18,10 +18,10 @@ const twitchAPI = axios.create({
 
 export function getTwitchOAuthUrl() {
     const randomString = generateRandomString(16);
-    return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${TWITCH_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/twitch/callback&scope=channel:manage:predictions&state=${randomString}`
+    return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${TWITCH_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/twitch/callback&scope=channel:manage:predictions%20user:read:chat&state=${randomString}`
 }
 
-export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<TwitchAuthorization>> {
+export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<TwitchUserAuthorization>> {
     
     const authOptions = {
         url: 'https://id.twitch.tv/oauth2/token',
@@ -42,7 +42,26 @@ export async function getUserLoginAccessToken(code: string): Promise<AxiosRespon
         headers: authOptions.headers
     })
     
-} 
+}
+
+export async function getTwitchAppAccessToken(): Promise<AxiosResponse<TwitchAppAuthorization>> {
+    const authOptions = {
+        url: 'https://id.twitch.tv/oauth2/token',
+        form: {
+          client_id: TWITCH_CLIENT_ID,
+          client_secret: TWITCH_CLIENT_SECRET,
+          grant_type: 'client_credentials'
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        json: true
+    };
+
+    return axios.post(authOptions.url, authOptions.form, {
+        headers: authOptions.headers
+    })
+}
 
 export async function getChannelInfo(broadcasterId: string) {
     return twitchAPI.get<TwitchChannelInfo>('/channels', {
@@ -73,5 +92,17 @@ export async function updatePrediction(payload: UpdatePredctionPayload) {
 export async function getTwitchClips(broadcasterId: string, isFeature: boolean) {
     return twitchAPI.get<ListAPIResponse<TwitchClip>>('/clips', {
         params: { broadcaster_id: broadcasterId, is_featured: isFeature }
+    })
+}
+
+export async function createEventSubSubscription(
+    payload: CreateTwitchEventSubscriptionPayload
+): Promise<AxiosResponse<TwitchEventSubscription>> {
+    const { accessToken } = await twitchStore.loadToken()
+    return twitchAPI.post<TwitchEventSubscription>('/eventsub/subscriptions', payload, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
     })
 }

@@ -15,3 +15,10 @@ export async function twitchAuthorizationCallbackController(request: FastifyRequ
     console.log('Twitch authorization successful')
     reply.send('Twitch authorization successful')
 }
+
+export async function twitchEventSubscriptionCallbackController(request: FastifyRequest<{
+    Querystring: { code: string, state: string }
+}>, reply: FastifyReply) {
+    console.log('twitchEventSubscriptionCallbackController')
+    return reply.send('twitchEventSubscriptionCallbackController')
+}

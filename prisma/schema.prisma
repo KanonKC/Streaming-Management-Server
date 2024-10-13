@@ -68,6 +68,8 @@ model Storage {
     spotifyAccessToken      String?
     spotifyRefreshToken     String?
     spotifyTokenExpires     DateTime?
+    twitchAppAccessToken    String?
+    twitchAppTokenExpires   DateTime?
     twitchAccessToken       String?
     twitchRefreshToken      String?
     twitchTokenExpires      DateTime?

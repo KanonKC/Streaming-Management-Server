@@ -5,12 +5,54 @@ export interface TwitchListAPIResponse<T> {
     }
 }
 
-export interface TwitchAuthorization {
+export interface TwitchUserAuthorization {
     access_token: string;
     refresh_token: string;
     expires_in: number;
     scope: string[];
     token_type: string;
+}
+
+export interface TwitchAppAuthorization {
+    access_token: string;
+    expires_in: number;
+    token_type: "bearer";
+}
+
+export interface CreateTwitchEventSubscriptionPayload {
+    type: string;
+    version: string;
+    condition: Record<string, string>
+    transport: {
+        method: "webhook" | "websocket" | "conduit"
+        callback?: string
+        session_id?: string
+        conduit_id?: string
+        secret?: string
+    }
+}
+
+export interface TwitchEventSubscription {
+    data: {
+        id: string;
+        status: string;
+        type: string;
+        version: string;
+        condition: Record<string, string>
+        transport: {
+            method: "webhook" | "websocket" | "conduit";
+            callback?: string;
+            session_id?: string;
+            conduit_id?: string;
+        }
+        session_id: string
+        connected_at: string;
+        conduit_id: string;
+        cost: number;
+    }
+    total: number;
+    total_cost: number;
+    max_total_cost: number;
 }
 
 export interface TwitchChannelInfo {

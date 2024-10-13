@@ -10,6 +10,7 @@
     "socket": "node build/socket.js",
     "dev": "nodemon src/index.ts",
     "socket-dev": "nodemon src/socket.ts",
+    "socket-twitch": "nodemon src/socket-twitch.ts",
     "build-exe": "bun build src/index.ts --compile --outfile Streaming-Management-Server"
   },
   "keywords": [],
@@ -19,6 +20,7 @@
     "@fastify/cors": "^9.0.1",
     "@google-cloud/translate": "^8.3.0",
     "@google/generative-ai": "^0.15.0",
+    "@ppauel/twitch-eventsub": "^1.0.4",
     "@prisma/client": "^5.18.0",
     "@types/request": "^2.48.12",
     "axios": "^1.7.7",
@@ -30,12 +32,14 @@
     "sharp": "^0.33.4",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/bad-words": "^3.0.3",
     "@types/jest": "^29.5.13",
     "@types/node": "^20.14.2",
+    "@types/ws": "^8.5.12",
     "prisma": "^5.18.0",
     "typescript": "^5.4.5"
   }
