@@ -75,6 +75,15 @@ export async function addItemToPlaybackQueue(payload: AddItemToPlaybackQueuePayl
     })
 }
 
+export async function skipToNextItemInPlaybackQueue(): Promise<void> {
+    const { accessToken } = await spotifyStore.loadToken()
+    return spotifyAPI.post('/me/player/next', null, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+}
+
 export async function searchTracks(query: string): Promise<AxiosResponse<SpotifySearchResult>> {
     const { accessToken } = await spotifyStore.loadToken()
     return spotifyAPI.get('/search', {

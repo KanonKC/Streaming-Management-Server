@@ -10,7 +10,7 @@ import { recordTwitchChannelPointRedeemedController } from "./controllers/Record
 import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
-import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
+import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 
 const server = fastify()
@@ -36,6 +36,7 @@ server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumber
 server.get('/spotify/callback', spotifyAuthorizationCallbackController)
 server.get('/spotify/player', showCurrentMusicQueueController)
 server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
+server.get('/spotify/player/skip', skipToNextMusicController)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 
