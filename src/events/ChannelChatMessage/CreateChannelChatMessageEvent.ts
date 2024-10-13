@@ -1,7 +1,7 @@
 import { createEventSubSubscription } from "../../services/Twitch.service";
 import { CreateTwitchEventSubscriptionPayload } from "../../types/Twitch.type";
 
-export async function createChannelChatMessageEvent() {
+export async function createChannelChatMessageEvent(sessionId: string) {
     const payload: CreateTwitchEventSubscriptionPayload = {
         type: "channel.chat.message",
         version: "1",
@@ -11,9 +11,9 @@ export async function createChannelChatMessageEvent() {
         },
         transport: {
             method: "websocket",
-            session_id: "AQoQexAWVYKSTIu4ec_2VAxyuhAB"
+            session_id: sessionId
         }
     }
-    const response = await createEventSubSubscription(payload)
-    console.log(response)
+
+    return createEventSubSubscription(payload)
 }

@@ -4,6 +4,9 @@
 
 // export default twitchSocket;
 import WebSocket from 'ws';
+import { createChannelChatMessageEvent } from './events/ChannelChatMessage/CreateChannelChatMessageEvent';
+import { deleteEventSubSubscription, getEventSubSubscriptions } from './services/Twitch.service';
+import { TwitchWebsocketSession } from './types/Twitch.type';
 
 // Create WebSocket connection.
 // const socket = new WebSocket("wss://eventsub.wss.twitch.tv/ws");
@@ -16,34 +19,50 @@ async function main() {
 
         
         // Subscribe to an event
+        
+    });
+
+    ws.on('message', async (data) => {
+        const message: TwitchWebsocketSession = JSON.parse(data.toString());
+        // console.log('Received message:', message);
+
+        if (message.metadata.message_type === 'session_welcome') {
+            // const response = await createChannelChatMessageEvent(message.payload.session.id)
+
+            // console.log(response.data)
+
+            const eventSubscriptionsResponse = await getEventSubSubscriptions()
+
+            const disconnectedSubscriptionsPromise = eventSubscriptionsResponse.data.data
+                .filter((sub) => sub.status === 'websocket_disconnected')
+                .map((sub) => deleteEventSubSubscription(sub.id))
+            
+            await Promise.all(disconnectedSubscriptionsPromise)
+
+            const channelChatMessageEvent = await createChannelChatMessageEvent(message.payload.session.id)
+            console.log(channelChatMessageEvent.data)
+        }
+
         // const subscribeMessage = {
         //     type: 'LISTEN',
         //     nonce: 'unique-nonce',
         //     data: {
-        //         type: EVENT_TYPE,
-        //         version: '1',
+        //         type: "channel.chat.message",
+        //         version: "1",
         //         condition: {
-        //             broadcaster_user_id: 'your_broadcaster_user_id',
+        //             broadcaster_user_id: "135783794",
+        //             user_id: "135783794"
         //         },
         //         transport: {
-        //             method: 'websocket',
-        //             session_id: 'your_session_id',
-        //         },
-        //     },
+        //             method: "websocket",
+        //             session_id: "AQoQexAWVYKSTIu4ec_2VAxyuhAB"
+        //         }
+        //     }
         // };
 
         // ws.send(JSON.stringify(subscribeMessage));
-    });
-
-    ws.on('message', (data) => {
-        const message = JSON.parse(data.toString());
-        console.log('Received message:', message);
-
-        // Handle events here
-        if (message.type === 'EVENT') {
-            // Process the event data
-            console.log('Event data:', message.data);
-        }
+        
+        // if (message.meta === '')
     });
 
     ws.on('error', (error) => {

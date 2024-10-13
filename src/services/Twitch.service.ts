@@ -106,3 +106,24 @@ export async function createEventSubSubscription(
         }
     })
 }
+
+export async function getEventSubSubscriptions(): Promise<AxiosResponse<TwitchEventSubscription>> {
+    const { accessToken } = await twitchStore.loadToken()
+    return twitchAPI.get<TwitchEventSubscription>('/eventsub/subscriptions', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+}
+
+export async function deleteEventSubSubscription(id: string): Promise<AxiosResponse<TwitchEventSubscription>> {
+    const { accessToken } = await twitchStore.loadToken()
+    return twitchAPI.delete<TwitchEventSubscription>('/eventsub/subscriptions', {
+        params: { id },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+}

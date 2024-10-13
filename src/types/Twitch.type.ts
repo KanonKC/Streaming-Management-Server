@@ -49,7 +49,7 @@ export interface TwitchEventSubscription {
         connected_at: string;
         conduit_id: string;
         cost: number;
-    }
+    }[]
     total: number;
     total_cost: number;
     max_total_cost: number;
@@ -139,4 +139,22 @@ export interface TwitchClip {
     duration: number;
     vod_offset: number | null;
     is_featured: boolean;
+}
+
+export interface TwitchWebsocketSession {
+    metadata: {
+        message_id: string;
+        message_type: string;
+        message_timestamp: Date;
+    }
+    payload: {
+        session: {
+            id: string;
+            status: string;
+            connected_at: Date;
+            keepalive_timeout_seconds: number;
+            reconnect_url: string | null;
+            recovery_url: string | null;
+        }
+    }
 }
