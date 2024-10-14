@@ -62,16 +62,21 @@ model MagicNumberMysteryBox {
     timestamp               DateTime @default(now())
 }
 
-model Storage {
+model Account {
     id                      Int      @id @default(autoincrement())
-    namespace               String   @unique
+    username                String   @unique
+    twitchId                String?  @unique
+
     spotifyAccessToken      String?
     spotifyRefreshToken     String?
     spotifyTokenExpires     DateTime?
+
     twitchAppAccessToken    String?
     twitchAppTokenExpires   DateTime?
+
     twitchAccessToken       String?
     twitchRefreshToken      String?
     twitchTokenExpires      DateTime?
+
     timestamp               DateTime @default(now())
 }

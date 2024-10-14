@@ -4,6 +4,7 @@ import { twitchStore } from "../stores/Twitch.store";
 import { ListAPIResponse } from "../types/Controller.type";
 import { CreatePredctionPayload, CreateTwitchEventSubscriptionPayload, TwitchAppAuthorization, TwitchChannelInfo, TwitchClip, TwitchEventSubscription, TwitchPrediction, TwitchUserAuthorization, UpdatePredctionPayload } from "../types/Twitch.type";
 import { generateRandomString } from "../utils/RandomString.util";
+import { TwitchOAuthScopes } from "../constants/Twitch.constant";
 
 configDotenv();
 const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_OAUTH_TOKEN, PORT } = process.env;
@@ -18,7 +19,7 @@ const twitchAPI = axios.create({
 
 export function getTwitchOAuthUrl() {
     const randomString = generateRandomString(16);
-    return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${TWITCH_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/twitch/callback&scope=channel:manage:predictions%20user:read:chat&state=${randomString}`
+    return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${TWITCH_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/twitch/callback&scope=${TwitchOAuthScopes.join('%20')}&state=${randomString}`
 }
 
 export async function getUserLoginAccessToken(code: string): Promise<AxiosResponse<TwitchUserAuthorization>> {
@@ -127,3 +128,9 @@ export async function deleteEventSubSubscription(id: string): Promise<AxiosRespo
         }
     })
 }
+
+// export async function getTwitchUserByAccessToken(accessToken: string) {
+//     return twitchAPI.get('/users', {
+//         params: { id: ids }
+//     })
+// }

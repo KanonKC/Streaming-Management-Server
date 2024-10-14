@@ -12,7 +12,7 @@ class SpotifyStore {
     constructor() {}
 
     async loadToken() {
-        const storage = await prisma.storage.findUnique({
+        const storage = await prisma.account.findUnique({
             where: { namespace: this.namespace },
         });
 
@@ -48,7 +48,7 @@ class SpotifyStore {
     }
 
     async setToken(spotifyAuthorization: SpotifyAuthorization) {
-        const result = await prisma.storage.upsert({
+        const result = await prisma.account.upsert({
             where: { namespace: this.namespace },
             update: {
                 spotifyAccessToken: spotifyAuthorization.access_token,

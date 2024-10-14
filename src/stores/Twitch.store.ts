@@ -1,10 +1,11 @@
+import { LocalAccountTwitchID } from "../constants/LocalAccount.constant";
 import { prisma } from "../database/prisma";
 import { getTwitchAppAccessToken } from "../services/Twitch.service";
 import { TwitchAppAuthorization, TwitchUserAuthorization } from "../types/Twitch.type";
 
 class TwitchStore {
 
-    namespace = 'main';
+    twitchId = LocalAccountTwitchID;
     accessToken: string | null = null;
     refreshToken: string | null = null;
     expires: number | null = null;
@@ -12,10 +13,10 @@ class TwitchStore {
 
     constructor() {}
 
-    async loadToken(namespace?: string) {
+    async loadToken(twitchId?: string) {
         
-        const storage = await prisma.storage.findUnique({
-            where: { namespace: namespace || this.namespace },
+        const storage = await prisma.account.findUnique({
+            where: { twitchId: twitchId || this.twitchId },
         });
 
         this.accessToken = storage?.twitchAccessToken || null;
@@ -30,14 +31,15 @@ class TwitchStore {
     }
 
     async setToken(twitchAuthorization: TwitchUserAuthorization) {
-        await prisma.storage.upsert({
-            where: { namespace: this.namespace },
+        
+        await prisma.account.upsert({
+            where: { twitchId: this.twitchId },
             update: {
                 twitchAccessToken: twitchAuthorization.access_token,
                 twitchRefreshToken: twitchAuthorization.refresh_token,
             },
             create: {
-                namespace: this.namespace,
+                twitchId: this.twitchId,
                 twitchAccessToken: twitchAuthorization.access_token,
                 twitchRefreshToken: twitchAuthorization.refresh_token,
                 twitchTokenExpires: new Date(Date.now() + twitchAuthorization.expires_in * 1000),
@@ -49,19 +51,19 @@ class TwitchStore {
 
     async getAppAccessToken() {
 
-        let storage = await prisma.storage.findUnique({
-            where: { namespace: this.namespace },
+        let storage = await prisma.account.findUnique({
+            where: { twitchId: this.twitchId },
         });
         if (!storage || !storage.twitchAppAccessToken || (storage.twitchAppTokenExpires ?? 0) < new Date()) {
             const response = await getTwitchAppAccessToken();
-            storage = await prisma.storage.upsert({
-                where: { namespace: this.namespace },
+            storage = await prisma.account.upsert({
+                where: { twitchId: this.twitchId },
                 update: {
                     twitchAppAccessToken: response.data.access_token,
                     twitchAppTokenExpires: new Date(Date.now() + response.data.expires_in * 1000),
                 },
                 create: {
-                    namespace: this.namespace,
+                    twitchId: this.twitchId,
                     twitchAppAccessToken: response.data.access_token,
                     twitchAppTokenExpires: new Date(Date.now() + response.data.expires_in * 1000),
                 },
