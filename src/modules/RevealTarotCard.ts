@@ -1,3 +1,4 @@
+import { TAROT_CARD_SOUND_PATH } from "../constants/LocalFilePath.constant";
 import { MajorCards, MinorCards } from "../constants/Tarot.constant"
 
 export function revealTarotCard(majorCardId?: number, minorCardId?: number):{
@@ -7,6 +8,9 @@ export function revealTarotCard(majorCardId?: number, minorCardId?: number):{
         description: string;
         picturePage: number;
         pictureIndex: number;
+        soundFilePath: string;
+        voiceActor: string;
+        voiceActorTwitchId: string | null;
     },
     minorCard: {
         id: number;
@@ -21,6 +25,8 @@ export function revealTarotCard(majorCardId?: number, minorCardId?: number):{
         (majorCardId || majorCardId === 0) ? majorCardId :
         Math.floor(Math.random() * MajorCards.length)
     ]
+
+    const randomMajorCardSound = randomMajorCard.sounds[Math.floor(Math.random() * randomMajorCard.sounds.length)]
 
     const randomMinorCard = MinorCards[
         (minorCardId || minorCardId === 0) ? minorCardId - 22 :
@@ -39,6 +45,9 @@ export function revealTarotCard(majorCardId?: number, minorCardId?: number):{
         description: randomMajorCard.description,
         picturePage: Math.floor(majorPicturePosition / 8) + 1,
         pictureIndex: majorPicturePosition % 8,
+        soundFilePath: `${TAROT_CARD_SOUND_PATH}/${randomMajorCardSound.filename}`,
+        voiceActor: randomMajorCardSound.voiceActor,
+        voiceActorTwitchId: randomMajorCardSound.voiceActorTwitchId,
     }
 
     const minorCard = {
