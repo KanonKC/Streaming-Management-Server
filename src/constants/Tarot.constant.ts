@@ -6,7 +6,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Fool",
         description: "การเริ่มต้นอะไรใหม่ๆ การเสี่ยงอันตราย หากว่าเปิดได้ไพ่ใบนี้แล้วล่ะก็ เส้นทางใหม่ที่จะเดินไปอาจมีความเสี่ยง แต่เป็นความเสี่ยงที่ตัวเองต้องการ รู้ว่าเสี่ยงแต่คงต้องขอลอง",
         sounds: [
-            { filename: "0.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "0.mp3", voiceActor: "", voiceActorTwitchId: "888080509" }
         ],
     },
     {
@@ -14,7 +14,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Magician",
         description: "ความทะเยอทะยาน การลงมือทำ ไพ่บอกว่าตัวคุณเองว่าคุณเก่งมาก อยากทำอะไรก็ลุยให้เต็มที่เลย เพราะไฟในตัวมีเยอะพอๆ กับความสามารถ ดังนั้นลุยได้เลยไม่ต้องยั้ง",
         sounds: [
-            { filename: "1.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "1.mp3", voiceActor: "", voiceActorTwitchId: "135783794" }
         ],
     },
     {
@@ -22,7 +22,7 @@ export const MajorCards: TarotCard[] = [
         name: "The High Priestess",
         description: "ความฉลาด มีความรู้ความสามารถ เป็นตัวแทนของคนเก่งมากความสามารถ แต่มักซ่อนสิ่งนั้นเอาไว้ภายในรูปลักษณ์นิ่งเงียบที่แสดงให้ภายนอกได้เห็น",
         sounds: [
-            { filename: "2.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "2.mp3", voiceActor: "", voiceActorTwitchId: "775370291" }
         ],
     },
     {
@@ -30,7 +30,10 @@ export const MajorCards: TarotCard[] = [
         name: "The Empress",
         description: "ความอุดมสมบูรณ์ ความเป็นแม่ เปิดได้ไพ่ใบนี้บอกเลยว่าจะเจอแต่ความสุขความสบาย เงินทองมั่งมี หรืออาจหมายถึงโอกาสตั้งครรภ์ได้ด้วย",
         sounds: [
-            { filename: "3.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "3_0.mp3", voiceActor: "", voiceActorTwitchId: "961059253" },
+            { filename: "3_1.mp3", voiceActor: "", voiceActorTwitchId: "961059253" },
+            { filename: "3_2.mp3", voiceActor: "", voiceActorTwitchId: "961059253" },
+            { filename: "3_3.mp3", voiceActor: "", voiceActorTwitchId: "961059253" },
         ],
     },
     {
@@ -38,7 +41,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Emperor",
         description: "การมีอำนาจ ชอบสั่ง และไม่ยอมใคร คุณอาจอยู่ในสถานการณ์ที่ต้องยอมทำตามผู้ใหญ่ ถูกบังคับจากคนมีอำนาจมากกว่าก็เป็นได้ และยังหมายถึงความมั่นคงได้อีกด้วย",
         sounds: [
-            { filename: "4.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "4.mp3", voiceActor: "", voiceActorTwitchId: "1014125258" }
         ],
     },
     {
@@ -46,7 +49,8 @@ export const MajorCards: TarotCard[] = [
         name: "The Hierophant",
         description: "การมีความรู้ การแต่งงาน การรวมเป็นหนึ่ง พระคือตัวแทนของผู้มีความรู้และยังเป็นตัวแทนในการแต่งงานรวมเป็นครอบครัวเดียวกัน อาจหมายถึงการเป็นที่พึ่งพาของคนอื่นๆ",
         sounds: [
-            { filename: "5.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            // { filename: "5.mp3", voiceActor: "", voiceActorTwitchId: "131659290" }
+            { filename: "blank-10.mp3", voiceActor: "???", voiceActorTwitchId: null }
         ],
     },
     {
@@ -54,11 +58,11 @@ export const MajorCards: TarotCard[] = [
         name: "The Lovers",
         description: "ความรัก การตัดสินใจ ได้พบเจอความรัก หรือต้องตัดสินใจเลือกสิ่งใดสิ่งหนึ่ง",
         sounds: [
-            { filename: "6_0.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null },
-            { filename: "6_1.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null },
-            { filename: "6_2.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null },
-            { filename: "6_3.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null },
-            { filename: "6_4.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null },
+            { filename: "6_0.mp3", voiceActor: "", voiceActorTwitchId: "666378366" },
+            { filename: "6_1.mp3", voiceActor: "", voiceActorTwitchId: "666378366" },
+            { filename: "6_2.mp3", voiceActor: "", voiceActorTwitchId: "666378366" },
+            { filename: "6_3.mp3", voiceActor: "", voiceActorTwitchId: "666378366" },
+            { filename: "6_4.mp3", voiceActor: "", voiceActorTwitchId: "666378366" },
         ],
     },
     {
@@ -66,7 +70,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Chariot",
         description: "ความแน่วแน่ มุ่งมั่น ขยัน ทุ่มเท เมื่อเจอไพ่ใบนี้ คุณต้องทำตัวให้แข็งแกร่งยิ่งกว่าม้าศึกถึงจะประสบความสำเร็จในสิ่งที่ทำ",
         sounds: [
-            { filename: "7.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "7.mp3", voiceActor: "", voiceActorTwitchId: "144234410" }
         ],
     },
     {
@@ -74,7 +78,7 @@ export const MajorCards: TarotCard[] = [
         name: "Strength",
         description: "ความแข็งแกร่ง บริหารจัดการเก่ง ไพ่นี้คือตัวแทนของหญิงสาวสุดแกร่ง มีอะไรเข้ามาก็ไม่อาจทำอะไรเธอได้ แถมยังจัดการสิ่งต่างๆ ได้เป็นอย่างดีอีกด้วย",
         sounds: [
-            { filename: "8.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "8.mp3", voiceActor: "", voiceActorTwitchId: "835207701" }
         ],
     },
     {
@@ -82,7 +86,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Hermit",
         description: "ความสันโดษ โดดเดี่ยว วิเคราะห์ เมื่อเจอไพ่ใบนี้ก็คงเลี่ยงไม่พ้นการอยู่ตัวคนเดียว การใช้เวลารักษาเยียวยาจิตใจ หรือแม้แต่การใช้เวลาเพื่อคิดวิเคราะห์สิ่งต่างๆ รอบตัว อย่าได้ใจร้อนทำสิ่งใดเด็ดขาด",
         sounds: [
-            { filename: "9.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "9.mp3", voiceActor: "", voiceActorTwitchId: "140738896" }
         ],
     },
     {
@@ -90,7 +94,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Wheel of Fortune",
         description: "โชคชะตา เปลี่ยนแปลง คุณต้องเตรียมตัวให้ดี เพราะมีโอกาสเกิดเรื่องที่ไม่คาดฝันได้ มีการเปลี่ยนแปลงที่เราไม่อาจขัดขวางได้ อาจจะเป็นเรื่องดีหรือไม่ดีก็ได้เช่นกัน",
         sounds: [
-            { filename: "10.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "10.mp3", voiceActor: "", voiceActorTwitchId: "117136811" }
         ],
     },
     {
@@ -98,7 +102,7 @@ export const MajorCards: TarotCard[] = [
         name: "Justice",
         description: "การตัดสินใจ เท่าเทียม กฎหมาย หากเปิดเจอไพ่นี้แสดงว่าคุณจะได้รับความยุติธรรม มีการตัดสินใจที่ก่อให้เกิดความเท่าเทียม หรืออาจจะเจอกับเรื่องราวเกี่ยวกับกฎหมายก็ได้เช่นกัน",
         sounds: [
-            { filename: "11.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "11.mp3", voiceActor: "", voiceActorTwitchId: "574788170" }
         ],
     },
     {
@@ -106,7 +110,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Hanged Man",
         description: "การรอคอย เสียสละ คุณอาจได้เจอกับสถานการณ์ที่ไม่อาจตัดสินใจทำอะไรได้ ต้องอยู่นิ่งๆ ต้องรอคอย หรืออาจจะต้องเสียสละความสุขส่วนตัวบางอย่าง",
         sounds: [
-            { filename: "12.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "12.mp3", voiceActor: "", voiceActorTwitchId: "623519964" }
         ],
     },
     {
@@ -114,7 +118,7 @@ export const MajorCards: TarotCard[] = [
         name: "Death",
         description: "การเปลี่ยนแปลง เกิดใหม่ เรื่องร้ายๆ จะกลายเป็นดี สิ่งต่างๆ ที่ว่าร้ายแรงแล้วจะเริ่มเปลี่ยนแปลงไปในทางที่ดีขึ้นทีละนิด",
         sounds: [
-            { filename: "13.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "13.mp3", voiceActor: "", voiceActorTwitchId: "705932393" }
         ],
     },
     {
@@ -122,7 +126,7 @@ export const MajorCards: TarotCard[] = [
         name: "Temperance",
         description: "การต่อรอง ผสมผสาน สมดุล ไพ่อยากแนะนำให้คุณสร้างความสมดุลให้ชีวิต ต้องต่อรองและยอมอ่อนข้อบ้างเพื่อให้ได้สิ่งที่ต้องการ",
         sounds: [
-            { filename: "14.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "14.mp3", voiceActor: "", voiceActorTwitchId: "468599571" }
         ],
     },
     {
@@ -130,7 +134,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Devil",
         description: "การควบคุม ผูกมัด ไร้ความหวัง ระวังให้ดี เมื่อไพ่ใบนี้ปรากฏขึ้นมา เพราะคุณอาจเจอกับการควบคุม ถูกผูกมัดโดยไม่เต็มใจจนทำให้หมดพลังใจและหมดความหวัง",
         sounds: [
-            { filename: "15.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "15.mp3", voiceActor: "", voiceActorTwitchId: "880377708" }
         ],
     },
     {
@@ -138,7 +142,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Tower",
         description: "การเปลี่ยนแปลงกะทันหัน การทะเลาะเบาะแว้ง ต้องเตรียมใจให้ดี เพราะอาจเจอเรื่องไม่คาดฝัน ได้รับข่าวสารที่ไม่ทันได้เตรียมใจ หรือเกิดเรื่องบาดหมางใหญ่โตกับคนรอบตัว",
         sounds: [
-            { filename: "16.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "16.mp3", voiceActor: "", voiceActorTwitchId: "849610457" }
         ],
     },
     {
@@ -146,7 +150,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Star",
         description: "ความหวัง ความสงบ แม้ฟ้าจะมืดมิด แต่หากไพ่ใบนี้โผล่ขึ้นมาก็เหมือนกับมีความหวังจากดวงดาวปรากฏขึ้น ควรทำตัวให้สงบเยือกเย็นเอาไว้",
         sounds: [
-            { filename: "17.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "17.mp3", voiceActor: "", voiceActorTwitchId: "1097779537" }
         ],
     },
     {
@@ -154,7 +158,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Moon",
         description: "ความกลัว ภาพลวงตา บางครั้งความกลัวก็อาจคืบคลานเข้ามาหาคุณแบบไม่รู้ตัว แต่ไพ่อาจบอกให้พิจารณาให้ดีว่าสิ่งนั้นน่ากลัวจริงๆ หรือเป็นเพียงภาพลวงตา",
         sounds: [
-            { filename: "18.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "18.mp3", voiceActor: "", voiceActorTwitchId: "156732629" }
         ],
     },
     {
@@ -162,7 +166,7 @@ export const MajorCards: TarotCard[] = [
         name: "The Sun",
         description: "การเติบโต แสงสว่าง มีชีวิตชีวา ไพ่ที่เป็นตัวแทนของความร้อนแรงและสดใส และเร็วๆ นี้อาจมีเรื่องดีๆ เข้ามาเซอร์ไพรส์ก็เป็นได้",
         sounds: [
-            { filename: "19.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "19.mp3", voiceActor: "", voiceActorTwitchId: "835322142" }
         ],
     },
     {
@@ -170,7 +174,7 @@ export const MajorCards: TarotCard[] = [
         name: "Judgement",
         description: "การตัดสินใจ โอกาสครั้งที่สอง จะมีเรื่องสำคัญมากๆ เข้ามาให้ต้องตัดสินใจ ต้องปล่อยอดีตให้ผ่านไปเพื่อให้สิ่งใหม่ๆ ได้เข้ามาแทน",
         sounds: [
-            { filename: "20.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "20.mp3", voiceActor: "", voiceActorTwitchId: "1118161688" }
         ],
     },
     {
@@ -178,7 +182,7 @@ export const MajorCards: TarotCard[] = [
         name: "The World",
         description: "ความสำเร็จ ความสมบูรณ์ ถือเป็นอีกหนึ่งใบดีๆ อีกหนึ่งใบ มีความสำเร็จเกิดขึ้น ชีวิตเติมเต็มมากๆ ด้วย",
         sounds: [
-            { filename: "21.mp3", voiceActor: "kapokzz", voiceActorTwitchId: null }
+            { filename: "21.mp3", voiceActor: "", voiceActorTwitchId: "89445570" }
         ],
     }
 ]

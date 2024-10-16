@@ -1,5 +1,6 @@
 import { TAROT_CARD_SOUND_PATH } from "../constants/LocalFilePath.constant";
 import { MajorCards, MinorCards } from "../constants/Tarot.constant"
+import { getTwitchUserById } from "../services/Twitch.service";
 import { getMediaDuration } from "../utils/GetMediaDuration.util";
 
 export async function revealTarotCard(majorCardId?: number, minorCardId?: number): Promise<{
@@ -11,8 +12,9 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
         pictureIndex: number;
         soundFilePath: string;
         soundDurationMilliseconds: number;
-        voiceActor: string;
+        voiceActorDisplayName: string;
         voiceActorTwitchId: string | null;
+        voiceActorTwitchLogin: string | null;
     },
     minorCard: {
         id: number;
@@ -30,7 +32,24 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
 
     const randomMajorCardSound = randomMajorCard.sounds[Math.floor(Math.random() * randomMajorCard.sounds.length)]
     const majorSoundFilePath = `${TAROT_CARD_SOUND_PATH}/${randomMajorCardSound.filename}`
-    const majorCardSoundDuration = await getMediaDuration(majorSoundFilePath)
+    
+    let majorCardSoundDuration = 10
+
+    try {
+        majorCardSoundDuration = await getMediaDuration(majorSoundFilePath)
+    } catch(error) {}
+
+    let voiceActorDisplayName = randomMajorCardSound.voiceActor
+    let voiceActorTwitchLogin = null
+
+    if (randomMajorCardSound.voiceActorTwitchId) {
+        const voiceActorTwitchAccountResponse = await getTwitchUserById(randomMajorCardSound.voiceActorTwitchId)
+        voiceActorDisplayName = voiceActorTwitchAccountResponse.data.data[0].display_name
+        voiceActorTwitchLogin = voiceActorTwitchAccountResponse.data.data[0].login
+    } else {
+        voiceActorDisplayName = randomMajorCardSound.voiceActor
+        voiceActorTwitchLogin = ""
+    }
 
     const randomMinorCard = MinorCards[
         (minorCardId || minorCardId === 0) ? minorCardId - 22 :
@@ -51,8 +70,9 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
         pictureIndex: majorPicturePosition % 8,
         soundFilePath: majorSoundFilePath,
         soundDurationMilliseconds: Math.ceil(majorCardSoundDuration * 1000),
-        voiceActor: randomMajorCardSound.voiceActor,
+        voiceActorDisplayName: voiceActorDisplayName,
         voiceActorTwitchId: randomMajorCardSound.voiceActorTwitchId,
+        voiceActorTwitchLogin: voiceActorTwitchLogin,
     }
 
     const minorCard = {
