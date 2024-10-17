@@ -14,7 +14,7 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
         soundDurationMilliseconds: number;
         voiceActorDisplayName: string;
         voiceActorTwitchId: string | null;
-        voiceActorTwitchLogin: string | null;
+        voiceActorURL: string | null;
     },
     minorCard: {
         id: number;
@@ -72,7 +72,7 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
         soundDurationMilliseconds: Math.ceil(majorCardSoundDuration * 1000),
         voiceActorDisplayName: voiceActorDisplayName,
         voiceActorTwitchId: randomMajorCardSound.voiceActorTwitchId,
-        voiceActorTwitchLogin: voiceActorTwitchLogin,
+        voiceActorURL: randomMajorCardSound.voiceActorCustomURL || `https://www.twitch.tv/${voiceActorTwitchLogin}`,
     }
 
     const minorCard = {

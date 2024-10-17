@@ -80,7 +80,7 @@ export const MajorCards: TarotCard[] = [
         name: "Strength",
         description: "ความแข็งแกร่ง บริหารจัดการเก่ง ไพ่นี้คือตัวแทนของหญิงสาวสุดแกร่ง มีอะไรเข้ามาก็ไม่อาจทำอะไรเธอได้ แถมยังจัดการสิ่งต่างๆ ได้เป็นอย่างดีอีกด้วย",
         sounds: [
-            { filename: "8.mp3", voiceActor: "", voiceActorTwitchId: "835207701" }
+            { filename: "8.mp3", voiceActor: "", voiceActorTwitchId: "835207701", voiceActorCustomURL: "https://www.youtube.com/@Francess542" }
         ],
     },
     {

@@ -6,5 +6,6 @@ export interface TarotCard {
         filename: string;
         voiceActor: string;
         voiceActorTwitchId: string | null;
+        voiceActorCustomURL?: string;
     }[];
 }
