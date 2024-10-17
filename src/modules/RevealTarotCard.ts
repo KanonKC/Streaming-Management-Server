@@ -1,32 +1,87 @@
-import { PrimaryCards, SecondaryCards } from "../constants/Tarot.constant"
+import { TAROT_CARD_SOUND_PATH } from "../constants/LocalFilePath.constant";
+import { MajorCards, MinorCards } from "../constants/Tarot.constant"
+import { getTwitchUserById } from "../services/Twitch.service";
+import { getMediaDuration } from "../utils/GetMediaDuration.util";
 
-function getPictureNumberAndIndex(id: number, diffIdStart: number, diffIdEnd: number, pictureNumberOffset: number) {
-    let picturePosition = id
+export async function revealTarotCard(majorCardId?: number, minorCardId?: number): Promise<{
+    majorCard: {
+        id: number;
+        title: string;
+        description: string;
+        picturePage: number;
+        pictureIndex: number;
+        soundFilePath: string;
+        soundDurationMilliseconds: number;
+        voiceActorDisplayName: string;
+        voiceActorTwitchId: string | null;
+        voiceActorURL: string | null;
+    },
+    minorCard: {
+        id: number;
+        title: string;
+        description: string;
+        picturePage: number;
+        pictureIndex: number;
+    }
+}> {
 
-    if (id >= diffIdStart && id <= diffIdEnd) {
-        picturePosition += 1
+    const randomMajorCard = MajorCards[
+        (majorCardId || majorCardId === 0) ? majorCardId :
+        Math.floor(Math.random() * MajorCards.length)
+    ]
+
+    const randomMajorCardSound = randomMajorCard.sounds[Math.floor(Math.random() * randomMajorCard.sounds.length)]
+    const majorSoundFilePath = `${TAROT_CARD_SOUND_PATH}/${randomMajorCardSound.filename}`
+    
+    let majorCardSoundDuration = 10
+
+    try {
+        majorCardSoundDuration = await getMediaDuration(majorSoundFilePath)
+    } catch(error) {}
+
+    let voiceActorDisplayName = randomMajorCardSound.voiceActor
+    let voiceActorTwitchLogin = null
+
+    if (randomMajorCardSound.voiceActorTwitchId) {
+        const voiceActorTwitchAccountResponse = await getTwitchUserById(randomMajorCardSound.voiceActorTwitchId)
+        voiceActorDisplayName = voiceActorTwitchAccountResponse.data.data[0].display_name
+        voiceActorTwitchLogin = voiceActorTwitchAccountResponse.data.data[0].login
+    } else {
+        voiceActorDisplayName = randomMajorCardSound.voiceActor
+        voiceActorTwitchLogin = ""
     }
 
-    const pictureNumber = Math.floor(picturePosition / 8) + 1 + pictureNumberOffset
-    const pictureOneIndex = (picturePosition % 8) + 1
+    const randomMinorCard = MinorCards[
+        (minorCardId || minorCardId === 0) ? minorCardId - 22 :
+        Math.floor(Math.random() * MinorCards.length)
+    ]
 
-    return { pictureNumber, pictureOneIndex }
-}
+    let majorPicturePosition = randomMajorCard.id
 
-
-export function revealTarotCard() {
-    const randomCard = PrimaryCards[Math.floor(Math.random() * PrimaryCards.length)]
-    const randomSecondaryCard = SecondaryCards[Math.floor(Math.random() * SecondaryCards.length)]
-
-    const { pictureNumber, pictureOneIndex } = getPictureNumberAndIndex(randomCard.id, 19, 21, 0)
-
-    const secondaryBody = {
-        secondaryId: randomSecondaryCard.id,
-        secondaryName: randomSecondaryCard.name,
-        secondaryDescription: randomSecondaryCard.description,
-        secondaryPictureNumber: Math.floor((randomSecondaryCard.id - 22) / 8) + 4,
-        secondaryPictureOneIndex: ((randomSecondaryCard.id - 22) % 8) + 1,
+    if (majorPicturePosition >= 19 && majorPicturePosition <= 21) {
+        majorPicturePosition += 1
     }
 
-    return { ...randomCard, pictureNumber, pictureOneIndex, ...secondaryBody }
+    const majorCard = {
+        id: randomMajorCard.id,
+        title: randomMajorCard.name,
+        description: randomMajorCard.description,
+        picturePage: Math.floor(majorPicturePosition / 8) + 1,
+        pictureIndex: majorPicturePosition % 8,
+        soundFilePath: majorSoundFilePath,
+        soundDurationMilliseconds: Math.ceil(majorCardSoundDuration * 1000),
+        voiceActorDisplayName: voiceActorDisplayName,
+        voiceActorTwitchId: randomMajorCardSound.voiceActorTwitchId,
+        voiceActorURL: randomMajorCardSound.voiceActorCustomURL || `https://www.twitch.tv/${voiceActorTwitchLogin}`,
+    }
+
+    const minorCard = {
+        id: randomMinorCard.id,
+        title: randomMinorCard.name,
+        description: randomMinorCard.description,
+        picturePage: Math.floor((randomMinorCard.id - 22) / 8) + 4,
+        pictureIndex: (randomMinorCard.id - 22) % 8,
+    }
+
+    return { majorCard, minorCard }
 }

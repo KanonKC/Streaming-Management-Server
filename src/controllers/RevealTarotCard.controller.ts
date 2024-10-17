@@ -5,6 +5,6 @@ import { configDotenv } from "dotenv"
 import { revealTarotCard } from "../modules/RevealTarotCard"
 
 export async function revealTarotCardController(request: FastifyRequest, reply: FastifyReply) {
-    const response = revealTarotCard()
+    const response = await revealTarotCard()
     return reply.status(200).send(response)
 }

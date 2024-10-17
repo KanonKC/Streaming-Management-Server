@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction, UpdatePredctionPayload } from "../types/Twitch.type";
+import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction, TwitchUsers, UpdatePredctionPayload } from "../types/Twitch.type";
 import axios, { AxiosResponse } from "axios";
 import { ListAPIResponse } from "../types/Controller.type";
 import { generateRandomString } from "../utils/RandomString.util";
@@ -74,4 +74,8 @@ export async function getTwitchClips(broadcasterId: string, isFeature: boolean) 
     return twitchAPI.get<ListAPIResponse<TwitchClip>>('/clips', {
         params: { broadcaster_id: broadcasterId, is_featured: isFeature }
     })
+}
+
+export async function getTwitchUserById(id: string) {
+    return twitchAPI.get<TwitchUsers>('/users', { params: { id } })
 }

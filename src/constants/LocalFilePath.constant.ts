@@ -8,3 +8,5 @@ export const IMAGE_FULL_PATH = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PA
 
 export const SHOUTOUT_CLIP_PATH = 'dumps/shoutout-clips'
 export const SHOUTOUT_CLIP_FULL_PATH = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${SHOUTOUT_CLIP_PATH}`;
+
+export const TAROT_CARD_SOUND_PATH = 'assets/sounds/tarot-voices/normalized'

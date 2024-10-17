@@ -10,7 +10,8 @@
     "socket": "node build/socket.js",
     "dev": "nodemon src/index.ts",
     "socket-dev": "nodemon src/socket.ts",
-    "build-exe": "bun build src/index.ts --compile --outfile Streaming-Management-Server"
+    "build-exe": "bun build src/index.ts --compile --outfile Streaming-Management-Server",
+    "convert": "sh src/scripts/convert-tarot-sounds-mp3.sh"
   },
   "keywords": [],
   "author": "",
