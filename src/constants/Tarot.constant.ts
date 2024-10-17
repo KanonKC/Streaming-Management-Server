@@ -41,7 +41,9 @@ export const MajorCards: TarotCard[] = [
         name: "The Emperor",
         description: "การมีอำนาจ ชอบสั่ง และไม่ยอมใคร คุณอาจอยู่ในสถานการณ์ที่ต้องยอมทำตามผู้ใหญ่ ถูกบังคับจากคนมีอำนาจมากกว่าก็เป็นได้ และยังหมายถึงความมั่นคงได้อีกด้วย",
         sounds: [
-            { filename: "4.mp3", voiceActor: "", voiceActorTwitchId: "1014125258" }
+            { filename: "4_1.mp3", voiceActor: "", voiceActorTwitchId: "1014125258" },
+            { filename: "4_2.mp3", voiceActor: "", voiceActorTwitchId: "1014125258" },
+            { filename: "4_3.mp3", voiceActor: "", voiceActorTwitchId: "1014125258" },
         ],
     },
     {
