@@ -1,6 +1,6 @@
 .env
 assets/data/bad_word_list.json
-sounds/tarot-voices/converted/*.mp3
+assets/sounds/tarot-voices/converted/*.mp3
 
 build
 node_modules
