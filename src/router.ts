@@ -8,9 +8,9 @@ import { addKillerRequestController, getKillerRequestQueuesController, markKille
 import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
-import { showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
+import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
-import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
+import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 
 const server = fastify()
@@ -20,6 +20,7 @@ server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
 server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
+server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
 server.get('/tarot', revealTarotCardController)
 
@@ -36,6 +37,7 @@ server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumber
 server.get('/spotify/callback', spotifyAuthorizationCallbackController)
 server.get('/spotify/player', showCurrentMusicQueueController)
 server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
+server.get('/spotify/player/skip', skipToNextMusicController)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 

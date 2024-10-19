@@ -98,3 +98,18 @@ export interface TwitchClip {
     vod_offset: number | null;
     is_featured: boolean;
 }
+
+export interface TwitchUsers {
+    data: {
+        id: string;
+        login: string;
+        display_name: string;
+        type: "staff" | "admin" | "global_mod" | "";
+        broadcaster_type: "partner" | "affiliate" | "";
+        description: string;
+        profile_image_url: string;
+        offline_image_url: string;
+        email: string;
+        created_at: string;
+    }[]
+}
