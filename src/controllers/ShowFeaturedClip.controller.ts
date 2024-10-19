@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { showFeaturedTwitchClip } from "../modules/ShowFeaturedTwitchClip";
+import { showFeaturedTwitchClip, ShowFeatureTwitchClipOptions } from "../modules/ShowFeaturedTwitchClip";
 
 type ShowFeaturedClip = FastifyRequest<{
     Querystring: { broadcasterId: string }
@@ -8,5 +8,16 @@ type ShowFeaturedClip = FastifyRequest<{
 export async function showFeaturedTwitchClipController(request: ShowFeaturedClip, reply: FastifyReply) {
     const { broadcasterId } = request.query;
     const response = await showFeaturedTwitchClip(String(broadcasterId))
+    return reply.status(200).send(response)
+}
+
+export async function advancedShowFeaturedTwitchClipController(request: FastifyRequest<{
+    Querystring: { broadcasterId: string },
+    Body: { options: ShowFeatureTwitchClipOptions }
+}>, reply: FastifyReply) {
+    const { broadcasterId } = request.query;
+    const { options } = request.body;
+    console.log('controller options', options)
+    const response = await showFeaturedTwitchClip(String(broadcasterId), options)
     return reply.status(200).send(response)
 }

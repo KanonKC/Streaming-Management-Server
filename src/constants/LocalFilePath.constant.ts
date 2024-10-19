@@ -1,7 +1,9 @@
 import { configDotenv } from "dotenv";
 
 configDotenv();
-const { STREAM_MANAGEMENT_SERVER_FULL_PATH } = process.env;
+const { STREAM_MANAGEMENT_SERVER_FULL_PATH, SERVER_URL } = process.env;
+
+export const PUBLIC_URL = `${SERVER_URL}/public`;
 
 export const IMAGE_PATH = 'dumps/show-images'
 export const IMAGE_FULL_PATH = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PATH}`;
