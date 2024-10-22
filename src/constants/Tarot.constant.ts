@@ -51,8 +51,9 @@ export const MajorCards: TarotCard[] = [
         name: "The Hierophant",
         description: "การมีความรู้ การแต่งงาน การรวมเป็นหนึ่ง พระคือตัวแทนของผู้มีความรู้และยังเป็นตัวแทนในการแต่งงานรวมเป็นครอบครัวเดียวกัน อาจหมายถึงการเป็นที่พึ่งพาของคนอื่นๆ",
         sounds: [
-            // { filename: "5.mp3", voiceActor: "", voiceActorTwitchId: "131659290" }
-            { filename: "blank-10.mp3", voiceActor: "???", voiceActorTwitchId: null }
+            { filename: "5_0.mp3", voiceActor: "", voiceActorTwitchId: "131659290" },
+            { filename: "5_1.mp3", voiceActor: "", voiceActorTwitchId: "131659290" },
+            // { filename: "blank-10.mp3", voiceActor: "???", voiceActorTwitchId: null }
         ],
     },
     {
