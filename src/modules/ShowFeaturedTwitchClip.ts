@@ -1,11 +1,9 @@
 import { PUBLIC_URL, SHOUTOUT_CLIP_FULL_PATH } from "../constants/LocalFilePath.constant";
 import { getTwitchClips } from "../services/Twitch.service";
 import { TwitchClip } from "../types/Twitch.type";
-import { downloadTwitchClip } from "../utils/DownloadTwitchClip.util";
+import { downloadTwitchClip, DownloadTwitchClipOptions } from "../utils/DownloadTwitchClip.util";
 
-export interface ShowFeatureTwitchClipOptions {
-    outputVideoFilePath?: string
-}
+export interface ShowFeatureTwitchClipOptions extends DownloadTwitchClipOptions {}
 
 export async function showFeaturedTwitchClip(broadcasterId: string, options?: ShowFeatureTwitchClipOptions) {
     
