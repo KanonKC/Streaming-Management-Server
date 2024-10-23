@@ -1,9 +1,9 @@
-import { TAROT_CARD_SOUND_PATH } from "../constants/LocalFilePath.constant";
-import { MajorCards, MinorCards } from "../constants/Tarot.constant"
-import { getTwitchUserById } from "../services/Twitch.service";
-import { getMediaDuration } from "../utils/GetMediaDuration.util";
+import { TAROT_CARD_SOUND_PATH } from "../../constants/LocalFilePath.constant";
+import { MajorCards, MinorCards } from "../../constants/Tarot.constant"
+import { getTwitchUserById } from "../../services/Twitch.service";
+import { getMediaDuration } from "../../utils/GetMediaDuration.util";
 
-export async function revealTarotCard(majorCardId?: number, minorCardId?: number): Promise<{
+export interface RevealTarotCard {
     majorCard: {
         id: number;
         title: string;
@@ -23,7 +23,9 @@ export async function revealTarotCard(majorCardId?: number, minorCardId?: number
         picturePage: number;
         pictureIndex: number;
     }
-}> {
+}
+
+export async function revealTarotCard(majorCardId?: number, minorCardId?: number): Promise<RevealTarotCard> {
 
     const randomMajorCard = MajorCards[
         (majorCardId || majorCardId === 0) ? majorCardId :
