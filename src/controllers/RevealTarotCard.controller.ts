@@ -14,7 +14,8 @@ export async function revealTarotCardController(request: FastifyRequest<{
     await recordTwitchUserRevealTarotCard({
         twitchUserId: request.query.twitchUserId,
         majorCardId: response.majorCard.id,
-        minorCardId: response.minorCard.id
+        minorCardId: response.minorCard.id,
+        data: response
     })
     return reply.status(200).send(response)
 }
