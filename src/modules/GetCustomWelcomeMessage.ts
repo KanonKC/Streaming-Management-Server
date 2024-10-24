@@ -1,5 +1,6 @@
 import { configDotenv } from "dotenv";
 import { prisma } from "../database/prisma";
+import { CustomWelcomeMessages } from "../constants/CustomWelcomeMessage.constant";
 
 const DefaultSoundFilename = "cafe_bell_door.mp3"
 const DefaultWelcomeMessage = "kanonkCrazyeyes"
@@ -9,9 +10,7 @@ const { WELCOME_SOUND_FULL_PATH } = process.env
 
 export async function getCustomWelcomeMessage(twitchUserId: string) {
 
-    const customWelcomeMessage = await prisma.customWelcomeMessage.findUnique({
-        where: { twitchUserId }
-    })
+    const customWelcomeMessage = CustomWelcomeMessages.find((item) => item.twitchUserId === twitchUserId)
 
     if (!customWelcomeMessage) {
         return {
