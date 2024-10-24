@@ -75,9 +75,10 @@ model Storage {
 }
 
 model TwitchUserRevealTarotCard {
-    id              Int      @id @default(autoincrement())
-    twitchUserId    String
-    majorCardId     Int
-    minorCardId     Int
-    timestamp       DateTime @default(now())
+    id                      Int      @id @default(autoincrement())
+    twitchUserId            String
+    majorCardId             Int
+    minorCardId             Int
+    data                    String   @default("{}")
+    timestamp               DateTime @default(now())
 }
