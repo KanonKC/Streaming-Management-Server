@@ -79,3 +79,8 @@ export async function getTwitchClips(broadcasterId: string, isFeature: boolean) 
 export async function getTwitchUserById(id: string) {
     return twitchAPI.get<TwitchUsers>('/users', { params: { id } })
 }
+
+export async function getTwitchUsersById(ids: string[]) {
+    const queryString = ids.map((id: string) => `id=${id}`).join("&");
+    return twitchAPI.get<TwitchUsers>(`/users?${queryString}`)
+}

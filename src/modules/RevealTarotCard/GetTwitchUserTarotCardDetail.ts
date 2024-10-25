@@ -56,6 +56,7 @@ export async function getTwitchUserTarotCardDetail(
     return {
         ...currentMajorCard,
         voiceActor,
+        imageUrl: `${SERVER_URL}/public/images/tarot-cards/${currentMajorCard.id}.png`,
         sounds: collectedSounds
     }
 
