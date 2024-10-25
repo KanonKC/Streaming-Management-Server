@@ -7,7 +7,7 @@ import { getRandomFoodController } from "./controllers/GetRandomFood.controller"
 import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
 import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
-import { revealTarotCardController } from "./controllers/RevealTarotCard.controller";
+import { getTwitchUserTarotCardCollectionsController, getTwitchUserTarotCardDetailController, revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
@@ -22,7 +22,10 @@ server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
 server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
+
 server.get('/tarot', revealTarotCardController)
+server.get('/tarot/:twitchUserId', getTwitchUserTarotCardCollectionsController)
+server.get('/tarot/:twitchUserId/:cardNumber', getTwitchUserTarotCardDetailController)
 
 server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)

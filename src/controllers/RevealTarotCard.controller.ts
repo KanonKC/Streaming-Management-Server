@@ -4,6 +4,8 @@ import { changeStreamTitle } from "../modules/ChangeStreamTitle"
 import { configDotenv } from "dotenv"
 import { revealTarotCard } from "../modules/RevealTarotCard/RevealTarotCard"
 import { recordTwitchUserRevealTarotCard } from "../modules/RevealTarotCard/RecordTwitchUserRevealTarotCard"
+import { getTwitchUserTarotCardDetail } from "../modules/RevealTarotCard/GetTwitchUserTarotCardDetail"
+import { getTwitchUserTarotCardCollections } from "../modules/RevealTarotCard/GetTwitchUserTarotCardCollections"
 
 export async function revealTarotCardController(request: FastifyRequest<{
     Querystring: {
@@ -19,3 +21,25 @@ export async function revealTarotCardController(request: FastifyRequest<{
     })
     return reply.status(200).send(response)
 }
+
+export async function getTwitchUserTarotCardCollectionsController(request: FastifyRequest<{
+    Params: {
+        twitchUserId: string
+    }
+}>, reply: FastifyReply) {
+    const { twitchUserId } = request.params
+    const response = await getTwitchUserTarotCardCollections(twitchUserId)
+    return reply.status(200).send(response)
+}
+
+export async function getTwitchUserTarotCardDetailController(request: FastifyRequest<{
+    Params: {
+        twitchUserId: string
+        cardNumber: string
+    }
+}>, reply: FastifyReply) {
+    const { twitchUserId, cardNumber } = request.params
+    const response = await getTwitchUserTarotCardDetail(twitchUserId, parseInt(cardNumber))
+    return reply.status(200).send(response)
+}
+
