@@ -35,7 +35,7 @@ export async function getTwitchUserTarotCardCollectionsController(
 ) {
 	const { twitchUserId } = request.params;
 	const response = await getTwitchUserTarotCardCollections(twitchUserId);
-	return reply.status(200).send({ data: response });
+	return reply.status(200).send({ majorCards: response });
 }
 
 export async function getTwitchUserTarotCardDetailController(
