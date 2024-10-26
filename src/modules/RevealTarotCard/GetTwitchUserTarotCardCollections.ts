@@ -1,8 +1,11 @@
 import { MajorCards } from "../../constants/Tarot.constant";
 import { prisma } from "../../database/prisma";
-import { getTwitchUsersById } from "../../services/Twitch.service";
+import {
+	getTwitchUsersById,
+	getTwitchUsersChatColorById,
+} from "../../services/Twitch.service";
 import { TarotCard } from "../../types/Tarot.type";
-import { TwitchUsers } from "../../types/Twitch.type";
+import { TwitchUser, TwitchUsers } from "../../types/Twitch.type";
 import { onlyUnique } from "../../utils/OnlyUnique.util";
 import { RevealTarotCard } from "./RevealTarotCard";
 
@@ -15,7 +18,7 @@ function getSoundFilename(card: RevealTarotCard) {
 function getCollectedSoundsAndVoiceActor(
 	userRecordData: RevealTarotCard[],
 	currentMajorCard: TarotCard,
-	twitchVoiceActorsList: TwitchUsers
+	twitchVoiceActorsList: (TwitchUser & { color: string })[]
 ) {
 	const collectedSoundFilenames = userRecordData.map((record) =>
 		getSoundFilename(record)
@@ -32,7 +35,7 @@ function getCollectedSoundsAndVoiceActor(
 	let voiceActor = null;
 
 	if (collectedSounds.length > 0 && collectedSounds[0].voiceActorTwitchId) {
-		const voiceActorProfile = twitchVoiceActorsList.data.find(
+		const voiceActorProfile = twitchVoiceActorsList.find(
 			(voiceActor) =>
 				voiceActor.id === collectedSounds[0].voiceActorTwitchId
 		);
@@ -42,17 +45,19 @@ function getCollectedSoundsAndVoiceActor(
 				displayName: voiceActorProfile.display_name,
 				profileUrl: voiceActorProfile.profile_image_url,
 				youtube: collectedSounds[0].voiceActorCustomURL || null,
+				color: voiceActorProfile.color,
 			};
 		}
 	}
 
-    return {
-        sounds: collectedSounds,
-        voiceActor
-    }
+	return {
+		sounds: collectedSounds,
+		voiceActor,
+	};
 }
 
 export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
+
 	const userRecords = await prisma.twitchUserRevealTarotCard.findMany({
 		where: { twitchUserId },
 	});
@@ -63,12 +68,22 @@ export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
 		.flat()
 		.filter(onlyUnique);
 
+	const twitchVoiceActorsChatColorResponse =
+		await getTwitchUsersChatColorById(voiceActorTwitchIds as string[]);
 	const twitchVoiceActorsResponse = await getTwitchUsersById(
 		voiceActorTwitchIds as string[]
 	);
-	const twitchVoiceActorsList = twitchVoiceActorsResponse.data;
 
-	// const usersResponse = await getTwitchUsersById([twitchUserId]);
+
+	const twitchVoiceActorsList = twitchVoiceActorsResponse.data.data.map(
+		(user) => ({
+			...user,
+			color:
+				twitchVoiceActorsChatColorResponse.data.data.find(
+					(chatColor) => chatColor.user_id === user.id
+				)?.color || "",
+		})
+	);
 
 	const openedMajorCardId = userRecords.map((record) => record.majorCardId);
 
@@ -78,6 +93,10 @@ export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
 		description: card.description,
 		isUnlocked: openedMajorCardId.includes(card.id),
 		imageUrl: `${SERVER_URL}/public/images/tarots/${card.id}.png`,
-        ...getCollectedSoundsAndVoiceActor(userRecords.map((record) => JSON.parse(record.data)), card, twitchVoiceActorsList),
+		...getCollectedSoundsAndVoiceActor(
+			userRecords.map((record) => JSON.parse(record.data)),
+			card,
+			twitchVoiceActorsList
+		),
 	}));
 }

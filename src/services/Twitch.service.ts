@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction, TwitchUsers, UpdatePredctionPayload } from "../types/Twitch.type";
+import { CreatePredctionPayload, TwitchAuthorization, TwitchChannelInfo, TwitchClip, TwitchListAPIResponse, TwitchPrediction, TwitchUsers, TwitchUsersChatColor, UpdatePredctionPayload } from "../types/Twitch.type";
 import axios, { AxiosResponse } from "axios";
 import { ListAPIResponse } from "../types/Controller.type";
 import { generateRandomString } from "../utils/RandomString.util";
@@ -83,4 +83,9 @@ export async function getTwitchUserById(id: string) {
 export async function getTwitchUsersById(ids: string[]) {
     const queryString = ids.map((id: string) => `id=${id}`).join("&");
     return twitchAPI.get<TwitchUsers>(`/users?${queryString}`)
+}
+
+export async function getTwitchUsersChatColorById(ids: string[]) {
+    const queryString = ids.map((id: string) => `user_id=${id}`).join("&");
+    return twitchAPI.get<TwitchUsersChatColor>(`/chat/color?${queryString}`)
 }
