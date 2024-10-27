@@ -12,6 +12,7 @@ import { showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
+import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
 
 const server = fastify()
 
@@ -31,9 +32,7 @@ server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedCon
 server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
 
 createKillerQueueRequestRoutes(server)
-
-server.get('/magic-number-mystery-boxes/create/:twitchRewardId', createMagicNumberMysteryBoxController)
-server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumberMysteryBoxController)
+createMagicNumberMysteryBoxRoutes(server)
 
 server.get('/spotify/callback', spotifyAuthorizationCallbackController)
 server.get('/spotify/player', showCurrentMusicQueueController)

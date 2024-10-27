@@ -1,5 +1,5 @@
-import { prisma } from "../../database/prisma";
-import { SolveMagicNumberMysteryBoxPayload } from "../../types/MagicNumberMysteryBox.type";
+import { prisma } from "../../../database/prisma";
+import { SolveMagicNumberMysteryBoxPayload } from "../types/MagicNumberMysteryBox.type";
 
 export async function solveMagicNumberMysteryBox(
     twitchRewardId: string,

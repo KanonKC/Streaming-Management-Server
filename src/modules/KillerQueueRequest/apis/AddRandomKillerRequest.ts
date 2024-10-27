@@ -1,4 +1,4 @@
-import { DBDKillerList } from "../../../constants/DbdKiller.constant";
+import { DBDKillerList } from "../constants/DbdKiller.constant";
 import { prisma } from "../../../database/prisma";
 import { getKillerRequestQueues } from "./GetKillerRequestQueues";
 
