@@ -1,7 +1,7 @@
-import { TAROT_CARD_SOUND_PATH } from "../../constants/LocalFilePath.constant";
-import { MajorCards, MinorCards } from "../../constants/Tarot.constant"
-import { getTwitchUserById } from "../../services/Twitch.service";
-import { getMediaDuration } from "../../utils/GetMediaDuration.util";
+import { TAROT_CARD_SOUND_PATH } from "../../../constants/LocalFilePath.constant";
+import { MajorCards, MinorCards } from "../constants/TarotCard.constant"
+import { getTwitchUserById } from "../../../services/Twitch.service";
+import { getMediaDuration } from "../../../utils/GetMediaDuration.util";
 
 export interface RevealTarotCard {
     majorCard: {

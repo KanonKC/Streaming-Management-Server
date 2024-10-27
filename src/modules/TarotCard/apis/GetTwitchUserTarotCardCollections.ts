@@ -1,13 +1,13 @@
-import { MajorCards } from "../../constants/Tarot.constant";
-import { prisma } from "../../database/prisma";
+import { prisma } from "../../../database/prisma";
 import {
 	getTwitchUsersById,
 	getTwitchUsersChatColorById,
-} from "../../services/Twitch.service";
-import { TarotCard } from "../../types/Tarot.type";
-import { TwitchUser, TwitchUsers } from "../../types/Twitch.type";
-import { onlyUnique } from "../../utils/OnlyUnique.util";
+} from "../../../services/Twitch.service";
+import { TarotCard } from "../types/TarotCard.type";
+import { TwitchUser, TwitchUsers } from "../../../types/Twitch.type";
+import { onlyUnique } from "../../../utils/OnlyUnique.util";
 import { RevealTarotCard } from "./RevealTarotCard";
+import { MajorCards } from "../constants/TarotCard.constant";
 
 const { SERVER_URL } = process.env;
 

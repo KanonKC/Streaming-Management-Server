@@ -1,7 +1,6 @@
-import { MajorCards } from "../../constants/Tarot.constant";
-import { prisma } from "../../database/prisma";
-import { getTwitchUserById } from "../../services/Twitch.service";
-import { TarotCard, TarotCardSoundProfile } from "../../types/Tarot.type";
+import { prisma } from "../../../database/prisma";
+import { getTwitchUserById } from "../../../services/Twitch.service";
+import { MajorCards } from "../constants/TarotCard.constant";
 import { RevealTarotCard } from "./RevealTarotCard";
 
 const { SERVER_URL } = process.env

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { createMagicNumberMysteryBox } from "../modules/MagicNumberMysteryBox/apis/CreateMagicNumberMysteryBox"
-import { solveMagicNumberMysteryBox } from "../modules/MagicNumberMysteryBox/apis/SolveMagicNumberMysteryBox"
+import { createMagicNumberMysteryBox } from "../apis/CreateMagicNumberMysteryBox"
+import { solveMagicNumberMysteryBox } from "../apis/SolveMagicNumberMysteryBox"
 
 export async function createMagicNumberMysteryBoxController(request: FastifyRequest<{
     Querystring: {

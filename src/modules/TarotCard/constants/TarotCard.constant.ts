@@ -1,4 +1,4 @@
-import { TarotCard } from "../types/Tarot.type";
+import { TarotCard } from "../types/TarotCard.type";
 
 export const MajorCards: TarotCard[] = [
     {

@@ -1,11 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getChannelInfo } from "../services/Twitch.service";
-import { changeStreamTitle } from "../modules/ChangeStreamTitle";
-import { configDotenv } from "dotenv";
-import { revealTarotCard } from "../modules/RevealTarotCard/RevealTarotCard";
-import { recordTwitchUserRevealTarotCard } from "../modules/RevealTarotCard/RecordTwitchUserRevealTarotCard";
-import { getTwitchUserTarotCardDetail } from "../modules/RevealTarotCard/GetTwitchUserTarotCardDetail";
-import { getTwitchUserTarotCardCollections } from "../modules/RevealTarotCard/GetTwitchUserTarotCardCollections";
+import { getTwitchUserTarotCardCollections } from "../apis/GetTwitchUserTarotCardCollections";
+import { getTwitchUserTarotCardDetail } from "../apis/GetTwitchUserTarotCardDetail";
+import { recordTwitchUserRevealTarotCard } from "../apis/RecordTwitchUserRevealTarotCard";
+import { revealTarotCard } from "../apis/RevealTarotCard";
 
 export async function revealTarotCardController(
 	request: FastifyRequest<{

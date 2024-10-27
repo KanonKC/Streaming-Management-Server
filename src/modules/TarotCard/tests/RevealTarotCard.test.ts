@@ -1,4 +1,4 @@
-import { revealTarotCard } from "../../modules/RevealTarotCard/RevealTarotCard"
+import { revealTarotCard } from "../apis/RevealTarotCard"
 
 describe('RevealTarotCard', () => {
     describe('Basic functionality', () => {
