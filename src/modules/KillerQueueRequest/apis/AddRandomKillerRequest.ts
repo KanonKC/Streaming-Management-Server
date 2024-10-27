@@ -1,6 +1,6 @@
-import { DBDKillerList } from "../../constants/DbdKiller.constant";
-import { prisma } from "../../database/prisma";
-import { getKillerRequestQueueTwitchText } from "../../utils/KillerRequestQueue.util";
+import { DBDKillerList } from "../../../constants/DbdKiller.constant";
+import { prisma } from "../../../database/prisma";
+import { getKillerRequestQueues } from "./GetKillerRequestQueues";
 
 export async function addRandomKillerRequest(twitchUserId: string, twitchUsername: string) {
     
@@ -23,7 +23,7 @@ export async function addRandomKillerRequest(twitchUserId: string, twitchUsernam
         }
     })
     
-    const twitchText = await getKillerRequestQueueTwitchText()
+    const twitchText = await getKillerRequestQueues()
 
     return { ...queue, ...twitchText }
 }

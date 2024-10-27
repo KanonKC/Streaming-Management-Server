@@ -1,5 +1,5 @@
-import { prisma } from "../../database/prisma";
-import { getKillerRequestQueueTwitchText } from "../../utils/KillerRequestQueue.util";
+import { prisma } from "../../../database/prisma";
+import { getKillerRequestQueues } from "./GetKillerRequestQueues";
 
 export async function markKillerRequestAsDone(index: number) {
     const queues = await prisma.killerRequestQueue.findMany({
@@ -32,7 +32,7 @@ export async function markKillerRequestAsDone(index: number) {
         },
     })
 
-    const twitchText = await getKillerRequestQueueTwitchText()
+    const twitchText = await getKillerRequestQueues()
 
     return { nextQueue, ...twitchText }
 }

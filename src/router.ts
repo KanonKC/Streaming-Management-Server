@@ -4,7 +4,6 @@ import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAll
 import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcomeMessage.controller";
 import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQuestion.controller";
 import { getRandomFoodController } from "./controllers/GetRandomFood.controller";
-import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
 import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { getTwitchUserTarotCardCollectionsController, getTwitchUserTarotCardDetailController, revealTarotCardController } from "./controllers/RevealTarotCard.controller";
@@ -12,6 +11,7 @@ import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipControl
 import { showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
+import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
 
 const server = fastify()
 
@@ -30,9 +30,7 @@ server.get('/tarot/:twitchUserId/:cardNumber', getTwitchUserTarotCardDetailContr
 server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
 server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
 
-server.get('/killer-queue-requests', getKillerRequestQueuesController)
-server.get('/killer-queue-requests/add', addKillerRequestController)
-server.get('/killer-queue-requests/mark/:index', markKillerRequestAsDoneController)
+createKillerQueueRequestRoutes(server)
 
 server.get('/magic-number-mystery-boxes/create/:twitchRewardId', createMagicNumberMysteryBoxController)
 server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumberMysteryBoxController)

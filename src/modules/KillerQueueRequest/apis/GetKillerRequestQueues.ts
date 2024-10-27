@@ -1,9 +1,8 @@
-import { KillerRequestQueue } from "@prisma/client";
-import { prisma } from "../database/prisma";
+import { prisma } from "../../../database/prisma";
 
 const QueueShowCount = 5;
 
-export async function getKillerRequestQueueTwitchText() {
+export async function getKillerRequestQueues() {
 
     const killerRequestQueueList = await prisma.killerRequestQueue.findMany({
         where: {

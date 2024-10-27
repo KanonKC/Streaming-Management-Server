@@ -1,4 +1,4 @@
-import { addKillerRequest } from "../../modules/KillerQueueRequest"
+import { addKillerRequest } from "../apis/AddKillerRequest"
 
 describe('KillerQueueRequest', () => {
     describe('addKillerRequest', () => {

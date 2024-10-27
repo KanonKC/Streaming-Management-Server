@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { addKillerRequest, getKillerRequestQueues, markKillerRequestAsDone } from "../modules/KillerQueueRequest"
-import { addRandomKillerRequest } from "../modules/KillerQueueRequest/AddRandomKillerRequest"
+import { addRandomKillerRequest } from "../apis/AddRandomKillerRequest"
+import { addKillerRequest } from "../apis/AddKillerRequest"
+import { getKillerRequestQueues } from "../apis/GetKillerRequestQueues"
+import { markKillerRequestAsDone } from "../apis/MarkKillerRequestAsDone"
 
 export async function addKillerRequestController(request: FastifyRequest<{
     Querystring: {
