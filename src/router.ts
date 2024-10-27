@@ -7,11 +7,12 @@ import { getRandomFoodController } from "./controllers/GetRandomFood.controller"
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
 import { showImageController } from "./controllers/ShowImage.controller";
-import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
+import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./modules/SpotifyMusicRequest/controllers/SpotifyMusicRequest.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
 import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
 import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
+import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
 
 const server = fastify()
 
@@ -31,10 +32,7 @@ server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRede
 createKillerQueueRequestRoutes(server)
 createMagicNumberMysteryBoxRoutes(server)
 
-server.get('/spotify/callback', spotifyAuthorizationCallbackController)
-server.get('/spotify/player', showCurrentMusicQueueController)
-server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
-server.get('/spotify/player/skip', skipToNextMusicController)
+createSpotifyMusicRequestRoutes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 

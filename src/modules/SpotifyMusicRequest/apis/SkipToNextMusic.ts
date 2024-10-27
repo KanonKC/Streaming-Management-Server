@@ -1,4 +1,4 @@
-import { skipToNextItemInPlaybackQueue } from "../../services/Spotify.service";
+import { skipToNextItemInPlaybackQueue } from "../../../services/Spotify.service";
 import { showCurrentMusicQueue } from "./ShowCurrentMusicQueue";
 
 export async function skipToNextMusic() {

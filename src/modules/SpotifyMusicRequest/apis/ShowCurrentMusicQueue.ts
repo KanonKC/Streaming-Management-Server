@@ -1,6 +1,6 @@
-import { getUserQueue } from "../../services/Spotify.service";
-import { SpotifyTrack } from "../../types/Spotify.type";
-import { simplifyTrackText } from "../../utils/Spotify.util";
+import { getUserQueue } from "../../../services/Spotify.service";
+import { SpotifyTrack } from "../../../types/Spotify.type";
+import { simplifyTrackText } from "../../../utils/Spotify.util";
 
 const MaxTextCount = 250
 const QueueShowCount = 3

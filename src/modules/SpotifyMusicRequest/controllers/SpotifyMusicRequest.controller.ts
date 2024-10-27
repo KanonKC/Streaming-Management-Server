@@ -1,13 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { getChannelInfo } from "../services/Twitch.service"
-import { changeStreamTitle } from "../modules/ChangeStreamTitle"
+import { getChannelInfo } from "../../../services/Twitch.service"
+import { changeStreamTitle } from "../../ChangeStreamTitle"
 import { configDotenv } from "dotenv"
 import { post } from "request"
-import { getUserLoginAccessToken } from "../services/Spotify.service"
-import { spotifyStore } from "../stores/Spotify.store"
-import { addMusicTrackToSpotifyPlayer } from "../modules/SpotifyMusicRequest/AddMusicTrackToSpotifyPlayer"
-import { showCurrentMusicQueue } from "../modules/SpotifyMusicRequest/ShowCurrentMusicQueue"
-import { skipToNextMusic } from "../modules/SpotifyMusicRequest/SkipToNextMusic"
+import { getUserLoginAccessToken } from "../../../services/Spotify.service"
+import { spotifyStore } from "../../../stores/Spotify.store"
+import { addMusicTrackToSpotifyPlayer } from "../apis/AddMusicTrackToSpotifyPlayer"
+import { showCurrentMusicQueue } from "../apis/ShowCurrentMusicQueue"
+import { skipToNextMusic } from "../apis/SkipToNextMusic"
 
 configDotenv()
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, PORT  } = process.env 
