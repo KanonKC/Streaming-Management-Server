@@ -6,7 +6,7 @@ import { configDotenv } from "dotenv";
 import { detectImageMatureContent } from "../services/Sightengine.service";
 
 configDotenv();
-const { STREAM_MANAGEMENT_SERVER_FULL_PATH } = process.env;
+const { STREAMING_MANAGEMENT_SERVER_ABSOLUTE_PATH } = process.env;
 const IMAGE_PATH = 'dumps/show-images'
 
 export async function showImage(url: string, twitchId: string, username: string): Promise<{
@@ -63,7 +63,7 @@ export async function showImage(url: string, twitchId: string, username: string)
         }
     })
 
-    const fullImagePath = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PATH}/${filename}`;
+    const fullImagePath = `${STREAMING_MANAGEMENT_SERVER_ABSOLUTE_PATH}/${IMAGE_PATH}/${filename}`;
 
     const imageBuffer = await image.toBuffer();
     await sharp(imageBuffer).toFile(fullImagePath);
