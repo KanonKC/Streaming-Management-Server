@@ -7,66 +7,85 @@ import { detectImageMatureContent } from "../services/Sightengine.service";
 
 configDotenv();
 const { STREAM_MANAGEMENT_SERVER_FULL_PATH } = process.env;
-const IMAGE_PATH = 'dumps/show-images'
+const IMAGE_PATH = "dumps/show-images";
 
-export async function showImage(url: string, twitchId: string, username: string): Promise<{
-    code: "INVALID_URL" | "NOT_IMAGE" | "CONTAIN_MATURE" | "ERROR" | "SUCCESS";
-    imagePath: string | null;
-    matureContentText?: string;
+export interface ShowImageOptions {
+	outputVideoFilePath?: string;
+}
+
+export async function showImage(
+	url: string,
+	twitchId?: string,
+	username?: string,
+	options?: ShowImageOptions
+): Promise<{
+	code: "INVALID_URL" | "NOT_IMAGE" | "CONTAIN_MATURE" | "ERROR" | "SUCCESS";
+    filename: string | null;
+	imagePath: string | null;
+	matureContentText?: string;
 }> {
-    const timestamp = new Date().getTime();
-    const filename = `${timestamp}_${twitchId}.png`;
+	const timestamp = new Date().getTime();
+	const filename = `${timestamp}_${twitchId}.png`;
 
-    try {
-        new URL(url);
-    }
-    catch (error) {
-        return { code: "INVALID_URL", imagePath: null };
-    }
+	try {
+		new URL(url);
+	} catch (error) {
+		return { code: "INVALID_URL", imagePath: null, filename: null };
+	}
 
-    const imageResponse = await axios.get(url, { responseType: 'arraybuffer' });
-    const contentType:string = imageResponse.headers['content-type'];
+	const imageResponse = await axios.get(url, { responseType: "arraybuffer" });
+	const contentType: string = imageResponse.headers["content-type"];
 
-    if (!contentType.includes('image')) {
-        return { code: "NOT_IMAGE", imagePath: null };
-    } 
+	if (!contentType.includes("image")) {
+		return { code: "NOT_IMAGE", imagePath: null, filename: null };
+	}
 
-    const matureContentResponse = await detectImageMatureContent(url);
-    const { nudity, gore } = matureContentResponse.data;
+	const matureContentResponse = await detectImageMatureContent(url);
+	const { nudity, gore } = matureContentResponse.data;
 
-    const matureContentTags = []
-    if (nudity.none < 0.9) matureContentTags.push("Nudity");
-    if (gore.prob > 0.35) matureContentTags.push("Gore");
-    
-    if (matureContentTags.length > 0) {
-        return { code: "CONTAIN_MATURE", imagePath: null, matureContentText: matureContentTags.join(", ") };
-    }
+	const matureContentTags = [];
+	if (nudity.none < 0.9) matureContentTags.push("Nudity");
+	if (gore.prob > 0.35) matureContentTags.push("Gore");
 
-    const image = sharp(imageResponse.data)
-    const { width, height } = await image.metadata();
+	if (matureContentTags.length > 0) {
+		return {
+			code: "CONTAIN_MATURE",
+			filename: null,
+            imagePath: null,
+			matureContentText: matureContentTags.join(", "),
+		};
+	}
 
-    if (!width || !height) return { code: "ERROR", imagePath: null };
+	const image = sharp(imageResponse.data);
+	const { width, height } = await image.metadata();
 
-    if (width > height) {
-        image.resize({ width: 500 });
-    }
-    else {
-        image.resize({ height: 500 });
-    }
+	if (!width || !height) return { code: "ERROR", imagePath: null, filename: null };
 
-    await prisma.showImage.create({
-        data: {
-            twitchId,
-            username,
-            imageUrl: url,
-            imageFilename: filename
-        }
-    })
+	if (width > height) {
+		image.resize({ width: 500 });
+	} else {
+		image.resize({ height: 500 });
+	}
 
-    const fullImagePath = `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PATH}/${filename}`;
+	if (twitchId && username) {
+		await prisma.showImage.create({
+			data: {
+				twitchId,
+				username,
+				imageUrl: url,
+				imageFilename: filename,
+			},
+		});
+	}
 
-    const imageBuffer = await image.toBuffer();
-    await sharp(imageBuffer).toFile(fullImagePath);
+	const fullImagePath = options?.outputVideoFilePath ? `${options.outputVideoFilePath}/${filename}` : `${STREAM_MANAGEMENT_SERVER_FULL_PATH}/${IMAGE_PATH}/${filename}`;
 
-    return { code: "SUCCESS", imagePath: fullImagePath };
+	const imageBuffer = await image.toBuffer();
+	await sharp(imageBuffer).toFile(fullImagePath);
+
+	return {
+		code: "SUCCESS",
+        filename: filename,
+		imagePath: fullImagePath,
+	};
 }

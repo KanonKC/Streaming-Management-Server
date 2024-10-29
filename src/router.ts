@@ -9,7 +9,7 @@ import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxContro
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { getTwitchUserTarotCardCollectionsController, getTwitchUserTarotCardDetailController, revealTarotCardController } from "./controllers/RevealTarotCard.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
-import { showImageController } from "./controllers/ShowImage.controller";
+import { advancedShowImageController, showImageController } from "./controllers/ShowImage.controller";
 import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 
@@ -18,10 +18,12 @@ const server = fastify()
 server.get('/title', changeStreamTitleController)
 server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
-server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
 server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
+
+server.get('/image', showImageController)
+server.post('/image', advancedShowImageController)
 
 server.get('/tarot', revealTarotCardController)
 server.get('/tarot/:twitchUserId', getTwitchUserTarotCardCollectionsController)
