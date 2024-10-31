@@ -44,8 +44,8 @@ export async function showImage(
 	const { nudity, gore } = matureContentResponse.data;
 
 	const matureContentTags = [];
-	if (nudity.none < 0.9) matureContentTags.push("Nudity");
-	if (gore.prob > 0.35) matureContentTags.push("Gore");
+	if (nudity.none < 0.6) matureContentTags.push("Nudity");
+	if (gore.prob > 0.5) matureContentTags.push("Gore");
 
 	if (matureContentTags.length > 0) {
 		return {
