@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { configDotenv } from "dotenv";
 import { generateRandomString } from "../utils/RandomString.util";
-import { post } from "request";
 import { AddItemToPlaybackQueuePayload, SpotifyAuthorization, SpotifySearchResult, SpotifyTrack, SpotifyUserQueue } from "../types/Spotify.type";
 import { spotifyStore } from "../stores/Spotify.store";
 
