@@ -1,6 +1,6 @@
 import { exec } from "child_process";
-import { SHOUTOUT_CLIP_FULL_PATH } from "../constants/LocalFilePath.constant";
-import { generateRandomString } from "./RandomString.util";
+import { SHOUTOUT_CLIP_FULL_PATH } from "../../../constants/LocalFilePath.constant";
+import { generateRandomString } from "../../../utils/RandomString.util";
 
 const FULL_PATH = SHOUTOUT_CLIP_FULL_PATH;
 
