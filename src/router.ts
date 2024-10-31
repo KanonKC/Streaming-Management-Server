@@ -6,23 +6,24 @@ import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQu
 import { getRandomFoodController } from "./controllers/GetRandomFood.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
-import { showImageController } from "./controllers/ShowImage.controller";
-import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./modules/SpotifyMusicRequest/controllers/SpotifyMusicRequest.controller";
+import { advancedShowImageController, showImageController } from "./controllers/ShowImage.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
 import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
-import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
 import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
+import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
 
 const server = fastify()
 
 server.get('/title', changeStreamTitleController)
 server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
-server.get('/image', showImageController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
 server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
+
+server.get('/image', showImageController)
+server.post('/image', advancedShowImageController)
 
 createTarotCardRoutes(server)
 
