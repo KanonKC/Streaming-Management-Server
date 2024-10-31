@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { clearBackslash } from "../../../utils/ClearBackslash.util";
-import { showImage, ShowImageOptions } from "../../ShowImage";
+import { ShowImageOptions } from "../../ShowImage";
+import { showAnImage } from "../apis/ShowAnImage";
 
 type ShowImage = FastifyRequest<{
 	Querystring: { url: string };
@@ -21,7 +22,7 @@ export async function showAnImageController(
 ) {
 	const { imageurl, twitchid, username } = request.headers;
 	const formatUrl = clearBackslash(String(imageurl));
-	const image = await showImage(formatUrl, twitchid, username);
+	const image = await showAnImage(formatUrl, twitchid, username);
 	return reply.send(image);
 }
 
@@ -30,6 +31,11 @@ export async function advancedShowAnImageController(
 	reply: FastifyReply
 ) {
 	const { body } = request;
-	const image = await showImage(body.url, undefined, undefined, body.options);
+	const image = await showAnImage(
+		body.url,
+		undefined,
+		undefined,
+		body.options
+	);
 	return reply.send(image);
 }

@@ -6,13 +6,12 @@ import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQu
 import { getRandomFoodController } from "./controllers/GetRandomFood.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
-import { advancedShowImageController, showImageController } from "./modules/ShowAnImage/controllers/ShowAnImage.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
 import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
+import { createShowAnImageRoutes } from "./modules/ShowAnImage/routes/ShowAnImage.route";
 import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
 import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
-import { createShowAnImageRoutes } from "./modules/ShowAnImage/routes/ShowAnImage.route";
 
 const server = fastify()
 

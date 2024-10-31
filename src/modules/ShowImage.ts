@@ -12,7 +12,7 @@ export interface ShowImageOptions {
 	outputVideoFilePath?: string;
 }
 
-export async function showImage(
+export async function showAnImage(
 	url: string,
 	twitchId?: string,
 	username?: string,
