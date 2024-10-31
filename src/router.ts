@@ -6,12 +6,13 @@ import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQu
 import { getRandomFoodController } from "./controllers/GetRandomFood.controller";
 import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
 import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
-import { advancedShowImageController, showImageController } from "./controllers/ShowImage.controller";
+import { advancedShowImageController, showImageController } from "./modules/ShowAnImage/controllers/ShowAnImage.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
 import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
 import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
 import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
 import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
+import { createShowAnImageRoutes } from "./modules/ShowAnImage/routes/ShowAnImage.route";
 
 const server = fastify()
 
@@ -22,9 +23,7 @@ server.get('/feature-clip', showFeaturedTwitchClipController)
 server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
 server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
 
-server.get('/image', showImageController)
-server.post('/image', advancedShowImageController)
-
+createShowAnImageRoutes(server)
 createTarotCardRoutes(server)
 
 server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
