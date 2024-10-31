@@ -1,6 +1,5 @@
 import { configDotenv } from "dotenv";
-import { prisma } from "../database/prisma";
-import { CustomWelcomeMessages } from "../constants/CustomWelcomeMessage.constant";
+import { CustomWelcomeMessages } from "../../../constants/CustomWelcomeMessage.constant";
 
 const DefaultSoundFilename = "cafe_bell_door.mp3"
 const DefaultWelcomeMessage = "kanonkCrazyeyes"

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getCustomWelcomeMessage } from "../modules/GetCustomWelcomeMessage";
 import { configDotenv } from "dotenv";
+import { getCustomWelcomeMessage } from "../apis/GetCustomWelcomeMessage";
 
 configDotenv()
 const { TWITCH_BROADCASTER_ID } = process.env

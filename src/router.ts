@@ -12,6 +12,7 @@ import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryB
 import { createShowAnImageRoutes } from "./modules/ShowAnImage/routes/ShowAnImage.route";
 import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
 import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
+import { createCustomWelcomeMessageRoutes } from "./modules/CustomWelcomeMessage/routes/CustomWelcomeMessage.route";
 
 const server = fastify()
 
@@ -20,8 +21,7 @@ server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
 server.get('/feature-clip', showFeaturedTwitchClipController)
 server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
-server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
-
+createCustomWelcomeMessageRoutes(server)
 createShowAnImageRoutes(server)
 createTarotCardRoutes(server)
 
