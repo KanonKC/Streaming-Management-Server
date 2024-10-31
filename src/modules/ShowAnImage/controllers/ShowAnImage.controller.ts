@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { clearBackslash } from "../../../utils/ClearBackslash.util";
-import { ShowImageOptions } from "../../ShowImage";
-import { showAnImage } from "../apis/ShowAnImage";
+import { showAnImage, ShowImageOptions } from "../apis/ShowAnImage";
 
 type ShowImage = FastifyRequest<{
 	Querystring: { url: string };
