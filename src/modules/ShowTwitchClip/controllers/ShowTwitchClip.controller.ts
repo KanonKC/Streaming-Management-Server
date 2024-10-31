@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { showFeaturedTwitchClip, ShowFeatureTwitchClipOptions } from "../modules/ShowFeaturedTwitchClip";
+import { showFeaturedTwitchClip, ShowFeatureTwitchClipOptions } from "../apis/ShowFeaturedTwitchClip";
 
 type ShowFeaturedClip = FastifyRequest<{
     Querystring: { broadcasterId: string }
