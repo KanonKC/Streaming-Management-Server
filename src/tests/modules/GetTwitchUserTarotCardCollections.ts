@@ -1,5 +1,5 @@
-import { getTwitchUserTarotCardCollections } from "../../modules/RevealTarotCard/GetTwitchUserTarotCardCollections";
-import { getTwitchUserTarotCardDetail } from "../../modules/RevealTarotCard/GetTwitchUserTarotCardDetail";
+import { getTwitchUserTarotCardCollections } from "../../modules/TarotCard/apis/GetTwitchUserTarotCardCollections";
+import { getTwitchUserTarotCardDetail } from "../../modules/TarotCard/apis/GetTwitchUserTarotCardDetail";
 
 // getTwitchUserTarotCardDetail("135783794", 9).then((result) => {
 //     console.log(result);

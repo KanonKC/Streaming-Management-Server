@@ -1,48 +1,34 @@
 import fastify from "fastify";
 import { changeStreamTitleController } from "./controllers/ChangeStreamTitle.controller";
-import { getAllTwitchChannelPointRedeemedController } from "./controllers/GetAllTwitchChannelPointRedeemed.controller";
-import { getCustomWelcomeMessageController } from "./controllers/GetCustomWelcomeMessage.controller";
 import { getIceBreakingQuestionController } from "./controllers/GetIceBreakingQuestion.controller";
 import { getRandomFoodController } from "./controllers/GetRandomFood.controller";
-import { addKillerRequestController, getKillerRequestQueuesController, markKillerRequestAsDoneController } from "./controllers/KillerQueueRequest.controller";
-import { createMagicNumberMysteryBoxController, solveMagicNumberMysteryBoxController } from "./controllers/MagicNumberMysteryBox.controller";
-import { recordTwitchChannelPointRedeemedController } from "./controllers/RecordTwitchChannelPointRedeemed.controller";
-import { getTwitchUserTarotCardCollectionsController, getTwitchUserTarotCardDetailController, revealTarotCardController } from "./controllers/RevealTarotCard.controller";
-import { advancedShowFeaturedTwitchClipController, showFeaturedTwitchClipController } from "./controllers/ShowFeaturedClip.controller";
-import { advancedShowImageController, showImageController } from "./controllers/ShowImage.controller";
-import { addMusicTrackToSpotifyPlayerController, showCurrentMusicQueueController, skipToNextMusicController, spotifyAuthorizationCallbackController } from "./controllers/Spotify.controller";
 import { twitchAuthorizationCallbackController } from "./controllers/Twitch.controller";
+import { createCustomWelcomeMessageRoutes } from "./modules/CustomWelcomeMessage/routes/CustomWelcomeMessage.route";
+import { createKillerQueueRequestRoutes } from "./modules/KillerQueueRequest/routes/KillerQueueRequest.route";
+import { createMagicNumberMysteryBoxRoutes } from "./modules/MagicNumberMysteryBox/routes/MagicNumberMysteryBox.route";
+import { createShowAnImageRoutes } from "./modules/ShowAnImage/routes/ShowAnImage.route";
+import { createShowTwtichClipRoutes } from "./modules/ShowTwitchClip/routes/ShowTwitchClip.route";
+import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/routes/SpotifyMusicRequest.route";
+import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
+import { createTwitchChannelPointLog } from "./modules/TwitchChannelPointLog/routes/TwitchChannelPointLog";
 
 const server = fastify()
 
 server.get('/title', changeStreamTitleController)
 server.get('/foods', getRandomFoodController)
 server.get('/ice-breaking', getIceBreakingQuestionController)
-server.get('/feature-clip', showFeaturedTwitchClipController)
-server.post('/feature-clip', advancedShowFeaturedTwitchClipController)
-server.get('/welcome-message/:twitchUserId', getCustomWelcomeMessageController)
 
-server.get('/image', showImageController)
-server.post('/image', advancedShowImageController)
+createShowTwtichClipRoutes(server)
+createCustomWelcomeMessageRoutes(server)
+createShowAnImageRoutes(server)
+createTarotCardRoutes(server)
 
-server.get('/tarot', revealTarotCardController)
-server.get('/tarot/:twitchUserId', getTwitchUserTarotCardCollectionsController)
-server.get('/tarot/:twitchUserId/:cardNumber', getTwitchUserTarotCardDetailController)
+createTwitchChannelPointLog(server)
 
-server.get('/twitch/channel-point-redeemed', getAllTwitchChannelPointRedeemedController)
-server.get('/twitch/channel-point-redeemed/create', recordTwitchChannelPointRedeemedController)
+createKillerQueueRequestRoutes(server)
+createMagicNumberMysteryBoxRoutes(server)
 
-server.get('/killer-queue-requests', getKillerRequestQueuesController)
-server.get('/killer-queue-requests/add', addKillerRequestController)
-server.get('/killer-queue-requests/mark/:index', markKillerRequestAsDoneController)
-
-server.get('/magic-number-mystery-boxes/create/:twitchRewardId', createMagicNumberMysteryBoxController)
-server.get('/magic-number-mystery-boxes/solve/:twitchRewardId', solveMagicNumberMysteryBoxController)
-
-server.get('/spotify/callback', spotifyAuthorizationCallbackController)
-server.get('/spotify/player', showCurrentMusicQueueController)
-server.get('/spotify/player/add', addMusicTrackToSpotifyPlayerController)
-server.get('/spotify/player/skip', skipToNextMusicController)
+createSpotifyMusicRequestRoutes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 
