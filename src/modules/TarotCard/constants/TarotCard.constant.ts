@@ -146,8 +146,8 @@ export const MajorCards: TarotCard[] = [
         description: "การเปลี่ยนแปลงกะทันหัน การทะเลาะเบาะแว้ง ต้องเตรียมใจให้ดี เพราะอาจเจอเรื่องไม่คาดฝัน ได้รับข่าวสารที่ไม่ทันได้เตรียมใจ หรือเกิดเรื่องบาดหมางใหญ่โตกับคนรอบตัว",
         sounds: [
             // { filename: "blank-10.mp3", voiceActor: "", voiceActorTwitchId: "849610457" }
-            { filename: "16_1.mp3", voiceActor: "", voiceActorTwitchId: "849610457" },
-            { filename: "16_2.mp3", voiceActor: "", voiceActorTwitchId: "849610457" },
+            { filename: "16_1.mp3", voiceActor: "", voiceActorTwitchId: "519032026" },
+            { filename: "16_2.mp3", voiceActor: "", voiceActorTwitchId: "519032026" },
         ],
     },
     {

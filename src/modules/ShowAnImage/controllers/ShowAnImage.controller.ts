@@ -22,6 +22,7 @@ export async function showAnImageController(
 	const { imageurl, twitchid, username } = request.headers;
 	const formatUrl = clearBackslash(String(imageurl));
 	const image = await showAnImage(formatUrl, twitchid, username);
+    console.log(image)
 	return reply.send(image);
 }
 

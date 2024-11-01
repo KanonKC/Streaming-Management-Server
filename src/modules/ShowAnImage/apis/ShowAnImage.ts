@@ -43,7 +43,7 @@ export async function showAnImage(
 	const { nudity, gore } = matureContentResponse.data;
 
 	const matureContentTags = [];
-	if (nudity.none < 0.6) matureContentTags.push("Nudity");
+	if (nudity.none < 0.8) matureContentTags.push("Nudity");
 	if (gore.prob > 0.5) matureContentTags.push("Gore");
 
 	if (matureContentTags.length > 0) {
@@ -80,7 +80,7 @@ export async function showAnImage(
 
 	const fullImagePath = options?.outputVideoFilePath
 		? `${options.outputVideoFilePath}/${filename}`
-		: `${STREAMING_MANAGEMENT_SERVER_ABSOLUTE_PATH}/${IMAGE_PATH}/${filename}`;
+		: `${IMAGE_PATH}/${filename}`;
 
 	const imageBuffer = await image.toBuffer();
 	await sharp(imageBuffer).toFile(fullImagePath);
