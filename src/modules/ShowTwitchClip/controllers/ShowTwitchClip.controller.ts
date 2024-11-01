@@ -19,7 +19,6 @@ export async function advancedShowFeaturedTwitchClipController(request: FastifyR
 }>, reply: FastifyReply) {
     const { broadcasterId } = request.query;
     const { options } = request.body;
-    console.log('controller options', options)
     const response = await showFeaturedTwitchClip(String(broadcasterId), options)
     return reply.status(200).send(response)
 }

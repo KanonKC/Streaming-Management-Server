@@ -1,4 +1,4 @@
-import { PUBLIC_URL, SHOUTOUT_CLIP_FULL_PATH } from "../../../constants/LocalFilePath.constant";
+import { PUBLIC_URL } from "../../../constants/LocalFilePath.constant";
 import { getTwitchClips } from "../../../services/Twitch.service";
 import { TwitchClip } from "../../../types/Twitch.type";
 import { downloadTwitchClip, DownloadTwitchClipOptions } from "../utils/DownloadTwitchClip.util";
@@ -36,7 +36,7 @@ export async function showFeaturedTwitchClip(
 
 	return {
 		videoUrl: `${PUBLIC_URL}/shoutout-clips/${downloadedVideo.filename}`,
-		filename: `${SHOUTOUT_CLIP_FULL_PATH}/${downloadedVideo.filename}`,
+		filename: `dumps/shoutout-clips/${downloadedVideo.filename}`,
 		videoFilename: downloadedVideo.filename,
 		outputVideoFilePath: downloadedVideo.outputVideoFilePath,
 		durationMilliseconds: Math.ceil(downloadedVideo.duration * 1000) - 1500,

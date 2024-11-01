@@ -20,22 +20,26 @@ export async function videoResize(
 ): Promise<{
 	filename: string;
 }> {
-	let filePath = `${FULL_PATH}/${filename}`;
+	
+	const generateString = generateRandomString(8);
+	const videoId = `${filename.split(".")[0]}_resize_${generateString}`;
+	const outputFilename = `${videoId}.mp4`;
+
+    let filePath = `${FULL_PATH}/${outputFilename}`;
 
 	if (options && options.outputVideoFilePath) {
 		filePath = options.outputVideoFilePath;
 	}
 
-	const generateString = generateRandomString(8);
-	const videoId = `${filename.split(".")[0]}_resize_${generateString}`;
-	const outputFilename = `${videoId}.mp4`;
-
+    const command = `ffmpeg -i ${FULL_PATH}/${filename} -s ${width}x${height} -y -c:a copy ${filePath}`
 	return new Promise((resolve, reject) => {
 		exec(
-			`ffmpeg -i ${FULL_PATH}/${filename} -s ${width}x${height} -c:a copy ${filePath}`,
+			command,
 			async (error) => {
 				if (error) {
-					reject(error);
+					reject({
+						filename: filename,
+					});
 				} else {
 					resolve({
 						filename: outputFilename,
@@ -115,7 +119,6 @@ export async function downloadTwitchClip(
 	let outputVideoFilePath = `${FULL_PATH}/${filename}`;
 
 	if (options && options.outputVideoFilePath) {
-		console.log("outputVideoFilePath", options.outputVideoFilePath);
 		outputVideoFilePath = `${options.outputVideoFilePath}/${filename}`;
 	}
 
@@ -126,7 +129,8 @@ export async function downloadTwitchClip(
 			if (error) {
 				throw new Error(error.message);
 			} else {
-				const duration = await getVideoDuration(filename, {
+
+                const duration = await getVideoDuration(filename, {
 					outputVideoFilePath: outputVideoFilePath,
 				});
 				const resolution = await getVideoResolution(filename, {
@@ -137,16 +141,24 @@ export async function downloadTwitchClip(
                 if (options && options.resolution) {
 
                     if (resolution.width !== options.resolution.width || resolution.height !== options.resolution.height) {
-                        const resizedFilename = await videoResize(
-                            filename,
-                            options.resolution.width,
-                            options.resolution.height
-                        );
+                        let resizedFilename: { filename: string };
+                        try {
+                            
+                            resizedFilename = await videoResize(
+                                filename,
+                                options.resolution.width,
+                                options.resolution.height
+                            );
+
+                        } catch (error) {
+                            console.error(error)
+                            resizedFilename = { filename: filename };
+                        }
+                        
                         filename = resizedFilename.filename;
                     }
 
                 }
-
 				resolve({ filename, duration, outputVideoFilePath });
 			}
 		});
