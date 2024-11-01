@@ -126,3 +126,10 @@ export interface TwitchUserChatColor {
 export interface TwitchUsersChatColor {
     data: TwitchUserChatColor[]
 }
+
+export interface TwitchGame {
+    id: string;
+    name: string;
+    box_art_url: string;
+    igdb_id: string;
+}

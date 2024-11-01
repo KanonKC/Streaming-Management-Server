@@ -1,7 +1,10 @@
 import { PUBLIC_URL } from "../../../constants/LocalFilePath.constant";
-import { getTwitchClips } from "../../../services/Twitch.service";
+import { getTwitchClips, getTwitchGamesByIds } from "../../../services/Twitch.service";
 import { TwitchClip } from "../../../types/Twitch.type";
-import { downloadTwitchClip, DownloadTwitchClipOptions } from "../utils/DownloadTwitchClip.util";
+import {
+	downloadTwitchClip,
+	DownloadTwitchClipOptions,
+} from "../utils/DownloadTwitchClip.util";
 
 export interface ShowFeatureTwitchClipOptions
 	extends DownloadTwitchClipOptions {}
@@ -26,12 +29,20 @@ export async function showFeaturedTwitchClip(
 		twitchClips = twitchClipsResponse.data.data;
 	}
 
-	const randomClipUrl =
-		twitchClips[Math.floor(Math.random() * twitchClips.length)].url;
+	const randomIndex = Math.floor(Math.random() * twitchClips.length);
+	const randomClipUrl = twitchClips[randomIndex].url;
+    const randomClipGameId = twitchClips[randomIndex].game_id;
+
+    const gameResponse = await getTwitchGamesByIds([randomClipGameId]);
+    console.log(gameResponse.data)
+    const gameData = gameResponse.data.data[0];
+    console.log(gameData)
+
 	const downloadVideoResponse = await downloadTwitchClip(
 		randomClipUrl,
 		options
 	);
+
 	const downloadedVideo = downloadVideoResponse;
 
 	return {
@@ -40,5 +51,7 @@ export async function showFeaturedTwitchClip(
 		videoFilename: downloadedVideo.filename,
 		outputVideoFilePath: downloadedVideo.outputVideoFilePath,
 		durationMilliseconds: Math.ceil(downloadedVideo.duration * 1000) - 1500,
-	};
+        gameName: gameData.name,
+        gameImageUrl: gameData.box_art_url.replace("{width}", "100").replace("{height}", "100"),
+    };
 }
