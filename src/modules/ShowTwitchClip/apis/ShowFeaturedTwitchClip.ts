@@ -1,5 +1,8 @@
 import { PUBLIC_URL } from "../../../constants/LocalFilePath.constant";
-import { getTwitchClips, getTwitchGamesByIds } from "../../../services/Twitch.service";
+import {
+	getTwitchClips,
+	getTwitchGamesByIds,
+} from "../../../services/Twitch.service";
 import { TwitchClip } from "../../../types/Twitch.type";
 import {
 	downloadTwitchClip,
@@ -31,27 +34,32 @@ export async function showFeaturedTwitchClip(
 
 	const randomIndex = Math.floor(Math.random() * twitchClips.length);
 	const randomClipUrl = twitchClips[randomIndex].url;
-    const randomClipGameId = twitchClips[randomIndex].game_id;
+	const randomClipGameId = twitchClips[randomIndex].game_id;
 
-    const gameResponse = await getTwitchGamesByIds([randomClipGameId]);
-    console.log(gameResponse.data)
-    const gameData = gameResponse.data.data[0];
-    console.log(gameData)
+	const gameResponse = await getTwitchGamesByIds([randomClipGameId]);
+	const gameData = gameResponse.data.data[0];
 
-	const downloadVideoResponse = await downloadTwitchClip(
-		randomClipUrl,
-		options
-	);
+	try {
+		const downloadVideoResponse = await downloadTwitchClip(
+			randomClipUrl,
+			options
+		);
 
-	const downloadedVideo = downloadVideoResponse;
+		const downloadedVideo = downloadVideoResponse;
 
-	return {
-		videoUrl: `${PUBLIC_URL}/shoutout-clips/${downloadedVideo.filename}`,
-		filename: `dumps/shoutout-clips/${downloadedVideo.filename}`,
-		videoFilename: downloadedVideo.filename,
-		outputVideoFilePath: downloadedVideo.outputVideoFilePath,
-		durationMilliseconds: Math.ceil(downloadedVideo.duration * 1000) - 1500,
-        gameName: gameData.name,
-        gameImageUrl: gameData.box_art_url.replace("{width}", "100").replace("{height}", "100"),
-    };
+		return {
+			videoUrl: `${PUBLIC_URL}/shoutout-clips/${downloadedVideo.filename}`,
+			filename: `dumps/shoutout-clips/${downloadedVideo.filename}`,
+			videoFilename: downloadedVideo.filename,
+			outputVideoFilePath: downloadedVideo.outputVideoFilePath,
+			durationMilliseconds:
+				Math.ceil(downloadedVideo.duration * 1000) - 1500,
+			gameName: gameData.name,
+			gameImageUrl: gameData.box_art_url
+				.replace("{width}", "100")
+				.replace("{height}", "100"),
+		};
+	} catch (error) {
+		return { filename: "" };
+	}
 }
