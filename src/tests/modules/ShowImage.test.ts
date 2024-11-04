@@ -1,14 +1,15 @@
 import { prisma } from "../../database/prisma"
-import { showImage } from "../../modules/ShowImage"
+import { showAnImage } from "../../modules/ShowAnImage/apis/ShowAnImage"
 
-describe('ShowImage', () => {
+describe('showAnImage', () => {
     it('Should return correct data', async () => {
-        const image = await showImage("https://cdn.discordapp.com/attachments/816220283224195085/1285602284511694969/20240917_132036.jpg?ex=66ef7b2d&is=66ee29ad&hm=9a6a6b5ec91d8d44db3c0c24c85437eb35ff4815c71a3cb3a975e0121621afed&width=300&height=300", "123456789", "testuser")
+        const imageUrl = "https://cdn.discordapp.com/attachments/568814386907447297/831795793366876181/SPOILER_Screenshot_20210414-143900_Instagram.png?ex=6717ff73&is=6716adf3&hm=41d5c55b24acb4cde5e97eecdd9a9dac2797b9eef2efbc3748ca7556c84d9486&"
+        const image = await showAnImage(imageUrl, "123456789", "testuser")
 
         
         const imagePath = image.imagePath
 
-        const showImageData = await prisma.showImage.findUnique({
+        const showAnImageData = await prisma.showImage.findUnique({
             where: {
                 imageFilename: imagePath?.split('/').pop()
             }
@@ -19,14 +20,14 @@ describe('ShowImage', () => {
         expect(imagePath).toContain('dumps/show-images')
         expect(imagePath).toContain('123456789')
 
-        expect(showImageData).toBeTruthy()
-        expect(showImageData?.twitchId).toBe('123456789')
-        expect(showImageData?.username).toBe('testuser')
-        expect(showImageData?.imageUrl).toBe("https://cdn.discordapp.com/attachments/816220283224195085/1285602284511694969/20240917_132036.jpg?ex=66ef7b2d&is=66ee29ad&hm=9a6a6b5ec91d8d44db3c0c24c85437eb35ff4815c71a3cb3a975e0121621afed&width=300&height=300")
-        expect(showImageData?.imageFilename).toBe(imagePath?.split('/').pop())
+        expect(showAnImageData).toBeTruthy()
+        expect(showAnImageData?.twitchId).toBe('123456789')
+        expect(showAnImageData?.username).toBe('testuser')
+        expect(showAnImageData?.imageUrl).toBe(imageUrl)
+        expect(showAnImageData?.imageFilename).toBe(imagePath?.split('/').pop())
     })
     it('Non-image HTTPS should return empty', async () => {
-        const image = await showImage("https://google.com", "123456789", "testuser")
+        const image = await showAnImage("https://google.com", "123456789", "testuser")
         
         if (!image) return
         const imagePath = image.imagePath
@@ -36,7 +37,7 @@ describe('ShowImage', () => {
         expect(imagePath).toBeNull()
     })
     it('Invalid HTTPS should return empty', async () => {
-        const image = await showImage("asdw", "123456789", "testuser")
+        const image = await showAnImage("asdw", "123456789", "testuser")
         
         if (!image) return
         const imagePath = image.imagePath

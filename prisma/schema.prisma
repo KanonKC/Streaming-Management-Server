@@ -73,3 +73,12 @@ model Storage {
     twitchTokenExpires      DateTime?
     timestamp               DateTime @default(now())
 }
+
+model TwitchUserRevealTarotCard {
+    id                      Int      @id @default(autoincrement())
+    twitchUserId            String
+    majorCardId             Int
+    minorCardId             Int
+    data                    String   @default("{}")
+    timestamp               DateTime @default(now())
+}

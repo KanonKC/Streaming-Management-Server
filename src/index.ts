@@ -13,8 +13,14 @@ server.register(cors, {
     origin: '*'
 })
 
+// server.register(fastifyStatic, {
+//     root: path.join(process.cwd(), 'dumps'),
+//     prefix: '/public/',
+//     wildcard: true
+// })
+
 server.register(fastifyStatic, {
-    root: path.join(process.cwd(), 'dumps'),
+    root: path.join(process.cwd(), 'assets'),
     prefix: '/public/',
     wildcard: true
 })

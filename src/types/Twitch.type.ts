@@ -99,17 +99,37 @@ export interface TwitchClip {
     is_featured: boolean;
 }
 
+export interface TwitchUser {
+    id: string;
+    login: string;
+    display_name: string;
+    type: "staff" | "admin" | "global_mod" | "";
+    broadcaster_type: "partner" | "affiliate" | "";
+    description: string;
+    profile_image_url: string;
+    offline_image_url: string;
+    email: string;
+    created_at: string;
+}
+
 export interface TwitchUsers {
-    data: {
-        id: string;
-        login: string;
-        display_name: string;
-        type: "staff" | "admin" | "global_mod" | "";
-        broadcaster_type: "partner" | "affiliate" | "";
-        description: string;
-        profile_image_url: string;
-        offline_image_url: string;
-        email: string;
-        created_at: string;
-    }[]
+    data: TwitchUser[]
+}
+
+export interface TwitchUserChatColor {
+    user_id: string;
+    user_login: string;
+    user_name: string;
+    color: string;
+}
+
+export interface TwitchUsersChatColor {
+    data: TwitchUserChatColor[]
+}
+
+export interface TwitchGame {
+    id: string;
+    name: string;
+    box_art_url: string;
+    igdb_id: string;
 }
