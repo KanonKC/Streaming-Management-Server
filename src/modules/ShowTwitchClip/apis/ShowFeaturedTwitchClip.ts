@@ -39,27 +39,39 @@ export async function showFeaturedTwitchClip(
 	const gameResponse = await getTwitchGamesByIds([randomClipGameId]);
 	const gameData = gameResponse.data.data[0];
 
-	try {
-		const downloadVideoResponse = await downloadTwitchClip(
-			randomClipUrl,
-			options
-		);
+    let retryCount = 0;
+    let downloadedVideo
 
-		const downloadedVideo = downloadVideoResponse;
+    while (retryCount < 10) {
+        try {
+            downloadedVideo = await downloadTwitchClip(
+                randomClipUrl,
+                options
+            );
+        }
+        catch (error) {
+            console.log(error, retryCount)
+            if (retryCount === 10) {
+                return { filename: "" };
+            }
+            retryCount++;
+        }
+    }
 
-		return {
-			videoUrl: `${PUBLIC_URL}/shoutout-clips/${downloadedVideo.filename}`,
-			filename: `dumps/shoutout-clips/${downloadedVideo.filename}`,
-			videoFilename: downloadedVideo.filename,
-			outputVideoFilePath: downloadedVideo.outputVideoFilePath,
-			durationMilliseconds:
-				Math.ceil(downloadedVideo.duration * 1000) - 1500,
-			gameName: gameData.name,
-			gameImageUrl: gameData.box_art_url
-				.replace("{width}", "100")
-				.replace("{height}", "100"),
-		};
-	} catch (error) {
-		return { filename: "" };
-	}
+    if (!downloadedVideo) {
+        return { filename: "" };
+    }
+
+    return {
+        videoUrl: `${PUBLIC_URL}/shoutout-clips/${downloadedVideo.filename}`,
+        filename: `dumps/shoutout-clips/${downloadedVideo.filename}`,
+        videoFilename: downloadedVideo.filename,
+        outputVideoFilePath: downloadedVideo.outputVideoFilePath,
+        durationMilliseconds:
+            Math.ceil(downloadedVideo.duration * 1000) - 1500,
+        gameName: gameData ? gameData.name : "",
+        gameImageUrl: gameData ? gameData.box_art_url
+            .replace("{width}", "100")
+            .replace("{height}", "100") : "",
+    };
 }
