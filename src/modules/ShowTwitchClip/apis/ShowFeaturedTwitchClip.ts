@@ -48,6 +48,7 @@ export async function showFeaturedTwitchClip(
                 randomClipUrl,
                 options
             );
+            break;
         }
         catch (error) {
             console.log(error, retryCount)
