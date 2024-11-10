@@ -36,8 +36,13 @@ export async function showFeaturedTwitchClip(
 	const randomClipUrl = twitchClips[randomIndex].url;
 	const randomClipGameId = twitchClips[randomIndex].game_id;
 
-	const gameResponse = await getTwitchGamesByIds([randomClipGameId]);
-	const gameData = gameResponse.data.data[0];
+    let gameResponse;
+
+    try {
+        gameResponse = await getTwitchGamesByIds([randomClipGameId]);
+    } catch (error) {
+        console.log(error);
+    }
 
     let retryCount = 0;
     let downloadedVideo
@@ -61,6 +66,11 @@ export async function showFeaturedTwitchClip(
 
     if (!downloadedVideo) {
         return { filename: "" };
+    }
+
+    let gameData;
+    if (gameResponse) {
+        gameData = gameResponse.data.data[0];
     }
 
     return {
