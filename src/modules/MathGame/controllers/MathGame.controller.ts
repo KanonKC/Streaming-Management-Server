@@ -1,6 +1,22 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { createSmallMathGame } from "../apis/CreateSmallMathGame";
 import { resolveSmallMathGame } from "../apis/ResolveSmallMathGame";
+import { getSmallMathGameLeaderboard } from "../apis/GetSmallMathGameLeaderboard";
+
+export async function getSmallMathGameLeaderboardController(
+	request: FastifyRequest<{
+        Querystring: {
+            twitchUserId: string;
+        }
+    }>,
+	reply: FastifyReply
+) {
+    const { twitchUserId } = request.query;
+	const response = await getSmallMathGameLeaderboard(twitchUserId, {
+        top: 5,
+    });
+	return reply.send(response);
+}
 
 export async function createSmallMathGameController(
 	_: FastifyRequest,
