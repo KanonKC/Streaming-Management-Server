@@ -80,9 +80,9 @@ export async function showFeaturedTwitchClip(
         outputVideoFilePath: downloadedVideo.outputVideoFilePath,
         durationMilliseconds:
             Math.ceil(downloadedVideo.duration * 1000) - 1500,
-        gameName: gameData ? gameData.name : "",
+        gameName: gameData ? gameData.name : "Untagged",
         gameImageUrl: gameData ? gameData.box_art_url
             .replace("{width}", "100")
-            .replace("{height}", "100") : "",
+            .replace("{height}", "100") : "https://nodeflair.com/api/v2/companies/4512.png",
     };
 }
