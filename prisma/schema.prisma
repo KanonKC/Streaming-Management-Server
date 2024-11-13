@@ -111,8 +111,8 @@ model HangedManGame {
     resolveTwitchUserId     String?
     resolveTwitchUsername   String?
     word                    String
-    currentGuessedWord      String
-    incorrectGuessesChar    Int      @default(0)
+    currentGuessedWord      String   @default("")
+    incorrectGuessesChar    String   @default("")
     createAt                DateTime @default(now())
     updatedAt               DateTime @updatedAt
 }
