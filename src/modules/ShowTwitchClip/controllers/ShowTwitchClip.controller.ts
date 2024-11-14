@@ -7,10 +7,15 @@ type ShowFeaturedClip = FastifyRequest<{
 
 export async function showFeaturedTwitchClipController(request: ShowFeaturedClip, reply: FastifyReply) {
     const { broadcasterId } = request.query;
-    const response = await showFeaturedTwitchClip(String(broadcasterId), {
-        resolution: { width: 1920, height: 1080 }
-    })
-    return reply.status(200).send(response)
+    try {
+        const response = await showFeaturedTwitchClip(String(broadcasterId), {
+            resolution: { width: 1920, height: 1080 }
+        })
+        return reply.status(200).send(response)
+    } catch (error) {
+        console.error(error)
+    }
+    return reply.status(204).send()
 }
 
 export async function advancedShowFeaturedTwitchClipController(request: FastifyRequest<{
