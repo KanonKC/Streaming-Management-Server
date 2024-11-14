@@ -108,11 +108,10 @@ model MathGameGuessLog {
 model HangedManGame {
     id                      Int      @id @default(autoincrement())
     isResolved              Boolean  @default(false)
-    resolveTwitchUserId     String?
-    resolveTwitchUsername   String?
     word                    String
-    currentGuessedWord      String   @default("")
-    incorrectGuessesChar    String   @default("")
+    currentWordState        String   @default("")
+    correctGuessedLetters   String   @default("")
+    incorrectGuessedLetters String   @default("")
     createAt                DateTime @default(now())
     updatedAt               DateTime @updatedAt
 }
