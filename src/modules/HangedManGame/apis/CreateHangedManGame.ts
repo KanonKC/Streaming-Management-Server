@@ -1,27 +1,9 @@
 import { prisma } from "../../../database/prisma";
+import { CommonEnglishWords } from "../constants/CommonEnglishWords.constant";
+import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
-export async function createHangedManGame() {
-	const words = [
-		"apple",
-		"banana",
-		"cherry",
-		"date",
-		"elderberry",
-		"fig",
-		"grape",
-		"honeydew",
-		"kiwi",
-		"lemon",
-		"mango",
-		"nectarine",
-		"orange",
-		"papaya",
-		"quince",
-		"raspberry",
-		"strawberry",
-		"tangerine",
-		"watermelon",
-	];
+export async function createHangedManGame(guessCount: number) {
+	const words = CommonEnglishWords;
 
 	const word = words[Math.floor(Math.random() * words.length)];
 
@@ -34,13 +16,16 @@ export async function createHangedManGame() {
 		},
 	});
 
-	await prisma.hangedManGame.create({
+	const result = await prisma.hangedManGame.create({
 		data: {
-			word: word,
+			word: word.toLowerCase(),
+            guessesLeft: guessCount,
 			currentWordState: word
 				.split("")
 				.map(() => "_")
 				.join(""),
 		},
 	});
+
+    return transformHangedManGameToDisplayText(result);
 }

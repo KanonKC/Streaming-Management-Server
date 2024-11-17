@@ -4,10 +4,12 @@ export function transformHangedManGameToDisplayText(
 	hangedManGame: HangedManGame
 ) {
 	return {
-		currentWordState: hangedManGame.currentWordState.split("").join(" "),
-		incorrectGuessedLetters: hangedManGame.incorrectGuessedLetters
-			.split(",")
-			.join(""),
-		totalIncorrect: hangedManGame.incorrectGuessedLetters.split(",").length,
+        ...hangedManGame,
+		currentWordStateDisplay: hangedManGame.currentWordState.toUpperCase().split("").join(" "),
+		incorrectGuessedLettersDisplay: hangedManGame.incorrectGuessedLetters
+            .toUpperCase()
+			.split("")
+            .sort((a, b) => a.localeCompare(b))
+			.join(" "),
 	};
 }

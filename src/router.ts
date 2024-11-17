@@ -12,6 +12,7 @@ import { createSpotifyMusicRequestRoutes } from "./modules/SpotifyMusicRequest/r
 import { createTarotCardRoutes } from "./modules/TarotCard/routes/TarotCard.route";
 import { createTwitchChannelPointLog } from "./modules/TwitchChannelPointLog/routes/TwitchChannelPointLog";
 import { createMathGameRoutes } from "./modules/MathGame/routes/MathGame.route";
+import { createHangedManGameRoutes } from "./modules/HangedManGame/routes/HangedManGame.router";
 
 const server = fastify()
 
@@ -31,6 +32,8 @@ createMagicNumberMysteryBoxRoutes(server)
 
 createSpotifyMusicRequestRoutes(server)
 createMathGameRoutes(server)
+
+createHangedManGameRoutes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 
