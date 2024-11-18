@@ -29,7 +29,6 @@ export async function createSmallMathGame() {
     })
 
     if (game) {
-        console.log("Update", game.id, game.expression, game.answer)
         await prisma.mathGame.update({
             where: {
                 id: game.id,

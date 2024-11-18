@@ -56,7 +56,6 @@ export async function showFeaturedTwitchClip(
             break;
         }
         catch (error) {
-            console.log(error, retryCount)
             if (retryCount === 10) {
                 return { filename: "" };
             }

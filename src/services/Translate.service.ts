@@ -10,7 +10,6 @@ const translate = new Translate({
 async function translateEnglishToThai(text: string) {
     let [ translations ] = await translate.translate(text, "th");
     const translationsArr = Array.isArray(translations) ? translations : [translations];
-    console.log('Translations:');
     translationsArr.forEach((translation, i) => {
       console.log(`${text[i]} => ${translation}`);
     });
