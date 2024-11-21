@@ -46,7 +46,7 @@
     },
     {
         "twitchUserId": "449956875",
-        "soundFilePath": "cafe_bell_door.mp3",
+        "soundFilePath": null,
         "message": "SeemsGood"
     }
 ]

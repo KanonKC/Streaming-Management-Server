@@ -1,7 +1,11 @@
 import { prisma } from "../../../database/prisma";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
-export async function guessLetterHangedManGame(letter: string) {
+export async function guessLetterHangedManGame(
+	letter: string,
+	twitchUserId: string,
+	twitchUsername: string
+) {
 	const hangedMan = await prisma.hangedManGame.findFirst({
 		where: {
 			isResolved: false,
@@ -11,8 +15,6 @@ export async function guessLetterHangedManGame(letter: string) {
 	if (!hangedMan) {
 		return { code: "NOT_FOUND" };
 	}
-
-	console.log(hangedMan);
 
 	// Regex only a to Z
 	const isValidInput = new RegExp("^[a-zA-Z]$").test(letter);
@@ -28,7 +30,10 @@ export async function guessLetterHangedManGame(letter: string) {
 			hangedMan.correctGuessedLetters.includes(letter)) ||
 		hangedMan.incorrectGuessedLetters.includes(letter)
 	) {
-		return { code: "ALREADY_GUESSED" };
+		return {
+			code: "ALREADY_GUESSED",
+			...transformHangedManGameToDisplayText(hangedMan),
+		};
 	} else if (hangedMan.word.includes(letter)) {
 		const { currentWordState } = hangedMan;
 		const newWordState = currentWordState
@@ -51,6 +56,18 @@ export async function guessLetterHangedManGame(letter: string) {
 			},
 		});
 
+		await prisma.hangedManGameAttemptedLog.create({
+			data: {
+				hangedManGameId: hangedMan.id,
+				guess: letter,
+				guessType: "letter",
+				twitchUserId,
+				twitchUsername,
+				isCorrect: true,
+				score: 1,
+			},
+		});
+
 		if (result.word === result.currentWordState) {
 			const resolvedResult = await prisma.hangedManGame.update({
 				where: {
@@ -63,12 +80,14 @@ export async function guessLetterHangedManGame(letter: string) {
 
 			return {
 				code: "CORRECT_RESOLVED",
+				score: 1,
 				...transformHangedManGameToDisplayText(resolvedResult),
 			};
 		}
 
 		return {
 			code: "CORRECT_GUESSED",
+			score: 1,
 			...transformHangedManGameToDisplayText(result),
 		};
 	} else {
@@ -85,22 +104,22 @@ export async function guessLetterHangedManGame(letter: string) {
 			},
 		});
 
-        if (result.guessesLeft === 0) {
-            const resolvedResult = await prisma.hangedManGame.update({
-                where: {
-                    id: hangedMan.id,
-                },
-                data: {
-                    isResolved: true,
-                    currentWordState: hangedMan.word,
-                },
-            })
+		if (result.guessesLeft === 0) {
+			const resolvedResult = await prisma.hangedManGame.update({
+				where: {
+					id: hangedMan.id,
+				},
+				data: {
+					isResolved: true,
+					currentWordState: hangedMan.word,
+				},
+			});
 
-            return {
-                code: "GAME_OVER",
-                ...transformHangedManGameToDisplayText(resolvedResult),
-            }
-        }
+			return {
+				code: "GAME_OVER",
+				...transformHangedManGameToDisplayText(resolvedResult),
+			};
+		}
 
 		return {
 			code: "INCORRECT_GUESSED",

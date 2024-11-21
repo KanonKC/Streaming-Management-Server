@@ -22,7 +22,7 @@ export async function getCustomWelcomeMessage(twitchUserId: string) {
         twitchUserId,
         soundFilePath,
         message: message || DefaultWelcomeMessage,
-        soundFullPath: `assets/sounds/welcome-sounds/${soundFilePath}`
+        soundFullPath: `assets/sounds/welcome-sounds/${soundFilePath || DefaultSoundFilename}`
     }
 
 }

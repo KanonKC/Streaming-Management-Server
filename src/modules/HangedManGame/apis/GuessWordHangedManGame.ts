@@ -1,7 +1,11 @@
 import { prisma } from "../../../database/prisma";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
-export async function guessWordHangedManGame(word: string) {
+export async function guessWordHangedManGame(
+	word: string,
+	twitchUserId: string,
+	twitchUsername: string
+) {
 	const hangedMan = await prisma.hangedManGame.findFirst({
 		where: {
 			isResolved: false,
@@ -12,18 +16,37 @@ export async function guessWordHangedManGame(word: string) {
 		return { code: "NOT_FOUND" };
 	}
 
-	if (hangedMan.word === word) {
+	if (hangedMan.word === word.toLowerCase()) {
 		const resolvedResult = await prisma.hangedManGame.update({
 			where: {
 				id: hangedMan.id,
 			},
 			data: {
 				isResolved: true,
+				currentWordState: hangedMan.word,
 			},
 		});
 
+        let score = hangedMan.currentWordState.split("").filter((char) => char === "_").length
+        if (hangedMan.guessesLeft === 1 && hangedMan.clue !== "Gemini ล่มอยู่ ไม่มีคำใบ้ให้นะ TT") {
+            score = Math.ceil(score / 2)
+        }
+
+        await prisma.hangedManGameAttemptedLog.create({
+            data: {
+                hangedManGameId: hangedMan.id,
+                guess: word,
+                guessType: "word",
+                twitchUserId,
+                twitchUsername,
+                isCorrect: true,
+                score: score,
+            }
+        })
+
 		return {
 			code: "CORRECT_RESOLVED",
+            score,
 			...transformHangedManGameToDisplayText(resolvedResult),
 		};
 	} else {
@@ -42,7 +65,7 @@ export async function guessWordHangedManGame(word: string) {
 				},
 				data: {
 					isResolved: true,
-                    currentWordState: hangedMan.word,
+					currentWordState: hangedMan.word,
 				},
 			});
 			return {
@@ -52,7 +75,7 @@ export async function guessWordHangedManGame(word: string) {
 		} else {
 			return {
 				code: "INCORRECT_GUESSED",
-				guessesLeft: result.guessesLeft,
+				...transformHangedManGameToDisplayText(result),
 			};
 		}
 	}
