@@ -2,14 +2,14 @@ import { prisma } from "../../../database/prisma";
 import { getDateFromPeroid, Peroid } from "../../../utils/GetDateFromPeroid";
 import { rankingToText } from "../../../utils/RankingToText";
 
-interface GetSmallMathGameLeaderboardOptions {
+interface GetHangedManGameLeaderboardOptions {
 	peroid?: Peroid;
 	top: number;
 }
 
-export async function getSmallMathGameLeaderboard(
+export async function getHangedManGameLeaderboards(
 	twitchUserId: string,
-	options?: GetSmallMathGameLeaderboardOptions
+	options?: GetHangedManGameLeaderboardOptions
 ) {
 	let limitDate: Date | undefined;
 
@@ -17,7 +17,7 @@ export async function getSmallMathGameLeaderboard(
 		limitDate = getDateFromPeroid(options.peroid);
 	}
 
-	const guessLogs = await prisma.mathGameGuessLog.findMany({
+	const guessLogs = await prisma.hangedManGameAttemptedLog.findMany({
 		where: {
             isCorrect: true,
 			createAt: {
@@ -42,7 +42,7 @@ export async function getSmallMathGameLeaderboard(
 				score: 0,
 			};
 		}
-		playerScoreRecord[guessLog.twitchUserId].score += 1;
+		playerScoreRecord[guessLog.twitchUserId].score += guessLog.score;
 	}
 
 	const playerScoreList = Object.entries(playerScoreRecord)

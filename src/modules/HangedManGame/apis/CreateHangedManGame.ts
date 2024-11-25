@@ -1,11 +1,12 @@
 import { prisma } from "../../../database/prisma";
 import { getEnglishWordClue } from "../../../services/Gemini.service";
-import { CommonEnglishWords } from "../constants/CommonEnglishWords.constant";
+import { CommonEnglishWordList } from "../constants/CommonEnglishWordList.constant";
+import { GEMINI_OUT_OF_SERVICE_TEXT } from "../constants/Wording";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
 export async function createHangedManGame(guessCount: number) {
 
-    const words = CommonEnglishWords.filter((word) => word.length >= 3);
+    const words = CommonEnglishWordList.filter((word) => word.length >= 3);
 
 	const word = words[Math.floor(Math.random() * words.length)];
 
@@ -22,7 +23,7 @@ export async function createHangedManGame(guessCount: number) {
     try {
         clue = await getEnglishWordClue(word);
     } catch (error) {
-        clue = "Gemini ล่มอยู่ ไม่มีคำใบ้ให้นะ TT"
+        clue = GEMINI_OUT_OF_SERVICE_TEXT;
     }
 
 	const result = await prisma.hangedManGame.create({

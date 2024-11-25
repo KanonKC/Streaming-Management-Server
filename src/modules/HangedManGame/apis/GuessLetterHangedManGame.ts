@@ -56,6 +56,8 @@ export async function guessLetterHangedManGame(
 			},
 		});
 
+        const score = hangedMan.word.split("").filter((char) => char === letter).length
+
 		await prisma.hangedManGameAttemptedLog.create({
 			data: {
 				hangedManGameId: hangedMan.id,
@@ -64,7 +66,7 @@ export async function guessLetterHangedManGame(
 				twitchUserId,
 				twitchUsername,
 				isCorrect: true,
-				score: 1,
+				score: score,
 			},
 		});
 
@@ -80,14 +82,14 @@ export async function guessLetterHangedManGame(
 
 			return {
 				code: "CORRECT_RESOLVED",
-				score: 1,
+				score: score,
 				...transformHangedManGameToDisplayText(resolvedResult),
 			};
 		}
 
 		return {
 			code: "CORRECT_GUESSED",
-			score: 1,
+			score: score,
 			...transformHangedManGameToDisplayText(result),
 		};
 	} else {

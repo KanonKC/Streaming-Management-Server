@@ -1,4 +1,5 @@
 import { prisma } from "../../../database/prisma";
+import { GEMINI_OUT_OF_SERVICE_TEXT } from "../constants/Wording";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
 export async function guessWordHangedManGame(
@@ -28,7 +29,7 @@ export async function guessWordHangedManGame(
 		});
 
         let score = hangedMan.currentWordState.split("").filter((char) => char === "_").length
-        if (hangedMan.guessesLeft === 1 && hangedMan.clue !== "Gemini ล่มอยู่ ไม่มีคำใบ้ให้นะ TT") {
+        if (hangedMan.guessesLeft === 1 && hangedMan.clue !== GEMINI_OUT_OF_SERVICE_TEXT) {
             score = Math.ceil(score / 2)
         }
 

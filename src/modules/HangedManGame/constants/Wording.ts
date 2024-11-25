@@ -1,0 +1,1 @@
+export const GEMINI_OUT_OF_SERVICE_TEXT = "Gemini ล่มอยู่ ไม่มีคำใบ้ให้นะ TT";

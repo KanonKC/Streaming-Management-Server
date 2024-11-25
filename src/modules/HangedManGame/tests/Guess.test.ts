@@ -1,11 +1,11 @@
-import { guessLetterHangedManGame } from "../apis/GuessLetterHangedManGame";
+// import { guessLetterHangedManGame } from "../apis/GuessLetterHangedManGame";
 
-const letters = "abcdefghijklmnopqrstuvwxyz";
+// const letters = "abcdefghijklmnopqrstuvwxyz";
 
-(async () => {
+// (async () => {
 
-    for (let i = 0; i < 10; i++) {
-        const res = await guessLetterHangedManGame(letters[i])
-        console.log(res);
-    }
-})()
+//     for (let i = 0; i < 10; i++) {
+//         const res = await guessLetterHangedManGame(letters[i])
+//         console.log(res);
+//     }
+// })()

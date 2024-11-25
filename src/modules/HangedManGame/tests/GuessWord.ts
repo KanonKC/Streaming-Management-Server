@@ -1,5 +1,5 @@
-import { guessWordHangedManGame } from "../apis/GuessWordHangedManGame";
+// import { guessWordHangedManGame } from "../apis/GuessWordHangedManGame";
 
-guessWordHangedManGame("hello").then((res) => {
-    console.log(res);
-})
+// guessWordHangedManGame("hello").then((res) => {
+//     console.log(res);
+// })
