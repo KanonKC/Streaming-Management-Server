@@ -6,7 +6,7 @@ import { transformHangedManGameToDisplayText } from "../utils/TransformHangedMan
 
 export async function createHangedManGame(guessCount: number) {
 
-    const words = CommonEnglishWordList.filter((word) => word.length >= 3);
+    const words = CommonEnglishWordList.filter((word) => word.length >= 4);
 
 	const word = words[Math.floor(Math.random() * words.length)];
 
