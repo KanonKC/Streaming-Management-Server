@@ -1,0 +1,2 @@
+((res) => {
+    console.log(res)
