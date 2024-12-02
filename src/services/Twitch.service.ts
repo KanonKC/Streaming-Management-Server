@@ -151,7 +151,7 @@ export async function getTwitchCustomRewardRedemption(
 	);
 }
 
-export async function udpateTwitchRedemptionStatus(
+export async function updateTwitchRedemptionStatus(
 	broadcasterId: string,
 	rewardId: string,
 	id: string,

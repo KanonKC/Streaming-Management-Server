@@ -9,6 +9,8 @@ export async function loadRewardRedemptionFromTwitch() {
     const customRewardList = customRewardResponse.data.data
     let response;
 
+    await prisma.twitchRewardRedemption.deleteMany()
+
     for (const customReward of customRewardList) {
         console.log(`Fetching ${customReward.title} ...`)
         while (true) {

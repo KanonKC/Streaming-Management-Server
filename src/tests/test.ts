@@ -17,14 +17,13 @@ import { addCustomPoint } from "../modules/CustomPoint/apis/AddCustomPoint";
 //     console.log(res)
 // })
 
-// refundChannelPointToViewer("135783794", 5000);
-// addCustomPoint("1108286106", 100).then((res) => {
+// addCustomPoint("175591332", 2000).then((res) => {
 //     console.log(res)
 // })
-redeemChannelPointFromCustomPoint("1108286106", 20).then(res => {
+redeemChannelPointFromCustomPoint("175591332", 1000).then(res => {
     console.log(res)
 })
 
-// getRedeemableChannelPointAmount("1108286106").then((res) => {
+// getRedeemableChannelPointAmount("175591332").then((res) => {
 //     console.log(res)
 // })

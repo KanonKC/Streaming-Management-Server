@@ -1,5 +1,5 @@
 import { prisma } from "../../../database/prisma";
-import { udpateTwitchRedemptionStatus } from "../../../services/Twitch.service";
+import { updateTwitchRedemptionStatus } from "../../../services/Twitch.service";
 import { removeCustomPoint } from "../../CustomPoint/apis/RemoveCustomPoint";
 import { getRedeemableChannelPointAmount } from "./GetRedeemableChannelPointAmount";
 
@@ -17,41 +17,51 @@ export async function redeemChannelPointFromCustomPoint(
 		},
 	});
 
-	const cancelRedemptionList = [];
 	let currentRefundPoint = 0;
+
+	await removeCustomPoint(twitchUserId, 0);
 
 	for (const redemption of redemptionList) {
 		if (currentRefundPoint + redemption.cost > amount) {
 			continue;
 		}
 
-		currentRefundPoint += redemption.cost;
-		cancelRedemptionList.push(redemption);
+		try {
+			await updateTwitchRedemptionStatus(
+				"135783794",
+				redemption.rewardId,
+				redemption.redemptionId,
+				"CANCELED",
+				"dnafsrivhw88gj7eltolrsq6794teq",
+				"20slcp652ai7x11axnvvxkyuud4pw9"
+			);
+			await prisma.twitchRewardRedemption.update({
+				where: {
+					rewardId_redemptionId: {
+						rewardId: redemption.rewardId,
+						redemptionId: redemption.redemptionId,
+					},
+				},
+				data: {
+					status: "CANCELED",
+				},
+			});
+			currentRefundPoint += redemption.cost;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
-	const cancelRedemptionTaskList = cancelRedemptionList.map((redemption) =>
-		udpateTwitchRedemptionStatus(
-			"135783794",
-			redemption.rewardId,
-			redemption.redemptionId,
-			"CANCELED",
-			"dnafsrivhw88gj7eltolrsq6794teq",
-			"20slcp652ai7x11axnvvxkyuud4pw9"
-		)
+	const customPoint = await removeCustomPoint(
+		twitchUserId,
+		currentRefundPoint
 	);
-
-	try {
-		await Promise.all(cancelRedemptionTaskList);
-		const customPoint = await removeCustomPoint(twitchUserId, currentRefundPoint);
-		const redeemableChannelPoints = await getRedeemableChannelPointAmount(
-			twitchUserId
-		);
-		return {
-			redeemedChannelPoints: currentRefundPoint,
-            redeemableChannelPoints,
-			...customPoint,
-		};
-	} catch (error) {
-		throw new Error("Error during transaction");
-	}
+	const redeemableChannelPoints = await getRedeemableChannelPointAmount(
+		twitchUserId
+	);
+	return {
+		redeemedChannelPoints: currentRefundPoint,
+		redeemableChannelPoints,
+		...customPoint,
+	};
 }
