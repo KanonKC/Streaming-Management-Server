@@ -33,7 +33,7 @@ export async function redeemChannelPointFromCustomPoint(
 				redemption.redemptionId,
 				"CANCELED",
 				"dnafsrivhw88gj7eltolrsq6794teq",
-				"20slcp652ai7x11axnvvxkyuud4pw9"
+				"zaqvfcse5t5w20tatai97i9kj9nqxc"
 			);
 			await prisma.twitchRewardRedemption.update({
 				where: {

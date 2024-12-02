@@ -21,7 +21,7 @@ export async function loadRewardRedemptionFromTwitch() {
                     customReward.id,
                     "UNFULFILLED",
                     "dnafsrivhw88gj7eltolrsq6794teq",
-                    "20slcp652ai7x11axnvvxkyuud4pw9",
+                    "zaqvfcse5t5w20tatai97i9kj9nqxc",
                     {
                         first: 50,
                         after: response?.data.pagination.cursor

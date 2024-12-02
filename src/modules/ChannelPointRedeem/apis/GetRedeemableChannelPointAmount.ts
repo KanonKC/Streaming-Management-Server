@@ -17,5 +17,5 @@ export async function getRedeemableChannelPointAmount(twitchUserId: string) {
 		currentRefundPoint += redemption.cost;
 	}
 
-	return currentRefundPoint
+	return { amount: currentRefundPoint };
 }
