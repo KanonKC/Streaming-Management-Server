@@ -1,5 +1,6 @@
 import { prisma } from "../../../database/prisma";
 import { updateTwitchRedemptionStatus } from "../../../services/Twitch.service";
+import { streamerBotStore } from "../../../stores/StreamerBot.store";
 import { removeCustomPoint } from "../../CustomPoint/apis/RemoveCustomPoint";
 import { getRedeemableChannelPointAmount } from "./GetRedeemableChannelPointAmount";
 
@@ -17,6 +18,12 @@ export async function redeemChannelPointFromCustomPoint(
 		},
 	});
 
+    const { clientId, token } = await streamerBotStore.loadToken()
+
+    if (!clientId || !token) {
+        throw Error("No Streamerbot OAuth")
+    }
+
 	let currentRefundPoint = 0;
 
 	await removeCustomPoint(twitchUserId, 0);
@@ -32,8 +39,8 @@ export async function redeemChannelPointFromCustomPoint(
 				redemption.rewardId,
 				redemption.redemptionId,
 				"CANCELED",
-				"dnafsrivhw88gj7eltolrsq6794teq",
-				"zaqvfcse5t5w20tatai97i9kj9nqxc"
+				clientId,
+				token
 			);
 			await prisma.twitchRewardRedemption.update({
 				where: {

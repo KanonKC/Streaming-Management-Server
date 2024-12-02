@@ -1,9 +1,16 @@
 import { prisma } from "../../../database/prisma";
 import { getTwitchCustomReward, getTwitchCustomRewardRedemption } from "../../../services/Twitch.service";
+import { streamerBotStore } from "../../../stores/StreamerBot.store";
 
 export async function loadRewardRedemptionFromTwitch() {
 
     console.log("Loading RewardRedemptionFromTwitch ...")
+
+    const { clientId, token } = await streamerBotStore.loadToken()
+
+    if (!clientId || !token) {
+        throw Error("No Streamerbot OAuth")
+    }
 
     const customRewardResponse = await getTwitchCustomReward("135783794")
     const customRewardList = customRewardResponse.data.data
@@ -20,8 +27,8 @@ export async function loadRewardRedemptionFromTwitch() {
                     "135783794",
                     customReward.id,
                     "UNFULFILLED",
-                    "dnafsrivhw88gj7eltolrsq6794teq",
-                    "zaqvfcse5t5w20tatai97i9kj9nqxc",
+                    clientId,
+                    token,
                     {
                         first: 50,
                         after: response?.data.pagination.cursor
