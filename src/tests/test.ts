@@ -1,13 +1,14 @@
+import { getRedeemableChannelPointAmount } from "../modules/ChannelPointRedeem/apis/GetRedeemableChannelPointAmount";
 import { loadRewardRedemptionFromTwitch } from "../modules/ChannelPointRedeem/apis/LoadRewardRedemptionFromTwitch";
-import { refundChannelPointToViewer } from "../modules/ChannelPointRedeem/apis/RefundChannelPointToViewer";
-import { getTwitchCustomRewardRedemption } from "../services/Twitch.service";
+import { redeemChannelPointFromCustomPoint } from "../modules/ChannelPointRedeem/apis/RedeemChannelPointFromCustomPoint";
+import { addCustomPoint } from "../modules/CustomPoint/apis/AddCustomPoint";
 // (async ()=> {
 //     const data = await getTwitchCustomRewardRedemption(
 //         "135783794",
 //         "4cc751fa-ddb0-43c5-a039-78c1a6275ed3",
 //         "UNFULFILLED",
 //         "dnafsrivhw88gj7eltolrsq6794teq",
-//         "9fs8ibhwf3gaetuzrgjkaya54v7mls",
+//         "20slcp652ai7x11axnvvxkyuud4pw9",
 //     )
 //     console.log(data.data)
 // })()
@@ -16,4 +17,14 @@ import { getTwitchCustomRewardRedemption } from "../services/Twitch.service";
 //     console.log(res)
 // })
 
-refundChannelPointToViewer("135783794", 5000);
+// refundChannelPointToViewer("135783794", 5000);
+// addCustomPoint("1108286106", 100).then((res) => {
+//     console.log(res)
+// })
+redeemChannelPointFromCustomPoint("1108286106", 20).then(res => {
+    console.log(res)
+})
+
+// getRedeemableChannelPointAmount("1108286106").then((res) => {
+//     console.log(res)
+// })
