@@ -1,4 +1,5 @@
 import { prisma } from "../../../database/prisma";
+import { addCustomPoint } from "../../CustomPoint/apis/AddCustomPoint";
 import { GEMINI_OUT_OF_SERVICE_TEXT } from "../constants/Wording";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
@@ -44,6 +45,8 @@ export async function guessWordHangedManGame(
                 score: score,
             }
         })
+
+        addCustomPoint(twitchUserId, score*3)
 
 		return {
 			code: "CORRECT_RESOLVED",

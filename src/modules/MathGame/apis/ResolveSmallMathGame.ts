@@ -1,4 +1,5 @@
 import { prisma } from "../../../database/prisma";
+import { addCustomPoint } from "../../CustomPoint/apis/AddCustomPoint";
 
 export interface ResolveSmallMathGamePayload {
     twitchUserId: string;
@@ -63,6 +64,7 @@ export async function resolveSmallMathGame(payload: ResolveSmallMathGamePayload)
             },
         })
 
+        addCustomPoint(payload.twitchUserId, 5)
         return { code: "CORRECT_GUESS", correctCount };
     } else {
         return { code: "INCORRECT_GUESS" };
