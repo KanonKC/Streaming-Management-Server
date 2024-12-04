@@ -1,4 +1,5 @@
 import { prisma } from "../../../database/prisma";
+import { addCustomPoint } from "../../CustomPoint/apis/AddCustomPoint";
 import { transformHangedManGameToDisplayText } from "../utils/TransformHangedManGameToDisplayText";
 
 export async function guessLetterHangedManGame(
@@ -80,12 +81,16 @@ export async function guessLetterHangedManGame(
 				},
 			});
 
+            addCustomPoint(twitchUserId, score)
+
 			return {
 				code: "CORRECT_RESOLVED",
 				score: score,
 				...transformHangedManGameToDisplayText(resolvedResult),
 			};
 		}
+
+        addCustomPoint(twitchUserId, score)
 
 		return {
 			code: "CORRECT_GUESSED",
