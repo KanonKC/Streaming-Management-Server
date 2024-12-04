@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getStreamerBotTwitchOAuth } from "../modules/GetStreamerbotTwitchOAuth";
+import { getStreamerBotTwitchOAuth } from "../modules/GetStreamerBotTwitchOAuth";
 
 export async function getStreamerBotTwitchOAuthController(
 	request: FastifyRequest<{
