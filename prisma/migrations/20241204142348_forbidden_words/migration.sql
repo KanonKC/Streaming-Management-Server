@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "ForbiddenWords" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "twitchUserId" TEXT NOT NULL,
+    "word" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
