@@ -1,6 +1,7 @@
 import { prisma } from "../../../database/prisma";
 
 export async function checkForbiddenWordsFromMessage(message: string) {
+
     const activeForbiddenWordsList = await prisma.forbiddenWords.findMany({
         where: {
             isActive: true,
@@ -11,6 +12,7 @@ export async function checkForbiddenWordsFromMessage(message: string) {
         if (message.includes(forbid.word)) {
             return {
                 code: "CONTAINS_FORBIDDEN_WORDS",
+                highlightText: message.replace(forbid.word, ` [${forbid.word}] `),
                 ...forbid
             };
         }

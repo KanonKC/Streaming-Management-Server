@@ -32,13 +32,13 @@ export async function createForbiddenWordsController(
 
 export async function deactiveForbiddenWordsController(
 	request: FastifyRequest<{
-		Querystring: {
+		Params: {
 			id: string;
 		};
 	}>,
 	reply: FastifyReply
 ) {
-	const id = parseInt(request.query.id);
+	const id = parseInt(request.params.id);
 	const response = await deactiveForbiddenWords(id);
 	return reply.status(200).send(response);
 }
