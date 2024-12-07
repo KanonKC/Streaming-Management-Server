@@ -16,6 +16,7 @@ import { createHangedManGameRoutes } from "./modules/HangedManGame/routes/Hanged
 import { createChannelPointRedeemRoutes } from "./modules/ChannelPointRedeem/routes/ChannelPointRedeem.route";
 import { createCustomPointRoutes } from "./modules/CustomPoint/routes/CustomPoint.route";
 import { getStreamerBotTwitchOAuthController } from "./controllers/StreamerBot.controller";
+import { createForbiddenWordsRoutes } from "./modules/ForbiddenWords/routes/ForbiddenWords.route";
 
 const server = fastify()
 
@@ -39,6 +40,8 @@ createMathGameRoutes(server)
 createHangedManGameRoutes(server)
 createChannelPointRedeemRoutes(server)
 createCustomPointRoutes(server)
+
+createForbiddenWordsRoutes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 server.get('/streamer-bot/callback', getStreamerBotTwitchOAuthController)

@@ -157,6 +157,7 @@ model CustomPoint {
 model ForbiddenWords {
     id                      Int     @id @default(autoincrement())
     twitchUserId            String
+    twitchUsername          String
     word                    String
     isActive                Boolean @default(true)
     createAt                DateTime @default(now())
