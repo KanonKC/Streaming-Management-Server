@@ -62,15 +62,28 @@ export async function getHangedManGameLeaderboardsController(
 	request: FastifyRequest<{
 		Querystring: {
 			twitchUserId: string;
+            startPeroid: string;
+            endPeroid: string;
+            offset: string;
+            limit: string;
 		};
 	}>,
 	reply: FastifyReply
 ) {
 	try {
-        const { twitchUserId } = request.query;
+        const { 
+            twitchUserId,
+            startPeroid,
+            endPeroid,
+            offset,
+            limit
+         } = request.query;
         const response = await getHangedManGameLeaderboards(
             twitchUserId, {
-                top: 5,
+                startPeroid: parseInt(startPeroid) ?? undefined,
+                endPeroid: parseInt(endPeroid) ?? undefined,
+                offset: parseInt(offset) ?? undefined,
+                limit: parseInt(limit) ?? undefined,
             }
         );
         return reply.status(200).send(response);

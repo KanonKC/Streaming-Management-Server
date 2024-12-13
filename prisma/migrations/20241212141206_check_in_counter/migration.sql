@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE "StartStream" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "ViewerCheckIn" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "twitchUserId" TEXT NOT NULL,
+    "twitchUsername" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

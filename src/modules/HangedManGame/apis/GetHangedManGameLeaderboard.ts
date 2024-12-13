@@ -1,27 +1,36 @@
 import { prisma } from "../../../database/prisma";
+import { getTwitchUsersById } from "../../../services/Twitch.service";
+import { TwitchUser } from "../../../types/Twitch.type";
 import { getDateFromPeroid, Peroid } from "../../../utils/GetDateFromPeroid";
 import { rankingToText } from "../../../utils/RankingToText";
 
 interface GetHangedManGameLeaderboardOptions {
-	peroid?: Peroid;
-	top: number;
+	startPeroid?: Peroid;
+	endPeroid?: Peroid;
+	offset?: number;
+	limit?: number;
 }
 
 export async function getHangedManGameLeaderboards(
 	twitchUserId: string,
 	options?: GetHangedManGameLeaderboardOptions
 ) {
-	let limitDate: Date | undefined;
+	let startDate: Date | undefined;
+	let endDate: Date | undefined;
 
-	if (options && options.peroid) {
-		limitDate = getDateFromPeroid(options.peroid);
+	if (options && options.startPeroid) {
+		startDate = getDateFromPeroid(options.startPeroid);
+	}
+	if (options && options.endPeroid) {
+		endDate = getDateFromPeroid(options.endPeroid);
 	}
 
 	const guessLogs = await prisma.hangedManGameAttemptedLog.findMany({
 		where: {
-            isCorrect: true,
+			isCorrect: true,
 			createAt: {
-				gte: limitDate,
+				gte: startDate,
+				lte: endDate,
 			},
 		},
 	});
@@ -45,27 +54,57 @@ export async function getHangedManGameLeaderboards(
 		playerScoreRecord[guessLog.twitchUserId].score += guessLog.score;
 	}
 
+	const playerIdList = [
+		twitchUserId,
+		...Object.keys(playerScoreRecord),
+	].filter((value, index, self) => self.indexOf(value) === index);
+
+	let twitchUserList: TwitchUser[] = [];
+	try {
+		const twitchUserListResponse = await getTwitchUsersById(playerIdList);
+		twitchUserList = twitchUserListResponse.data.data;
+	} catch (error) {}
+
 	const playerScoreList = Object.entries(playerScoreRecord)
 		.map(([_, value]) => value)
 		.sort((a, b) => b.score - a.score)
 		.map((player, index) => ({
 			...player,
 			ranking: index + 1,
+			imageUrl: twitchUserList.find(
+				(twitchUser) => twitchUser.id === player.twitchUserId
+			)?.profile_image_url,
 		}));
 
 	let modifiedPlayerScoreList = playerScoreList;
 
-	if (options && options.top) {
-		modifiedPlayerScoreList = playerScoreList.slice(0, options.top);
+	if (options && options.offset) {
+		modifiedPlayerScoreList = modifiedPlayerScoreList.slice(options.offset);
+	}
+	if (options && options.limit) {
+		modifiedPlayerScoreList = modifiedPlayerScoreList.slice(
+			0,
+			options.limit
+		);
 	}
 
-	const targetPlayer = {
-		score: playerScoreRecord[twitchUserId]?.score || 0,
-		ranking:
-			playerScoreList.find(
-				(player) => player.twitchUserId === twitchUserId
-			)?.ranking || "-",
-	};
+	let targetPlayer = playerScoreList.find(
+		(player) => player.twitchUserId === twitchUserId
+	);
+
+	if (!targetPlayer) {
+        const targetTwitchUser = twitchUserList.find(user => user.id === twitchUserId);
+
+        if (!targetTwitchUser) throw new Error("User not found");
+
+		targetPlayer = {
+            twitchUserId,
+            twitchUsername: targetTwitchUser.display_name,
+            score: 0,
+            ranking: 0,
+            imageUrl: targetTwitchUser.profile_image_url,
+        }
+	}
 
 	let playerScoreListText = modifiedPlayerScoreList
 		.map(
@@ -80,5 +119,6 @@ export async function getHangedManGameLeaderboards(
 		leaderboards: modifiedPlayerScoreList,
 		text: playerScoreListText,
 		targetPlayer,
+        total: playerScoreList.length,
 	};
 }

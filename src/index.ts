@@ -5,6 +5,7 @@ import server from './router'
 import { getSpotifyOAuthUrl } from './services/Spotify.service'
 import { getTwitchOAuthUrl } from './services/Twitch.service'
 import path from 'path'
+import { loadRewardRedemptionFromTwitch } from './modules/ChannelPointRedeem/apis/LoadRewardRedemptionFromTwitch'
 
 configDotenv()
 const PORT = Number(process.env.PORT) || 8080
@@ -30,6 +31,7 @@ server.listen({ port: PORT }, (err, address) => {
     console.error(err)
     process.exit(1)
   }
+//   loadRewardRedemptionFromTwitch()
   console.log(`Server listening at ${address}`)
   console.log('----- Spotify -----')
   console.log(getSpotifyOAuthUrl())

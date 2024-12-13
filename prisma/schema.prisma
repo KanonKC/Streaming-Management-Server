@@ -37,6 +37,19 @@ model CustomWelcomeMessage {
     message         String?
 }
 
+model StartStream {
+    id              Int      @id @default(autoincrement())
+    isActive        Boolean  @default(true)
+    timestamp       DateTime @default(now())
+}
+
+model ViewerCheckIn {
+    id              Int      @id @default(autoincrement())
+    twitchUserId    String
+    order           Int
+    timestamp       DateTime @default(now())
+}
+
 model KillerRequestQueue {
     id              Int      @id @default(autoincrement())
     twitchUserId    String 
