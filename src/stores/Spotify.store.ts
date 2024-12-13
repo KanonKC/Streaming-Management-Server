@@ -39,6 +39,15 @@ class SpotifyStore {
         }
     }
 
+    async isTokenValid() {
+        await this.loadToken();
+        if (!this.accessToken || !this.refreshToken || !this.expires) {
+            return false;
+        }
+
+        return this.expires > new Date();
+    }
+
     getToken() {
         return {
             accessToken: this.accessToken,

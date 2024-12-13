@@ -6,7 +6,7 @@ class TwitchStore {
     namespace = 'main';
     accessToken: string | null = null;
     refreshToken: string | null = null;
-    expires: number | null = null;
+    expires: Date | null = null;
 
 
     constructor() {}
@@ -18,13 +18,22 @@ class TwitchStore {
 
         this.accessToken = storage?.twitchAccessToken || null;
         this.refreshToken = storage?.twitchRefreshToken || null;
-        this.expires = storage?.twitchTokenExpires ? storage.twitchTokenExpires.getTime() : null;
+        this.expires = storage?.twitchTokenExpires ? storage.twitchTokenExpires : null;
 
         return {
             accessToken: this.accessToken,
             refreshToken: this.refreshToken,
             expires: this.expires,
         }
+    }
+
+    async isTokenValid() {
+        await this.loadToken();
+        if (!this.accessToken || !this.refreshToken || !this.expires) {
+            return false;
+        }
+
+        return this.expires > new Date();
     }
 
     getToken() {
@@ -41,6 +50,7 @@ class TwitchStore {
             update: {
                 twitchAccessToken: twitchAuthorization.access_token,
                 twitchRefreshToken: twitchAuthorization.refresh_token,
+                twitchTokenExpires: new Date(Date.now() + twitchAuthorization.expires_in * 1000),
             },
             create: {
                 namespace: this.namespace,

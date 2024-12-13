@@ -5,13 +5,13 @@ import { streamerBotStore } from "../../../stores/StreamerBot.store";
 export async function loadRewardRedemptionFromTwitch() {
 
     console.log("Loading RewardRedemptionFromTwitch ...")
-
+    
     const { clientId, token } = await streamerBotStore.loadToken()
-
+    
     if (!clientId || !token) {
         throw Error("No Streamerbot OAuth")
     }
-
+    
     const customRewardResponse = await getTwitchCustomReward("135783794")
     const customRewardList = customRewardResponse.data.data
     let response;
@@ -19,7 +19,7 @@ export async function loadRewardRedemptionFromTwitch() {
     await prisma.twitchRewardRedemption.deleteMany()
 
     for (const customReward of customRewardList) {
-        console.log(`Fetching ${customReward.title} ...`)
+        // console.log(`Fetching ${customReward.title} ...`)
         while (true) {
             
             try {
