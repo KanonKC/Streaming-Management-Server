@@ -17,6 +17,7 @@ import { createChannelPointRedeemRoutes } from "./modules/ChannelPointRedeem/rou
 import { createCustomPointRoutes } from "./modules/CustomPoint/routes/CustomPoint.route";
 import { getStreamerBotTwitchOAuthController } from "./controllers/StreamerBot.controller";
 import { createForbiddenWordsRoutes } from "./modules/ForbiddenWords/routes/ForbiddenWords.route";
+import { createLeaderboardsRoutes } from "./modules/Leaderboards/routes/Leaderboards.router";
 
 const server = fastify()
 
@@ -42,6 +43,7 @@ createChannelPointRedeemRoutes(server)
 createCustomPointRoutes(server)
 
 createForbiddenWordsRoutes(server)
+createLeaderboardsRoutes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 server.get('/streamer-bot/callback', getStreamerBotTwitchOAuthController)
