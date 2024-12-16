@@ -176,3 +176,25 @@ model ForbiddenWords {
     createAt                DateTime @default(now())
     updatedAt               DateTime @updatedAt
 }
+
+model Game24 {
+    id                      Int     @id @default(autoincrement())
+    numberList              String
+    isSkipped               Boolean @default(false)
+    isSolved                Boolean @default(false)
+    isActive                Boolean @default(true)
+    guessLogList            Game24GuessLog[]
+    createAt                DateTime @default(now())
+    updatedAt               DateTime @updatedAt
+}
+
+model Game24GuessLog {
+    id                      Int     @id @default(autoincrement())
+    game24Id                Int
+    game24                  Game24  @relation(fields: [game24Id], references: [id])
+    expression              String
+    twitchUserId            String
+    isCorrect               Boolean
+    createAt                DateTime @default(now())
+    updatedAt               DateTime @updatedAt
+}

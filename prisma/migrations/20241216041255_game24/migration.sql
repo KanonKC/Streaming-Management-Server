@@ -1,0 +1,21 @@
+-- CreateTable
+CREATE TABLE "Game24" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "numberList" TEXT NOT NULL,
+    "isSkipped" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Game24GuessLog" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "game24Id" INTEGER NOT NULL,
+    "expression" TEXT NOT NULL,
+    "twitchUserId" TEXT NOT NULL,
+    "isCorrect" BOOLEAN NOT NULL,
+    "createAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Game24GuessLog_game24Id_fkey" FOREIGN KEY ("game24Id") REFERENCES "Game24" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
