@@ -19,7 +19,9 @@ export async function getCustomWelcomeMessageController(
     const ignoredTwitchUserIdList = [
         TWITCH_BROADCASTER_ID,
         "1108286106",
-        "52268235"
+        "52268235",
+        "19264788"
+        // "1",
     ]
 
     if (ignoredTwitchUserIdList.includes(twitchUserId)) {
