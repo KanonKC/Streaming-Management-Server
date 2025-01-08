@@ -18,6 +18,7 @@ import { createCustomPointRoutes } from "./modules/CustomPoint/routes/CustomPoin
 import { getStreamerBotTwitchOAuthController } from "./controllers/StreamerBot.controller";
 import { createForbiddenWordsRoutes } from "./modules/ForbiddenWords/routes/ForbiddenWords.route";
 import { createLeaderboardsRoutes } from "./modules/Leaderboards/routes/Leaderboards.router";
+import { createGame24Routes } from "./modules/Game24/routes/Game24.router";
 
 const server = fastify()
 
@@ -44,6 +45,8 @@ createCustomPointRoutes(server)
 
 createForbiddenWordsRoutes(server)
 createLeaderboardsRoutes(server)
+
+createGame24Routes(server)
 
 server.get('/twitch/callback', twitchAuthorizationCallbackController)
 server.get('/streamer-bot/callback', getStreamerBotTwitchOAuthController)

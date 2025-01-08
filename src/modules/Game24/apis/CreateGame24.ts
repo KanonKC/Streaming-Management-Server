@@ -1,7 +1,7 @@
 import { prisma } from "../../../database/prisma";
 
-function product(list: number[]) {
-    return list.reduce((acc, cur) => acc * cur, 1)
+function sum(list: number[]) {
+    return list.reduce((acc, cur) => acc + cur, 0)
 }
 
 export async function createGame24() {
@@ -17,15 +17,20 @@ export async function createGame24() {
 
     let numberList = [0,0,0,0]
 
-    while (product(numberList) < 24) {
+    while (sum(numberList) < 10 || sum(numberList) > 54) {
         for (let i = 0; i < 4; i++) {
-            numberList[i] = Math.floor(Math.random() * 16)
+            numberList[i] = Math.floor(Math.random() * 10)
         }
     }
 
-    return prisma.game24.create({
+    const game24 = await prisma.game24.create({
         data: {
             numberList: numberList.join(',')
         }
     })
+
+    return {
+        ...game24,
+        numberText: numberList.join(', ')
+    }
 }
