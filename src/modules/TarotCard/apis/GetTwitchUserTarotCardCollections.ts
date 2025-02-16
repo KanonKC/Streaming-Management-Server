@@ -57,7 +57,6 @@ function getCollectedSoundsAndVoiceActor(
 }
 
 export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
-
 	const userRecords = await prisma.twitchUserRevealTarotCard.findMany({
 		where: { twitchUserId },
 	});
@@ -74,7 +73,6 @@ export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
 		voiceActorTwitchIds as string[]
 	);
 
-
 	const twitchVoiceActorsList = twitchVoiceActorsResponse.data.data.map(
 		(user) => ({
 			...user,
@@ -87,7 +85,7 @@ export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
 
 	const openedMajorCardId = userRecords.map((record) => record.majorCardId);
 
-	return MajorCards.map((card) => ({
+	const majorCardList = MajorCards.map((card) => ({
 		id: card.id,
 		name: card.name,
 		description: card.description,
@@ -99,4 +97,20 @@ export async function getTwitchUserTarotCardCollections(twitchUserId: string) {
 			twitchVoiceActorsList
 		),
 	}));
+
+	const majorCardTotalCardUnlocked = majorCardList.filter(
+		(card) => card.isUnlocked
+	).length;
+	const majorCardTotalSoundUnlocked = majorCardList.reduce(
+		(acc, card) =>
+			card.sounds.filter((sound) => sound.isUnlocked).length + acc,
+		0
+	);
+
+	return {
+		majorCards: majorCardList,
+		majorCardTotalCardUnlocked,
+		majorCardTotalSoundUnlocked,
+		isFirstTime: userRecords.length <= 1,
+	};
 }
