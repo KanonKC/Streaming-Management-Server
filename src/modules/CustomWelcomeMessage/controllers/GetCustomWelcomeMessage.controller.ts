@@ -20,15 +20,15 @@ export async function getCustomWelcomeMessageController(
         TWITCH_BROADCASTER_ID,
         "1108286106",
         "52268235",
-        "19264788"
-        // "1",
+        "19264788",
+        "1",
     ]
 
     if (ignoredTwitchUserIdList.includes(twitchUserId)) {
-        return reply.status(204)
+        return reply.send({ code: "IGNORED" })
     }
-
     const customWelcomeMessage = await getCustomWelcomeMessage(twitchUserId)
+
     return reply.status(200).send(customWelcomeMessage)
     } catch (error) {
         console.error(error)

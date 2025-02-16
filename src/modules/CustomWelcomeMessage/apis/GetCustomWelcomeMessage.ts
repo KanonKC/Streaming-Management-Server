@@ -21,6 +21,7 @@ export async function getCustomWelcomeMessage(twitchUserId: string) {
 
     if (!customWelcomeMessage) {
         return {
+            code: "DEFAULT",
             twitchUserId,
             soundFilePath: DefaultSoundFilename,
             message: DefaultWelcomeMessage,
@@ -31,7 +32,8 @@ export async function getCustomWelcomeMessage(twitchUserId: string) {
 
     const { soundFilePath, message } = customWelcomeMessage
     
-    return { 
+    return {
+        code: "CUSTOM", 
         twitchUserId,
         soundFilePath,
         message: message || DefaultWelcomeMessage,
