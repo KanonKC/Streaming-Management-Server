@@ -1,0 +1,87 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	height: 100vh;
+	overflow: hidden;
+	display: grid;
+}
+@-webkit-keyframes Infite {
+	0% {
+		background-position: 0% 97%;
+	}
+	50% {
+		background-position: 100% 4%;
+	}
+	100% {
+		background-position: 0% 97%;
+	}
+}
+@-moz-keyframes Infite {
+	0% {
+		background-position: 0% 97%;
+	}
+	50% {
+		background-position: 100% 4%;
+	}
+	100% {
+		background-position: 0% 97%;
+	}
+}
+@keyframes Infite {
+	0% {
+		background-position: 0% 97%;
+	}
+	50% {
+		background-position: 100% 4%;
+	}
+	100% {
+		background-position: 0% 97%;
+	}
+}
+
+p {
+	margin: auto;
+	font-family: "Modak", cursive;
+	font-size: 10vw;
+	mix-blend-mode: multiply;
+	background: linear-gradient(
+		90deg,
+		rgba(58, 77, 180, 1) 0%,
+		rgba(253, 54, 29, 1) 50%,
+		rgba(248, 252, 69, 1) 87%
+	);
+	animation: Infite 2s ease-in-out infinite;
+	background-size: 175% 175%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+.main {
+	display: grid;
+	height: 100%;
+	width: 100%;
+	mix-blend-mode: multiply;
+}
+
+.btn {
+	position: fixed;
+	top: 1rem;
+	left: 1rem;
+	font-family: sans-serif;
+	font-weight: bold;
+	background: linear-gradient(
+		90deg,
+		rgba(58, 77, 180, 1) 0%,
+		rgba(253, 54, 29, 1) 50%,
+		rgba(248, 252, 69, 1) 87%
+	);
+	padding: 1rem 0.5rem;
+	color: white;
+	border-radius: 0.5rem;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	border: none;
+}
