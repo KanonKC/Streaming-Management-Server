@@ -34,6 +34,7 @@ const twitchAPI = axios.create({
 export const TwitchOAuthScopes = [
 	"channel:manage:predictions",
 	"channel:manage:redemptions",
+    "user:read:follows",
 ];
 
 export function getTwitchOAuthUrl() {
